@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:FishRluer.xcodeproj">
+      location = "self:/Users/user1/Desktop/FishRluer/FishRuler.xcodeproj">
    </FileRef>
 </Workspace>
