@@ -19,8 +19,14 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var resetImageView: UIImageView!
     @IBOutlet weak var resetButton: UIButton!
     
+    @IBOutlet weak var outputImageView: UIImageView!
     
+    
+    @IBOutlet weak var photoTakenButton: UIButton!
+    @IBOutlet weak var photoTaken: UIImageView!
     @IBOutlet weak var targetLabel: UILabel!
+    @IBOutlet weak var cameraButton: UIButton!
+    @IBOutlet weak var cameraButtonImage: UIImageView!
     
     
     
@@ -35,7 +41,7 @@ final class MeasureViewController: UIViewController {
     fileprivate lazy var unit: DistanceUnit = .inch
     
     
-    
+   
     
     
     override func viewDidLoad() {
@@ -75,7 +81,34 @@ final class MeasureViewController: UIViewController {
             
         }
     }
+    @IBAction func takePic(_ sender: Any) {
+       outputImageView.image = sceneView.snapshot()
+        photoTaken.isHidden = false
+        photoTakenButton.isHidden = false
+       
+        
+        
+       
+    func didTakePic(_image: UIImage)  {
+        
+        }
+    }
     
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is ImageDisplayViewController{
+             let myPic = outputImageView.image
+            let vc = segue.destination as? ImageDisplayViewController
+            vc?.showMyPic = myPic!
+           
+            
+    }
+}
+        
+    @IBAction func showPic(_ sender: Any) {
+       
+    }
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -129,6 +162,8 @@ extension MeasureViewController {
         }
         lines.removeAll()
     }
+    
+    
 }
 
 // MARK: - Privates
@@ -146,6 +181,8 @@ extension MeasureViewController {
         resetButton.isHidden = true
         resetImageView.isHidden = true
         targetLabel.isHidden = true
+        cameraButton.isHidden = false
+        cameraButtonImage.isHidden = false
         session.run(sessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
         resetValues()
     }
