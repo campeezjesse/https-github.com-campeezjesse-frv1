@@ -15,7 +15,13 @@
 		7F70911C20C83A4B00265230 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70911B20C83A4B00265230 /* Line.swift */; };
 		7F70911F20C83AE700265230 /* ARSCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70911E20C83AE700265230 /* ARSCNView.swift */; };
 		7F70912120C83B6200265230 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70912020C83B6200265230 /* SCNVector3.swift */; };
-		7F70914720C9482F00265230 /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70914620C9482F00265230 /* ImageDisplayViewController.swift */; };
+		7F70916120CEC2BA00265230 /* DiscoveryV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F70916020CEC2BA00265230 /* DiscoveryV1.framework */; };
+		7F70916320CEC2CA00265230 /* VisualRecognitionV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F70916220CEC2CA00265230 /* VisualRecognitionV3.framework */; };
+		7F70916420CEC2DE00265230 /* VisualRecognitionV3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F70916220CEC2CA00265230 /* VisualRecognitionV3.framework */; };
+		7F70916520CEC2DE00265230 /* VisualRecognitionV3.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F70916220CEC2CA00265230 /* VisualRecognitionV3.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7F70916620CEC2E300265230 /* DiscoveryV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F70916020CEC2BA00265230 /* DiscoveryV1.framework */; };
+		7F70916720CEC2E300265230 /* DiscoveryV1.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F70916020CEC2BA00265230 /* DiscoveryV1.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +31,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				7F70916720CEC2E300265230 /* DiscoveryV1.framework in Embed Frameworks */,
+				7F70916520CEC2DE00265230 /* VisualRecognitionV3.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,7 +50,9 @@
 		7F70911B20C83A4B00265230 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		7F70911E20C83AE700265230 /* ARSCNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSCNView.swift; sourceTree = "<group>"; };
 		7F70912020C83B6200265230 /* SCNVector3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3.swift; sourceTree = "<group>"; };
-		7F70914620C9482F00265230 /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
+		7F70916020CEC2BA00265230 /* DiscoveryV1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscoveryV1.framework; path = "../../Downloads/visual-recognition-with-discovery-coreml-master/Carthage/Build/iOS/DiscoveryV1.framework"; sourceTree = "<group>"; };
+		7F70916220CEC2CA00265230 /* VisualRecognitionV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VisualRecognitionV3.framework; path = "../../Downloads/visual-recognition-with-discovery-coreml-master/Carthage/Build/iOS/VisualRecognitionV3.framework"; sourceTree = "<group>"; };
+		7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +60,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F70916620CEC2E300265230 /* DiscoveryV1.framework in Frameworks */,
+				7F70916120CEC2BA00265230 /* DiscoveryV1.framework in Frameworks */,
+				7F70916420CEC2DE00265230 /* VisualRecognitionV3.framework in Frameworks */,
+				7F70916320CEC2CA00265230 /* VisualRecognitionV3.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +75,8 @@
 			children = (
 				7F00DCEB20BE3A8F001A2C9E /* FishRluer */,
 				7F00DCEA20BE3A8F001A2C9E /* Products */,
+				7F70916220CEC2CA00265230 /* VisualRecognitionV3.framework */,
+				7F70916020CEC2BA00265230 /* DiscoveryV1.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -89,10 +105,10 @@
 		7F70911D20C83A5E00265230 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */,
 				7F70911B20C83A4B00265230 /* Line.swift */,
 				7F70911E20C83AE700265230 /* ARSCNView.swift */,
 				7F70912020C83B6200265230 /* SCNVector3.swift */,
-				7F70914620C9482F00265230 /* ImageDisplayViewController.swift */,
 			);
 			name = Support;
 			path = "New Group";
@@ -170,7 +186,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F70914720C9482F00265230 /* ImageDisplayViewController.swift in Sources */,
+				7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */,
 				7F00DCEF20BE3A8F001A2C9E /* MeasureViewController.swift in Sources */,
 				7F70912120C83B6200265230 /* SCNVector3.swift in Sources */,
 				7F70911F20C83AE700265230 /* ARSCNView.swift in Sources */,
