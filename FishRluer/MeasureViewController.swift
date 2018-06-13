@@ -98,9 +98,9 @@ final class MeasureViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is ImageDisplayViewController{
-             let myPic = outputImageView.image
+             let myPic = sceneView.snapshot()
             let vc = segue.destination as? ImageDisplayViewController
-            vc?.showMyPic = myPic!
+            vc?.showMyPic = myPic
            
             
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import  Pulley
 
 class ImageDisplayViewController: UIViewController{
     
@@ -15,6 +16,7 @@ var showMyPic = UIImage()
 
     @IBOutlet weak var showPic: UIImageView!
     
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,8 @@ var showMyPic = UIImage()
         showPic.image = showMyPic
         
        
-        // Do any additional setup after loading the view.
+        
     }
+    
+  
 }
