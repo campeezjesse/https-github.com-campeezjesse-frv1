@@ -22,7 +22,6 @@
 		7F70916620CEC2E300265230 /* DiscoveryV1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F70916020CEC2BA00265230 /* DiscoveryV1.framework */; };
 		7F70916720CEC2E300265230 /* DiscoveryV1.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7F70916020CEC2BA00265230 /* DiscoveryV1.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */; };
-		7F7091DD20D0A8F200265230 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7091DC20D0A8F200265230 /* TableViewController.swift */; };
 		D63F34634AF6DA967E3FF56C /* Pods_FishRuler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CCDBA481F8C75AF92153C3F /* Pods_FishRuler.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,7 +57,6 @@
 		7F70916020CEC2BA00265230 /* DiscoveryV1.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscoveryV1.framework; path = "../../Downloads/visual-recognition-with-discovery-coreml-master/Carthage/Build/iOS/DiscoveryV1.framework"; sourceTree = "<group>"; };
 		7F70916220CEC2CA00265230 /* VisualRecognitionV3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VisualRecognitionV3.framework; path = "../../Downloads/visual-recognition-with-discovery-coreml-master/Carthage/Build/iOS/VisualRecognitionV3.framework"; sourceTree = "<group>"; };
 		7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
-		7F7091DC20D0A8F200265230 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +129,6 @@
 		7F70911D20C83A5E00265230 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				7F7091DC20D0A8F200265230 /* TableViewController.swift */,
 				7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */,
 				7F70911B20C83A4B00265230 /* Line.swift */,
 				7F70911E20C83AE700265230 /* ARSCNView.swift */,
@@ -271,7 +268,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */,
-				7F7091DD20D0A8F200265230 /* TableViewController.swift in Sources */,
 				7F00DCEF20BE3A8F001A2C9E /* MeasureViewController.swift in Sources */,
 				7F70912120C83B6200265230 /* SCNVector3.swift in Sources */,
 				7F70911F20C83AE700265230 /* ARSCNView.swift in Sources */,

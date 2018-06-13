@@ -110,10 +110,12 @@
                             <constraint firstItem="OY2-0z-2tc" firstAttribute="top" secondItem="wmR-LX-zTv" secondAttribute="bottom" constant="290" id="9O5-5I-pAa"/>
                             <constraint firstItem="Sd1-0O-Dmd" firstAttribute="top" secondItem="wmR-LX-zTv" secondAttribute="bottom" constant="6" id="AKX-KO-FNn"/>
                             <constraint firstItem="AoU-wC-ykI" firstAttribute="bottom" secondItem="Koc-i9-ovN" secondAttribute="bottom" id="Exe-Bj-Tm6"/>
+                            <constraint firstItem="Koc-i9-ovN" firstAttribute="bottom" secondItem="S1T-88-EGz" secondAttribute="bottom" constant="17" id="FXT-ql-XYs"/>
                             <constraint firstItem="hbD-Dw-WzR" firstAttribute="centerX" secondItem="AoU-wC-ykI" secondAttribute="centerX" id="FuW-l2-Wif"/>
                             <constraint firstItem="Koc-i9-ovN" firstAttribute="bottom" secondItem="OY2-0z-2tc" secondAttribute="bottom" constant="16" id="GLr-aT-FqK"/>
                             <constraint firstItem="aC6-W3-E2n" firstAttribute="leading" secondItem="cZc-2P-ecF" secondAttribute="trailing" constant="24" id="Hgh-pJ-HoW"/>
                             <constraint firstAttribute="bottom" secondItem="hbD-Dw-WzR" secondAttribute="bottom" constant="20" symbolic="YES" id="Ifg-Qw-f66"/>
+                            <constraint firstItem="Koc-i9-ovN" firstAttribute="trailing" secondItem="S1T-88-EGz" secondAttribute="trailing" constant="16" id="MiB-uB-nao"/>
                             <constraint firstItem="AoU-wC-ykI" firstAttribute="trailing" secondItem="Koc-i9-ovN" secondAttribute="trailing" id="Pfk-fs-e5m"/>
                             <constraint firstItem="cZc-2P-ecF" firstAttribute="leading" secondItem="Koc-i9-ovN" secondAttribute="leading" constant="20" id="Pg5-Vq-lCi"/>
                             <constraint firstItem="wmR-LX-zTv" firstAttribute="leading" secondItem="Koc-i9-ovN" secondAttribute="leading" constant="25" id="R4g-kS-GRt"/>
@@ -222,12 +224,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DLi-rU-Km7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4664.8000000000002" y="-5.8470764617691158"/>
+            <point key="canvasLocation" x="4961" y="-7"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="gTH-Tc-CzK">
             <objects>
-                <tableViewController id="pYZ-5T-3Xo" customClass="TableViewController" customModule="FishRuler" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="pYZ-5T-3Xo" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" springLoaded="YES" id="VQ1-8v-z27">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="331"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -235,9 +237,6 @@
                         <label key="tableHeaderView" opaque="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Catch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Mec-Wy-Fcv">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="41"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="41" id="drD-al-BDi"/>
-                            </constraints>
                             <fontDescription key="fontDescription" name="Baskerville-Bold" family="Baskerville" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -253,7 +252,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Size..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="veV-X2-vHF">
-                                                    <rect key="frame" x="0.0" y="12" width="41" height="18"/>
+                                                    <rect key="frame" x="0.0" y="12" width="359" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                     <nil key="textColor"/>
@@ -270,7 +269,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Location..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIk-C7-TCh">
-                                                    <rect key="frame" x="0.0" y="15" width="71" height="18"/>
+                                                    <rect key="frame" x="0.0" y="15" width="375" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                     <nil key="textColor"/>
@@ -286,21 +285,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date/Time..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vs4-Y8-Qsz">
-                                                    <rect key="frame" x="0.0" y="11" width="82" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="S6D-Ix-bm3"/>
-                                                    </constraints>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date/Time..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vs4-Y8-Qsz">
+                                                    <rect key="frame" x="0.0" y="11" width="359" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <constraints>
-                                                <constraint firstItem="vs4-Y8-Qsz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fHq-KL-9wa" secondAttribute="leading" id="VC2-Px-gAL"/>
-                                                <constraint firstItem="vs4-Y8-Qsz" firstAttribute="top" secondItem="fHq-KL-9wa" secondAttribute="topMargin" id="bAz-47-Fa7"/>
-                                                <constraint firstAttribute="trailing" secondItem="vs4-Y8-Qsz" secondAttribute="trailing" constant="293" id="zPC-8D-LAv"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="BhN-fr-uGj">
@@ -311,7 +303,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Weather..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RET-dj-MYK">
-                                                    <rect key="frame" x="0.0" y="15" width="67" height="18"/>
+                                                    <rect key="frame" x="0.0" y="15" width="359" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                                     <nil key="textColor"/>
@@ -349,7 +341,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Water Depth:  " textAlignment="natural" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="goY-q8-bSE">
-                                                    <rect key="frame" x="4" y="13" width="162" height="19"/>
+                                                    <rect key="frame" x="4" y="13" width="371" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
@@ -366,7 +358,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Water Temp:  " textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Zbz-2I-DMn">
-                                                    <rect key="frame" x="4" y="14" width="162" height="18"/>
+                                                    <rect key="frame" x="4" y="14" width="371" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
@@ -383,7 +375,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Bait:  " textAlignment="natural" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="37v-BP-5Xu">
-                                                    <rect key="frame" x="7" y="13" width="162" height="19"/>
+                                                    <rect key="frame" x="7" y="13" width="368" height="19"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
@@ -417,15 +409,10 @@
                             <outlet property="delegate" destination="pYZ-5T-3Xo" id="yXH-du-elb"/>
                         </connections>
                     </tableView>
-                    <connections>
-                        <outlet property="infoView" destination="VQ1-8v-z27" id="gM6-v4-JLS"/>
-                        <outlet property="waterDepth" destination="ZPK-3Y-ll6" id="DV9-mz-5t7"/>
-                        <outlet property="waterText" destination="goY-q8-bSE" id="8Fo-Dg-d50"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bTT-W7-Lrc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4677.6000000000004" y="575.26236881559225"/>
+            <point key="canvasLocation" x="4960.8000000000002" y="641.82908545727139"/>
         </scene>
     </scenes>
     <resources>
