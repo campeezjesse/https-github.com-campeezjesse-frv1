@@ -17,12 +17,14 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var loadingView: UIActivityIndicatorView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var meterImageView: UIImageView!
-    @IBOutlet weak var resetImageView: UIImageView!
+
     @IBOutlet weak var resetButton: UIButton!
     
     @IBOutlet weak var outputImageView: UIImageView!
+    @IBOutlet weak var titleView: UIView!
     
-
+    @IBOutlet weak var takePicPrompt: UILabel!
+    
     @IBOutlet weak var instructionsText: UILabel!
 
     @IBOutlet weak var photoTakenButton: UIButton!
@@ -86,9 +88,9 @@ final class MeasureViewController: UIViewController {
             lines.append(line)
             currentLine = nil
             resetButton.isHidden = false
-            resetImageView.isHidden = false
+            
             targetLabel.isHidden = true
-        
+        takePicPrompt.isHidden = false
         }
     }
     
@@ -171,7 +173,7 @@ extension MeasureViewController {
     
     @IBAction func resetButtonTapped(button: UIButton) {
         resetButton.isHidden = true
-        resetImageView.isHidden = true
+        
         for line in lines {
             line.removeFromParentNode()
         }
@@ -195,14 +197,15 @@ extension MeasureViewController {
         messageLabel.lineBreakMode = .byWordWrapping
         messageLabel.numberOfLines = 0
         resetButton.isHidden = true
-        resetImageView.isHidden = true
+        
         targetLabel.isHidden = true
         cameraButton.isHidden = false
         cameraButtonImage.isHidden = false
         instructionsText.isHidden = false
         instructionsText.lineBreakMode = .byWordWrapping
         instructionsText.isUserInteractionEnabled = true
-       
+        photoTakenButton.isHidden = true
+       takePicPrompt.isHidden = true
        
         session.run(sessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
         resetValues()
