@@ -9,6 +9,7 @@
 import UIKit
 import SceneKit
 import ARKit
+import CoreLocation
 
 final class MeasureViewController: UIViewController {
     @IBOutlet weak var sceneView: ARSCNView!
@@ -21,14 +22,14 @@ final class MeasureViewController: UIViewController {
     
     @IBOutlet weak var outputImageView: UIImageView!
     
-    
+
+    @IBOutlet weak var instructionsText: UILabel!
+
     @IBOutlet weak var photoTakenButton: UIButton!
     @IBOutlet weak var photoTaken: UIImageView!
     @IBOutlet weak var targetLabel: UILabel!
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var cameraButtonImage: UIImageView!
-    
-    
     
     fileprivate lazy var session = ARSession()
     fileprivate lazy var sessionConfiguration = ARWorldTrackingConfiguration()
@@ -59,14 +60,23 @@ final class MeasureViewController: UIViewController {
         super.viewWillDisappear(animated)
         session.pause()
     }
+
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        super.touchesBegan(touches, with: event)
+        
+        let touch: UITouch = touches.first as! UITouch
+        
+        if (touch.view == instructionsText) {
+            
+        
         resetValues()
         isMeasuring = true
         targetImageView.image = UIImage(named: "targetGreen")
         targetLabel.isHidden = false
-        
-        
+        instructionsText.isHidden = true
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -78,9 +88,12 @@ final class MeasureViewController: UIViewController {
             resetButton.isHidden = false
             resetImageView.isHidden = false
             targetLabel.isHidden = true
-            
+        
         }
     }
+    
+  
+    
     @IBAction func takePic(_ sender: Any) {
        outputImageView.image = sceneView.snapshot()
         photoTaken.isHidden = false
@@ -100,7 +113,9 @@ final class MeasureViewController: UIViewController {
         if segue.destination is ImageDisplayViewController{
              let myPic = sceneView.snapshot()
             let vc = segue.destination as? ImageDisplayViewController
+           // let length = messageLabel.text
             vc?.showMyPic = myPic
+            vc?.length = messageLabel.text!
            
             
     }
@@ -161,6 +176,7 @@ extension MeasureViewController {
             line.removeFromParentNode()
         }
         lines.removeAll()
+        instructionsText.isHidden = false
     }
     
     
@@ -183,6 +199,11 @@ extension MeasureViewController {
         targetLabel.isHidden = true
         cameraButton.isHidden = false
         cameraButtonImage.isHidden = false
+        instructionsText.isHidden = false
+        instructionsText.lineBreakMode = .byWordWrapping
+        instructionsText.isUserInteractionEnabled = true
+       
+       
         session.run(sessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
         resetValues()
     }
@@ -197,7 +218,7 @@ extension MeasureViewController {
         guard let worldPosition = sceneView.realWorldVector(screenPosition: view.center) else { return }
         targetImageView.isHidden = false
         meterImageView.isHidden = false
-        
+       
         if lines.isEmpty {
             messageLabel.text = "Place target at head, touch any location on screen and hold."
         }

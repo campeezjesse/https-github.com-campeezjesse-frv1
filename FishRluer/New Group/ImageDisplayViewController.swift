@@ -7,13 +7,23 @@
 //
 
 import UIKit
-import  Pulley
+import CoreLocation
+import MapKit
 
-class ImageDisplayViewController: UIViewController{
+class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate{
     
-var showMyPic = UIImage()
+    var showMyPic = UIImage()
+    var length: String = ""
+    var date = Date()
+    
+    
+    let formater = DateFormatter()
+    let locationManager = CLLocationManager()
    
+    @IBOutlet weak var fishLength: UILabel!
 
+    @IBOutlet weak var catchTime: UILabel!
+    
     @IBOutlet weak var showPic: UIImageView!
     
  
@@ -21,11 +31,25 @@ var showMyPic = UIImage()
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        showPic.image = showMyPic
+        setupView()
         
+       
        
         
     }
-    
+   
   
 }
+extension ImageDisplayViewController {
+    fileprivate func setupView() {
+        showPic.image = showMyPic
+        fishLength.text = length
+        
+        formater.dateFormat = "mm/dd/yyyy hh:mm"
+        let result = formater.string(from: date)
+        catchTime.text = result
+        
+        
+        }
+    }
+
