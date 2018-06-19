@@ -16,8 +16,8 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var targetImageView: UIImageView!
     @IBOutlet weak var loadingView: UIActivityIndicatorView!
     @IBOutlet weak var messageLabel: UILabel!
-    @IBOutlet weak var meterImageView: UIImageView!
 
+    @IBOutlet weak var bottomPanel: UIView!
     @IBOutlet weak var resetButton: UIButton!
     
     @IBOutlet weak var outputImageView: UIImageView!
@@ -25,6 +25,7 @@ final class MeasureViewController: UIViewController {
     
     @IBOutlet weak var takePicPrompt: UILabel!
     
+    @IBOutlet weak var pressAndHoldButton: UILabel!
     @IBOutlet weak var instructionsText: UILabel!
 
     @IBOutlet weak var photoTakenButton: UIButton!
@@ -78,6 +79,9 @@ final class MeasureViewController: UIViewController {
         targetImageView.image = UIImage(named: "targetGreen")
         targetLabel.isHidden = false
         instructionsText.isHidden = true
+            pressAndHoldButton.isHidden = true
+            takePicPrompt.isHidden = true
+            
         }
     }
     
@@ -100,7 +104,8 @@ final class MeasureViewController: UIViewController {
        outputImageView.image = sceneView.snapshot()
         photoTaken.isHidden = false
         photoTakenButton.isHidden = false
-       
+       takePicPrompt.isHidden = true
+        bottomPanel.isHidden = true
         
         
        
@@ -179,6 +184,7 @@ extension MeasureViewController {
         }
         lines.removeAll()
         instructionsText.isHidden = false
+        pressAndHoldButton.isHidden = false
     }
     
     
@@ -192,16 +198,17 @@ extension MeasureViewController {
         sceneView.delegate = self
         sceneView.session = session
         loadingView.startAnimating()
-        meterImageView.isHidden = true
+       
         messageLabel.text = "Looking for your fish..."
         messageLabel.lineBreakMode = .byWordWrapping
         messageLabel.numberOfLines = 0
         resetButton.isHidden = true
-        
+        bottomPanel.isHidden = false
         targetLabel.isHidden = true
         cameraButton.isHidden = false
         cameraButtonImage.isHidden = false
         instructionsText.isHidden = false
+        pressAndHoldButton.isHidden = false
         instructionsText.lineBreakMode = .byWordWrapping
         instructionsText.isUserInteractionEnabled = true
         photoTakenButton.isHidden = true
@@ -220,10 +227,10 @@ extension MeasureViewController {
     fileprivate func detectObjects() {
         guard let worldPosition = sceneView.realWorldVector(screenPosition: view.center) else { return }
         targetImageView.isHidden = false
-        meterImageView.isHidden = false
+        
        
         if lines.isEmpty {
-            messageLabel.text = "Place target at head, touch any location on screen and hold."
+            messageLabel.text = "Get Length"
         }
         loadingView.stopAnimating()
         if isMeasuring {
