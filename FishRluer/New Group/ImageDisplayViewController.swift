@@ -106,7 +106,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate{
         super.viewDidLoad()
         
         setupView()
-        
+
        
     }
   
@@ -124,7 +124,7 @@ extension ImageDisplayViewController {
         let image = showMyPic
         showPic.image = image
         updateClassifications(for: image)
-        
+      
         }
     }
 
