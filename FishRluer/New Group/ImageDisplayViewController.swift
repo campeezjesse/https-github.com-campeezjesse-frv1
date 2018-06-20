@@ -22,13 +22,13 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate{
     
     let formater = DateFormatter()
     let locationManager = CLLocationManager()
+    
    
     @IBOutlet weak var fishLength: UILabel!
-
+    @IBOutlet weak var latitudeLabel: UILabel!
+    @IBOutlet weak var longitudeLabel: UILabel!
     @IBOutlet weak var catchTime: UILabel!
-    
     @IBOutlet weak var showPic: UIImageView!
-    
     @IBOutlet weak var fishSpeciesLabel: UILabel!
     
     // MARK: - Image Classification
@@ -114,16 +114,27 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate{
 extension ImageDisplayViewController {
     fileprivate func setupView() {
         showPic.image = showMyPic
-        
         fishLength.text = length
         
-        formater.dateFormat = "MM/dd/yyyy hh:mm"
+        formater.dateFormat = "MM/dd/yyyy   hh:mm"
         let result = formater.string(from: date)
         catchTime.text = result
         
         let image = showMyPic
         showPic.image = image
         updateClassifications(for: image)
+        
+        var currentLocation: CLLocation!
+        
+        if( CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
+            CLLocationManager.authorizationStatus() == .authorizedAlways){
+            
+            currentLocation = locationManager.location
+            
+           latitudeLabel.text = "\(currentLocation.coordinate.latitude)"
+            
+            longitudeLabel.text = "\(currentLocation.coordinate.longitude)"
+        }
       
         }
     }
