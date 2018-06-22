@@ -33,6 +33,8 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate{
     
     // MARK: - Image Classification
     
+    
+    
     /// - Tag: MLModelSetup
     lazy var classificationRequest: VNCoreMLRequest = {
         do {
@@ -41,7 +43,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate{
              To use a different Core ML classifier model, add it to the project
              and replace `MobileNet` with that model's generated Swift class.
              */
-            let model = try VNCoreMLModel(for: MobileNet().model)
+            let model = try VNCoreMLModel(for: DefaultCustomModel_2013441993().model )
             
             let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
                 self?.processClassifications(for: request, error: error)
@@ -70,7 +72,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate{
                  completion handler `processClassifications(_:error:)` catches errors specific
                  to processing that request.
                  */
-                print("Failed to perform classification.\n\(error.localizedDescription)")
+                print("Not Hotdog.\n\(error.localizedDescription)")
             }
         }
     }
@@ -80,22 +82,17 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate{
     func processClassifications(for request: VNRequest, error: Error?) {
         DispatchQueue.main.async {
             guard let results = request.results else {
-                self.fishSpeciesLabel.text = "Unable to classify image.\n\(error!.localizedDescription)"
+                self.fishSpeciesLabel.text = "Not Hotdog.\n\(error!.localizedDescription)"
                 return
             }
             // The `results` will always be `VNClassificationObservation`s, as specified by the Core ML model in this project.
             let classifications = results as! [VNClassificationObservation]
             
             if classifications.isEmpty {
-                self.fishSpeciesLabel.text = "Nothing recognized."
+                self.fishSpeciesLabel.text = "Not Hotdog"
             } else {
-                // Display top classifications ranked by confidence in the UI.
-                let topClassifications = classifications.prefix(2)
-                let descriptions = topClassifications.map { classification in
-                    // Formats the classification for display; e.g. "(0.37) cliff, drop, drop-off".
-                    return String(format: "  (%.2f) %@", classification.confidence, classification.identifier)
-                }
-                self.fishSpeciesLabel.text = "Classification:\n" + descriptions.joined(separator: "\n")
+              
+                self.fishSpeciesLabel.text = classifications[0].identifier
             }
         }
     }
@@ -115,7 +112,7 @@ extension ImageDisplayViewController {
     fileprivate func setupView() {
         showPic.image = showMyPic
         fishLength.text = length
-        
+        fishSpeciesLabel.lineBreakMode = .byWordWrapping
         formater.dateFormat = "MM/dd/yyyy   hh:mm"
         let result = formater.string(from: date)
         catchTime.text = result

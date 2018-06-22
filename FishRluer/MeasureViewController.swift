@@ -23,9 +23,11 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var outputImageView: UIImageView!
     @IBOutlet weak var titleView: UIView!
     
-    @IBOutlet weak var takePicPrompt: UILabel!
+    @IBOutlet weak var takePicPrompt: UIVisualEffectView!
+    @IBOutlet weak var savePicButton: UIButton!
+    @IBOutlet weak var picSaved: UIImageView!
+
     
-    @IBOutlet weak var pressAndHoldButton: UILabel!
     @IBOutlet weak var instructionsText: UILabel!
 
     @IBOutlet weak var photoTakenButton: UIButton!
@@ -72,14 +74,14 @@ final class MeasureViewController: UIViewController {
         let touch: UITouch = touches.first as! UITouch
         
         if (touch.view == instructionsText) {
-            
+         
         
         resetValues()
         isMeasuring = true
         targetImageView.image = UIImage(named: "targetGreen")
         targetLabel.isHidden = false
-        instructionsText.isHidden = true
-            pressAndHoldButton.isHidden = true
+       
+            bottomPanel.isHidden = true
             takePicPrompt.isHidden = true
             
         }
@@ -92,7 +94,7 @@ final class MeasureViewController: UIViewController {
             lines.append(line)
             currentLine = nil
             resetButton.isHidden = false
-            
+            bottomPanel.isHidden = true
             targetLabel.isHidden = true
         takePicPrompt.isHidden = false
         }
@@ -105,7 +107,7 @@ final class MeasureViewController: UIViewController {
         photoTaken.isHidden = false
         photoTakenButton.isHidden = false
        takePicPrompt.isHidden = true
-        bottomPanel.isHidden = true
+       savePicButton.isHidden = false
         
         
        
@@ -127,7 +129,16 @@ final class MeasureViewController: UIViewController {
             
     }
 }
-        
+    @IBAction func savePic(_ sender: Any) {
+        let pic = sceneView.snapshot()
+        UIImageWriteToSavedPhotosAlbum(pic, self, nil, nil)
+        savePicButton.isHidden = true
+  picSaved.isHidden = false
+    }
+    
+    
+    
+    
     @IBAction func showPic(_ sender: Any) {
        
     }
@@ -184,7 +195,7 @@ extension MeasureViewController {
         }
         lines.removeAll()
         instructionsText.isHidden = false
-        pressAndHoldButton.isHidden = false
+        bottomPanel.isHidden = false
     }
     
     
@@ -208,14 +219,18 @@ extension MeasureViewController {
         cameraButton.isHidden = false
         cameraButtonImage.isHidden = false
         instructionsText.isHidden = false
-        pressAndHoldButton.isHidden = false
         instructionsText.lineBreakMode = .byWordWrapping
         instructionsText.isUserInteractionEnabled = true
         photoTakenButton.isHidden = true
        takePicPrompt.isHidden = true
+        savePicButton.isHidden = true
+        picSaved.isHidden = true
        
         session.run(sessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
         resetValues()
+        
+        self.bottomPanel.layer.borderWidth = 1
+        self.bottomPanel.layer.cornerRadius = 0.5
     }
     
     fileprivate func resetValues() {
@@ -245,3 +260,4 @@ extension MeasureViewController {
         }
     }
 }
+
