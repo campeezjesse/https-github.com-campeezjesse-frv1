@@ -28,28 +28,30 @@ enum DistanceUnit {
     var unit: String {
         switch self {
         case .centimeter:
-            return "cm"
+            return " cm"
         case .inch:
-            return "inch"
+            return " inches"
         case .meter:
-            return "m"
+            return " m"
         }
     }
     
     var title: String {
         switch self {
         case .centimeter:
-            return "Centimeter"
+            return "Centimeters"
         case .inch:
-            return "Inch"
+            return "Inches"
         case .meter:
-            return "Meter"
+            return "Meters"
         }
     }
 }
 
 final class Line {
     fileprivate var color: UIColor = .white
+    
+    
     
     fileprivate var startNode: SCNNode!
     fileprivate var endNode: SCNNode!
@@ -66,25 +68,32 @@ final class Line {
         self.startVector = startVector
         self.unit = unit
         
-        let dot = SCNSphere(radius: 0.5)
-        dot.firstMaterial?.diffuse.contents = color
+        let dot = SCNBox(width: 0.5, height: 6, length: 0.5, chamferRadius: 0)
+        
+        let lineColor: UIColor = .white
+        dot.firstMaterial?.diffuse.contents = lineColor
         dot.firstMaterial?.lightingModel = .constant
         dot.firstMaterial?.isDoubleSided = true
         startNode = SCNNode(geometry: dot)
-        startNode.scale = SCNVector3(1/500.0, 1/500.0, 1/500.0)
+        startNode.scale = SCNVector3(2/500.0, 2/500.0, 2/500.0)
         startNode.position = startVector
         sceneView.scene.rootNode.addChildNode(startNode)
         
         endNode = SCNNode(geometry: dot)
-        endNode.scale = SCNVector3(1/500.0, 1/500.0, 1/500.0)
+        endNode.scale = SCNVector3(2/500.0, 2/500.0, 2/500.0)
         
-        text = SCNText(string: "", extrusionDepth: 0.1)
-        text.font = UIFont(name: "Baskerville", size: 12)
+        
+       
+        
+        
+        text = SCNText(string: "", extrusionDepth: 0.5)
+        text.font = UIFont(name: "Helvetica", size: 18)
         text.firstMaterial?.diffuse.contents = color
         text.alignmentMode  = kCAAlignmentCenter
         text.truncationMode = kCATruncationMiddle
         text.firstMaterial?.isDoubleSided = true
         
+      
         let textWrapperNode = SCNNode(geometry: text)
         textWrapperNode.eulerAngles = SCNVector3Make(0, .pi, 0)
         textWrapperNode.scale = SCNVector3(1/500.0, 1/500.0, 1/500.0)
@@ -98,6 +107,7 @@ final class Line {
     }
     
     func update(to vector: SCNVector3) {
+        
         lineNode?.removeFromParentNode()
         lineNode = startVector.line(to: vector, color: color)
         sceneView.scene.rootNode.addChildNode(lineNode!)

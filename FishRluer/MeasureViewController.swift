@@ -10,6 +10,8 @@ import UIKit
 import SceneKit
 import ARKit
 import CoreLocation
+import ReplayKit
+
 
 final class MeasureViewController: UIViewController {
     @IBOutlet weak var sceneView: ARSCNView!
@@ -22,8 +24,12 @@ final class MeasureViewController: UIViewController {
     
     @IBOutlet weak var outputImageView: UIImageView!
     @IBOutlet weak var titleView: UIView!
+    @IBOutlet weak var recVid: UIButton!
+    @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var pressToRecLabel: UILabel!
+    @IBOutlet weak var pressToStopRecLabel: UILabel!
     
-    @IBOutlet weak var takePicPrompt: UIVisualEffectView!
+
     @IBOutlet weak var savePicButton: UIButton!
     @IBOutlet weak var picSaved: UIImageView!
 
@@ -45,9 +51,7 @@ final class MeasureViewController: UIViewController {
     fileprivate lazy var lines: [Line] = []
     fileprivate var currentLine: Line?
     fileprivate lazy var unit: DistanceUnit = .inch
-    
-    
-   
+    fileprivate lazy var isRecording: Bool = false
     
     
     override func viewDidLoad() {
@@ -64,6 +68,7 @@ final class MeasureViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         session.pause()
+        session.run(sceneView.session.configuration!)
     }
 
     
@@ -71,9 +76,11 @@ final class MeasureViewController: UIViewController {
         
         super.touchesBegan(touches, with: event)
         
+      
+        
         let touch: UITouch = touches.first as! UITouch
         
-        if (touch.view == instructionsText) {
+        if (touch.view == bottomPanel) {
          
         
         resetValues()
@@ -82,7 +89,7 @@ final class MeasureViewController: UIViewController {
         targetLabel.isHidden = false
        
             bottomPanel.isHidden = true
-            takePicPrompt.isHidden = true
+            
             
         }
     }
@@ -96,18 +103,86 @@ final class MeasureViewController: UIViewController {
             resetButton.isHidden = false
             bottomPanel.isHidden = true
             targetLabel.isHidden = true
-        takePicPrompt.isHidden = false
+            
+           
+       
         }
     }
     
+    
+    func startRecording() {
+        
   
+        if RPScreenRecorder.shared().isAvailable {
+            
+            RPScreenRecorder.shared().startRecording(handler: { (error) in
+                if error == nil {
+                } else {
+                    print(error ?? "")
+                    self.messageLabel.text = "Error recording occurred"
+                }
+            })
+        }
+    }
+
+    func stopRecording() {
+       
+        RPScreenRecorder.shared().stopRecording { (previewController, error) in
+            if error == nil {
+                
+                let alertController = UIAlertController(title: "Recording", message: "You can view your recording to edit and share, or delete to try again", preferredStyle: .alert)
+                
+                let discardAction = UIAlertAction(title: "Delete", style: .default) { (action: UIAlertAction) in
+                    RPScreenRecorder.shared().discardRecording(handler: { () -> Void in
+                        // Executed once recording has successfully been discarded
+                    })
+                }
+                
+                let viewAction = UIAlertAction(title: "View", style: .default, handler: { (action) in
+                    previewController?.previewControllerDelegate = self
+                    self.present(previewController!, animated: true, completion: nil)
+                })
+                
+                alertController.addAction(discardAction)
+                alertController.addAction(viewAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+            } else {
+                print(error ?? "")
+            }
+        }
+        
+    }
+
+    @IBAction func startVideoRec(_ sender: Any) {
+        if isRecording {
+            stopRecording()
+            isRecording = false
+        } else {
+            startRecording()
+            isRecording = true
+            pressToRecLabel.isHidden = true
+            pressToStopRecLabel.isHidden = false
+            stopButton.isHidden = false
+            recVid.isHidden = true
+        }
+    }
+    
+    
+    @IBAction func stopRec(_ sender: Any) {
+        stopRecording()
+        pressToRecLabel.isHidden = false
+        pressToStopRecLabel.isHidden = true
+        stopButton.isHidden = true
+        recVid.isHidden = false
+    }
     
     @IBAction func takePic(_ sender: Any) {
        outputImageView.image = sceneView.snapshot()
         photoTaken.isHidden = false
         photoTakenButton.isHidden = false
-       takePicPrompt.isHidden = true
-       savePicButton.isHidden = false
+        savePicButton.isHidden = false
         
         
        
@@ -122,10 +197,10 @@ final class MeasureViewController: UIViewController {
         if segue.destination is ImageDisplayViewController{
              let myPic = sceneView.snapshot()
             let vc = segue.destination as? ImageDisplayViewController
-           // let length = messageLabel.text
+         
             vc?.showMyPic = myPic
             vc?.length = messageLabel.text!
-           
+           stopRecording()
             
     }
 }
@@ -188,7 +263,7 @@ extension MeasureViewController {
     }
     
     @IBAction func resetButtonTapped(button: UIButton) {
-        resetButton.isHidden = true
+      //  resetButton.isHidden = true
         
         for line in lines {
             line.removeFromParentNode()
@@ -196,6 +271,9 @@ extension MeasureViewController {
         lines.removeAll()
         instructionsText.isHidden = false
         bottomPanel.isHidden = false
+        photoTaken.isHidden = true
+        photoTakenButton.isHidden = true
+        savePicButton.isHidden = true
     }
     
     
@@ -215,22 +293,27 @@ extension MeasureViewController {
         messageLabel.numberOfLines = 0
         resetButton.isHidden = true
         bottomPanel.isHidden = false
-        targetLabel.isHidden = true
+       // targetLabel.isHidden = true
         cameraButton.isHidden = false
         cameraButtonImage.isHidden = false
-        instructionsText.isHidden = false
+        //instructionsText.isHidden = false
         instructionsText.lineBreakMode = .byWordWrapping
-        instructionsText.isUserInteractionEnabled = true
+        //instructionsText.isUserInteractionEnabled = true
         photoTakenButton.isHidden = true
-       takePicPrompt.isHidden = true
         savePicButton.isHidden = true
         picSaved.isHidden = true
+        pressToRecLabel.isHidden = false
+        pressToStopRecLabel.isHidden = true
+        stopButton.isHidden = true
        
         session.run(sessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
         resetValues()
         
-        self.bottomPanel.layer.borderWidth = 1
-        self.bottomPanel.layer.cornerRadius = 0.5
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        self.bottomPanel.layer.borderWidth = 3
+        self.bottomPanel.layer.cornerRadius = 5
+        self.bottomPanel.layer.masksToBounds = true
     }
     
     fileprivate func resetValues() {
@@ -242,6 +325,7 @@ extension MeasureViewController {
     fileprivate func detectObjects() {
         guard let worldPosition = sceneView.realWorldVector(screenPosition: view.center) else { return }
         targetImageView.isHidden = false
+        resetButton.isHidden = false 
         
        
         if lines.isEmpty {
@@ -260,4 +344,14 @@ extension MeasureViewController {
         }
     }
 }
-
+extension MeasureViewController: RPPreviewViewControllerDelegate {
+    public func previewControllerDidFinish(_ previewController: RPPreviewViewController) {
+        previewController.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    /* @abstract Called when the view controller is finished and returns a set of activity types that the user has completed on the recording. The built in activity types are listed in UIActivity.h. */
+    public func previewController(_ previewController: RPPreviewViewController, didFinishWithActivityTypes activityTypes: Set<String>) {
+        
+    }
+}
