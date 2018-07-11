@@ -11,8 +11,9 @@
 		7F00DCF220BE3A8F001A2C9E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F00DCF020BE3A8F001A2C9E /* Main.storyboard */; };
 		7F00DCF420BE3AA4001A2C9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F00DCF320BE3AA4001A2C9E /* Assets.xcassets */; };
 		7F00DCF720BE3AA4001A2C9E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F00DCF520BE3AA4001A2C9E /* LaunchScreen.storyboard */; };
-		7F23050320F573D100052AB2 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F23050220F573D100052AB2 /* Pin.swift */; };
-		7F23050520F5741B00052AB2 /* PinExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F23050420F5741B00052AB2 /* PinExtension.swift */; };
+		7F23050720F58BAD00052AB2 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F23050620F58BAD00052AB2 /* CoreDataStack.swift */; };
+		7F23050920F65F8900052AB2 /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F23050820F65F8800052AB2 /* Pin.swift */; };
+		7F23050B20F6627D00052AB2 /* PinExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F23050A20F6627C00052AB2 /* PinExtension.swift */; };
 		7F2583B420D2E2FC000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2583B320D2E2FB000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift */; };
 		7F6DCD4920E583FF004D22C1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DCD4820E583FF004D22C1 /* MapViewController.swift */; };
 		7F6DCD9120EE9275004D22C1 /* CetchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DCD9020EE9275004D22C1 /* CetchDetailsViewController.swift */; };
@@ -38,8 +39,9 @@
 		7F00DCF320BE3AA4001A2C9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F00DCF620BE3AA4001A2C9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F00DCF820BE3AA4001A2C9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7F23050220F573D100052AB2 /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
-		7F23050420F5741B00052AB2 /* PinExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinExtension.swift; sourceTree = "<group>"; };
+		7F23050620F58BAD00052AB2 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		7F23050820F65F8800052AB2 /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
+		7F23050A20F6627C00052AB2 /* PinExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinExtension.swift; sourceTree = "<group>"; };
 		7F2583B320D2E2FB000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImagePropertyOrientation+UIImageOrientation.swift"; sourceTree = "<group>"; };
 		7F6DCD4820E583FF004D22C1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		7F6DCD9020EE9275004D22C1 /* CetchDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CetchDetailsViewController.swift; sourceTree = "<group>"; };
@@ -105,11 +107,11 @@
 			isa = PBXGroup;
 			children = (
 				7F6DCDBE20F50819004D22C1 /* Fish_Ruler.xcdatamodeld */,
+				7F23050A20F6627C00052AB2 /* PinExtension.swift */,
 				7F00DCEE20BE3A8F001A2C9E /* MeasureViewController.swift */,
 				7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */,
+				7F23050820F65F8800052AB2 /* Pin.swift */,
 				7F6DCD4820E583FF004D22C1 /* MapViewController.swift */,
-				7F23050220F573D100052AB2 /* Pin.swift */,
-				7F23050420F5741B00052AB2 /* PinExtension.swift */,
 				7F70911D20C83A5E00265230 /* Support */,
 				7F00DCF020BE3A8F001A2C9E /* Main.storyboard */,
 				7F00DCF320BE3AA4001A2C9E /* Assets.xcassets */,
@@ -123,6 +125,7 @@
 		7F70911D20C83A5E00265230 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				7F23050620F58BAD00052AB2 /* CoreDataStack.swift */,
 				7F6DCD9220F3EDD1004D22C1 /* CatchAnnotation.swift */,
 				7F6DCD9020EE9275004D22C1 /* CetchDetailsViewController.swift */,
 				7F70911B20C83A4B00265230 /* Line.swift */,
@@ -269,15 +272,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F23050920F65F8900052AB2 /* Pin.swift in Sources */,
+				7F23050B20F6627D00052AB2 /* PinExtension.swift in Sources */,
 				7F6DCD4920E583FF004D22C1 /* MapViewController.swift in Sources */,
 				7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */,
 				7F00DCEF20BE3A8F001A2C9E /* MeasureViewController.swift in Sources */,
-				7F23050520F5741B00052AB2 /* PinExtension.swift in Sources */,
 				7F6DCDC020F50819004D22C1 /* Fish_Ruler.xcdatamodeld in Sources */,
 				7F70912120C83B6200265230 /* SCNVector3.swift in Sources */,
 				7F6DCD9920F468FA004D22C1 /* AppDelegate.swift in Sources */,
+				7F23050720F58BAD00052AB2 /* CoreDataStack.swift in Sources */,
 				7F70911F20C83AE700265230 /* ARSCNView.swift in Sources */,
-				7F23050320F573D100052AB2 /* Pin.swift in Sources */,
 				7F2583B420D2E2FC000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */,
 				7F6DCD9320F3EDD1004D22C1 /* CatchAnnotation.swift in Sources */,
 				7F6DCD9720F427AE004D22C1 /* SearchViewController.swift in Sources */,

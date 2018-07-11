@@ -52,8 +52,11 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
 
     @IBOutlet weak var waterTempConditions: UITextField!
     
-
+  
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    private var fish: Fish?
+    private var locationList: [CLLocation] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,58 +160,73 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         
     }
 
-    @IBAction func saveInfo(_ sender: Any) {
+
+    
         
+    @IBAction func addInfo(_ sender: UIButton) {
+    
+    
         let fishKind = fishSpeciesLabel.text!
         let waterTempDepth = waterTempConditions.text!
         let bait =  baitUsed.text!
         let weatherCond = currentWeather.text!
         let notes = moreNotes.text!
-        let latitude = latitudeLabel.text!
-        let longitude = longitudeLabel.text
+
         let coordinate = pointAnnotation.coordinate
+
+        let newPin = Fish(context: context)
+        newPin.latitude = coordinate.latitude
+        newPin.longitude = coordinate.longitude
+        newPin.species = fishKind
+        newPin.length = length
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
+        print("saved bitches")
+
+//        Fish.setValue(fishKind, forKey: "species")
+//        Fish.setValue(date, forKey: "date")
+//        Fish.setValue(length, forKey: "length")
+//        Fish.setValue(waterTempDepth, forKey: "water")
+//        Fish.setValue(bait, forKey: "bait")
+//        Fish.setValue(weatherCond, forKey: "weather")
+//        Fish.setValue(notes, forKey: "notes")
+//        Fish.setValue(coordinate.latitude as Double, forKey: "latitude")
+//        Fish.setValue(coordinate.longitude as Double, forKey: "longitude")
+
+//        for location in locationList {
+//            let locationObject = Fish(context: CoreDataStack.context)
+//            locationObject.species = fishSpeciesLabel.text
+//            locationObject.latitude = location.coordinate.latitude
+//            locationObject.longitude = location.coordinate.longitude
+//            print("321")
         
-        let entity = NSEntityDescription.entity(forEntityName: "Fish", in: context)
-        let newCatch = NSManagedObject(entity: entity!, insertInto: context)
         
-        newCatch.setValue(fishKind, forKey: "species")
-        newCatch.setValue(date, forKey: "date")
-        newCatch.setValue(length, forKey: "length")
-        newCatch.setValue(waterTempDepth, forKey: "water")
-        newCatch.setValue(bait, forKey: "bait")
-        newCatch.setValue(weatherCond, forKey: "weather")
-        newCatch.setValue(notes, forKey: "notes")
-        newCatch.setValue(coordinate.latitude as Double, forKey: "latitude")
-        newCatch.setValue(coordinate.longitude as Double, forKey: "longitude")
+      
         
-        
-        do {
-            try context.save()
-        } catch {
-            print("Failed saving")
-        }
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Fish")
-        //request.predicate = NSPredicate(format: "age = %@", "12")
-        request.returnsObjectsAsFaults = false
-        do {
-            let result = try context.fetch(request)
-            for data in result as! [NSManagedObject] {
-                print(data.value(forKey: "species") as! String)
-            }
-            
-        } catch {
-            
-            print("Failed")
-        }
-        
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Failed saving")
+//        }
+//
+//        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Fish")
+//        //request.predicate = NSPredicate(format: "age = %@", "12")
+//        request.returnsObjectsAsFaults = false
+//        do {
+//            let result = try context.fetch(request)
+//            for data in result as! [NSManagedObject] {
+//                print(data.value(forKey: "species") as! String)
+//            }
+//
+//        } catch {
+//
+//            print("Failed")
+//        }
+//
+//    }
     }
     
-    
-    
+        
     
     @IBAction func goBackButton(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -240,6 +258,9 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
             mapVC?.catchTitle = catchTitle!
             mapVC?.catchSubTitle = catchSubTitle!
             mapVC?.catchSpecies = catchSpecies!
+            
+            let destination = segue.destination as! MapViewController
+            destination.fish = fish
         }
     }
 }
@@ -278,3 +299,4 @@ extension ImageDisplayViewController {
        
     }
 }
+
