@@ -9,116 +9,252 @@
 import UIKit
 import CoreLocation
 import MapKit
-import CoreML
-import Vision
-import ImageIO
+import ReplayKit
+import CoreData
 
-class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate{
+class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate{
+    
     
     var showMyPic = UIImage()
+    var fishKind: String = ""
     var length: String = ""
     var date = Date()
-
+    var waterTempDepth: String = ""
+    var bait: String = ""
+    var weatherCond: String = ""
+    var notes: String = ""
     
+
+   
+
     let formater = DateFormatter()
     let locationManager = CLLocationManager()
+    
+    var pointAnnotation: CatchAnnotation!
+    var pinAnnotationView: MKAnnotationView!
+    
+    
+    fileprivate lazy var isRecording: Bool = false
     
    
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var fishLength: UITextField!
-   // @IBOutlet weak var fishLength: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
     @IBOutlet weak var longitudeLabel: UILabel!
-   // @IBOutlet weak var catchTime: UILabel!
     @IBOutlet weak var showPic: UIImageView!
-    //@IBOutlet weak var fishSpeciesLabel: UILabel!
     @IBOutlet weak var fishSpeciesLabel: UITextField!
     @IBOutlet weak var catchTime: UITextField!
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var addToMapButton: UIButton!
+    @IBOutlet weak var baitUsed: UITextField!
+    @IBOutlet weak var currentWeather: UITextField!
+    @IBOutlet weak var moreNotes: UITextView!
+
+    @IBOutlet weak var waterTempConditions: UITextField!
     
-    // MARK: - Image Classification
-    
-    
-    
-    /// - Tag: MLModelSetup
-    lazy var classificationRequest: VNCoreMLRequest = {
-        do {
-            /*
-             Use the Swift class `MobileNet` Core ML generates from the model.
-             To use a different Core ML classifier model, add it to the project
-             and replace `MobileNet` with that model's generated Swift class.
-             */
-            let model = try VNCoreMLModel(for: FishId_1154862929().model )
-            
-            let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
-                self?.processClassifications(for: request, error: error)
-            })
-            request.imageCropAndScaleOption = .centerCrop
-            return request
-        } catch {
-            fatalError("Failed to load Vision ML model: \(error)")
-        }
-    }()
-    
-    /// - Tag: PerformRequests
-    func updateClassifications(for image: UIImage) {
-        fishSpeciesLabel.text = "Classifying..."
-        
-        let orientation = CGImagePropertyOrientation(image.imageOrientation)
-        guard let ciImage = CIImage(image: image) else { fatalError("Unable to create \(CIImage.self) from \(image).") }
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            let handler = VNImageRequestHandler(ciImage: ciImage, orientation: orientation)
-            do {
-                try handler.perform([self.classificationRequest])
-            } catch {
-                /*
-                 This handler catches general image processing errors. The `classificationRequest`'s
-                 completion handler `processClassifications(_:error:)` catches errors specific
-                 to processing that request.
-                 */
-                print("Not Hotdog.\n\(error.localizedDescription)")
-            }
-        }
-    }
-    
-    /// Updates the UI with the results of the classification.
-    /// - Tag: ProcessClassifications
-    func processClassifications(for request: VNRequest, error: Error?) {
-        DispatchQueue.main.async {
-            guard let results = request.results else {
-                self.fishSpeciesLabel.text = "Not Hotdog.\n\(error!.localizedDescription)"
-                return
-            }
-            // The `results` will always be `VNClassificationObservation`s, as specified by the Core ML model in this project.
-            let classifications = results as! [VNClassificationObservation]
-            
-            if classifications.isEmpty {
-                self.fishSpeciesLabel.text = "Not Hotdog"
-            } else {
-              
-                self.fishSpeciesLabel.text = classifications[0].identifier
-            }
-        }
-    }
 
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         
         setupView()
+        
+        //Mark: - Authorization
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        mapView.delegate = self
+        mapView.mapType = MKMapType.standard
+        mapView.showsUserLocation = true
+        
+    }
 
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        
+        
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        
+        if locations.count > 0 {
+            
+            manager.stopUpdatingLocation()
+        }
+        
+        let location = locations.last! as CLLocation
+        let catchLocation = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+        
+        let center = catchLocation
+        let region = MKCoordinateRegionMake(center, MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025))
+        mapView.setRegion(region, animated: true)
+        
+        pointAnnotation = CatchAnnotation()
+        pointAnnotation.pinImageName = "pin"
+        pointAnnotation.coordinate = catchLocation
+        pointAnnotation.title = length
+        pointAnnotation.subtitle = catchTime.text
+        
+        pinAnnotationView = MKPinAnnotationView(annotation: pointAnnotation, reuseIdentifier: "pin")
+        
+        mapView.addAnnotation(pinAnnotationView.annotation!)
+        
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
        
     }
-    @IBAction func goBackButton(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+    
+    //MARK: - Custom Annotation
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseIdentifier = "pin"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+        
+        if annotationView == nil {
+            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+            annotationView?.canShowCallout = true
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+       // let catchAnnotation = annotation as! CatchAnnotation
+        annotationView?.image = UIImage(named: "pin2")
+        
+        return annotationView
     }
     
+    func stopRecording() {
+        
+        RPScreenRecorder.shared().stopRecording { (previewController, error) in
+            if error == nil {
+                
+                let alertController = UIAlertController(title: "Recording", message: "You can view your recording to edit and share, or delete to try again", preferredStyle: .alert)
+                
+                let discardAction = UIAlertAction(title: "Delete", style: .default) { (action: UIAlertAction) in
+                    RPScreenRecorder.shared().discardRecording(handler: { () -> Void in
+                        // Executed once recording has successfully been discarded
+                    })
+                }
+                
+                let viewAction = UIAlertAction(title: "View", style: .default, handler: { (action) in
+                    previewController?.previewControllerDelegate = self as? RPPreviewViewControllerDelegate
+                    self.present(previewController!, animated: true, completion: nil)
+                })
+                
+                alertController.addAction(discardAction)
+                alertController.addAction(viewAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+                
+            } else {
+                print(error ?? "")
+            }
+        }
+        
+    }
+
+    @IBAction func saveInfo(_ sender: Any) {
+        
+        let fishKind = fishSpeciesLabel.text!
+        let waterTempDepth = waterTempConditions.text!
+        let bait =  baitUsed.text!
+        let weatherCond = currentWeather.text!
+        let notes = moreNotes.text!
+        let latitude = latitudeLabel.text!
+        let longitude = longitudeLabel.text
+        let coordinate = pointAnnotation.coordinate
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Fish", in: context)
+        let newCatch = NSManagedObject(entity: entity!, insertInto: context)
+        
+        newCatch.setValue(fishKind, forKey: "species")
+        newCatch.setValue(date, forKey: "date")
+        newCatch.setValue(length, forKey: "length")
+        newCatch.setValue(waterTempDepth, forKey: "water")
+        newCatch.setValue(bait, forKey: "bait")
+        newCatch.setValue(weatherCond, forKey: "weather")
+        newCatch.setValue(notes, forKey: "notes")
+        newCatch.setValue(coordinate.latitude as Double, forKey: "latitude")
+        newCatch.setValue(coordinate.longitude as Double, forKey: "longitude")
+        
+        
+        do {
+            try context.save()
+        } catch {
+            print("Failed saving")
+        }
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Fish")
+        //request.predicate = NSPredicate(format: "age = %@", "12")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            for data in result as! [NSManagedObject] {
+                print(data.value(forKey: "species") as! String)
+            }
+            
+        } catch {
+            
+            print("Failed")
+        }
+        
+    }
+    
+    
+    
+    
+    @IBAction func goBackButton(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+        
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is MapViewController{
+            
+            let mapVC = segue.destination as? MapViewController
+            let catchTitle = pointAnnotation.title
+            let catchSubTitle = pointAnnotation.subtitle
+            let catchSpecies = fishSpeciesLabel.text
+            
+            let fishKind = fishSpeciesLabel.text!
+            let waterTempDepth = waterTempConditions.text!
+            let bait =  baitUsed.text!
+            let weatherCond = currentWeather.text!
+            let notes = moreNotes.text!
+           
+            
+            mapVC?.fishKind = fishKind
+            mapVC?.waterTempDepth = waterTempDepth
+            mapVC?.bait = bait
+            mapVC?.weatherCond = weatherCond
+            mapVC?.notes = notes
+            
+            mapVC?.catchTitle = catchTitle!
+            mapVC?.catchSubTitle = catchSubTitle!
+            mapVC?.catchSpecies = catchSpecies!
+        }
+    }
 }
+    
 extension ImageDisplayViewController {
     fileprivate func setupView() {
+        
         showPic.image = showMyPic
         fishLength.text = length
+        
+      
+        
+        
+        
+        
         
         formater.dateFormat = "MM/dd/yyyy   hh:mm"
         let result = formater.string(from: date)
@@ -126,7 +262,7 @@ extension ImageDisplayViewController {
         
         let image = showMyPic
         showPic.image = image
-        updateClassifications(for: image)
+       // updateClassifications(for: image)
         
         var currentLocation: CLLocation!
         
@@ -139,7 +275,6 @@ extension ImageDisplayViewController {
             
             longitudeLabel.text = "\(currentLocation.coordinate.longitude)"
         }
-      
-        }
+       
     }
-
+}

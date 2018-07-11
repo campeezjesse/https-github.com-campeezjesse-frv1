@@ -38,7 +38,7 @@ final class MeasureViewController: UIViewController {
 
     @IBOutlet weak var photoTakenButton: UIButton!
     @IBOutlet weak var photoTaken: UIImageView!
-    @IBOutlet weak var targetLabel: UILabel!
+
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var cameraButtonImage: UIImageView!
     
@@ -86,9 +86,7 @@ final class MeasureViewController: UIViewController {
         resetValues()
         isMeasuring = true
         targetImageView.image = UIImage(named: "targetGreen")
-        targetLabel.isHidden = false
-       
-            bottomPanel.isHidden = true
+        bottomPanel.isHidden = true
             
             
         }
@@ -102,7 +100,7 @@ final class MeasureViewController: UIViewController {
             currentLine = nil
             resetButton.isHidden = false
             bottomPanel.isHidden = true
-            targetLabel.isHidden = true
+            targetImageView.isHidden = true
             
            
        
@@ -195,12 +193,14 @@ final class MeasureViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is ImageDisplayViewController{
-             let myPic = sceneView.snapshot()
+            
             let vc = segue.destination as? ImageDisplayViewController
-         
+            
+         let myPic = sceneView.snapshot()
             vc?.showMyPic = myPic
             vc?.length = messageLabel.text!
-           stopRecording()
+           
+            stopRecording()
             
     }
 }
@@ -274,6 +274,7 @@ extension MeasureViewController {
         photoTaken.isHidden = true
         photoTakenButton.isHidden = true
         savePicButton.isHidden = true
+        targetImageView.isHidden = false
     }
     
     
@@ -293,12 +294,9 @@ extension MeasureViewController {
         messageLabel.numberOfLines = 0
         resetButton.isHidden = true
         bottomPanel.isHidden = false
-       // targetLabel.isHidden = true
         cameraButton.isHidden = false
         cameraButtonImage.isHidden = false
-        //instructionsText.isHidden = false
         instructionsText.lineBreakMode = .byWordWrapping
-        //instructionsText.isUserInteractionEnabled = true
         photoTakenButton.isHidden = true
         savePicButton.isHidden = true
         picSaved.isHidden = true

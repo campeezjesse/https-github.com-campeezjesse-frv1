@@ -50,6 +50,7 @@ enum DistanceUnit {
 
 final class Line {
     fileprivate var color: UIColor = .white
+    fileprivate var sideColor: UIColor = .blue
     
     
     
@@ -68,7 +69,7 @@ final class Line {
         self.startVector = startVector
         self.unit = unit
         
-        let dot = SCNBox(width: 0.5, height: 6, length: 0.5, chamferRadius: 0)
+        let dot = SCNBox(width: 0.5, height: 3, length: 0.5, chamferRadius: 0)
         
         let lineColor: UIColor = .white
         dot.firstMaterial?.diffuse.contents = lineColor
@@ -83,15 +84,21 @@ final class Line {
         endNode.scale = SCNVector3(2/500.0, 2/500.0, 2/500.0)
         
         
-       
+//       let textFront = SCNMaterial()
+//        textFront.diffuse.contents = UIColor.black
+//
+//        let textSides = SCNMaterial()
+//        textSides.diffuse.contents = UIColor.white
+//
         
-        
-        text = SCNText(string: "", extrusionDepth: 0.5)
-        text.font = UIFont(name: "Helvetica", size: 18)
+        text = SCNText(string: "", extrusionDepth: 2)
+        text.font = UIFont(name: "Helvetica", size: 25)
         text.firstMaterial?.diffuse.contents = color
         text.alignmentMode  = kCAAlignmentCenter
         text.truncationMode = kCATruncationMiddle
         text.firstMaterial?.isDoubleSided = true
+       // text.firstMaterial?.specular.contents = textFront
+        //text.materials = [textSides, textFront]
         
       
         let textWrapperNode = SCNNode(geometry: text)

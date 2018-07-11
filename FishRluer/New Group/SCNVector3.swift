@@ -23,12 +23,11 @@ extension SCNVector3 {
     
     func line(to vector: SCNVector3, color: UIColor = .white) -> SCNNode {
         
-        let image = String("Fish Ruler")
+       
         let indices: [Int32] = [0, 1]
         let source = SCNGeometrySource(vertices: [self, vector])
         let element = SCNGeometryElement(indices: indices, primitiveType: .line)
         let geometry = SCNGeometry(sources: [source], elements: [element])
-        geometry.firstMaterial?.diffuse.contents = image
         let node = SCNNode(geometry: geometry)
         
        
