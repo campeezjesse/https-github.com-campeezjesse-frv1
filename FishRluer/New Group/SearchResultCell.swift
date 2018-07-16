@@ -10,6 +10,9 @@ import UIKit
 
 class SearchResultCell: UITableViewCell {
     
+    
+    
+    
     @IBOutlet private weak var titleLabel: UILabel!
     
     func configure(title: String) {

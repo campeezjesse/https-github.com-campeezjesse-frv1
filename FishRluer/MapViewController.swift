@@ -10,7 +10,6 @@ import UIKit
 import MapKit
 import CoreLocation
 import ReplayKit
-import PullUpController
 import CoreData
 
 
@@ -20,7 +19,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var catchTitle: String = ""
     var catchSubTitle: String = ""
     var catchSpecies: String = ""
-    
     var fishKind: String = ""
     var length: String = ""
     var date = Date()
@@ -28,70 +26,30 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var bait: String = ""
     var weatherCond: String = ""
     var notes: String = ""
+    var time: String = ""
     
-    var pointAnnotation: CatchAnnotation!
-   // var pinAnnotationView: MKAnnotationView!
    
+    var myLength: String = ""
+    var myTime = ""
+    
+    
     var fish: Fish!
+    var storedLocations: [Fish]! = []
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
    
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
-    
     let locationManager = CLLocationManager()
-    var storedLocations: [Fish]! = []
-    
-  
-    
    
     
     @IBOutlet weak var map: MKMapView!
 
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-   
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let annotations = getData() {
-            map.addAnnotations(annotations)
-        }
-        
-    
-        addPullUpController()
-    }
-    
-    func getData() -> [MKAnnotation]? {
-        
-        do {
-            storedLocations = try context.fetch(Fish.fetchRequest())
-            var annotations = [MKAnnotation]()
-            for storedLocation in storedLocations {
-                let newAnnotation = MKPointAnnotation()
-                newAnnotation.coordinate.latitude = storedLocation.latitude
-                newAnnotation.coordinate.longitude = storedLocation.longitude
-                newAnnotation.title = storedLocation.species
-                newAnnotation.subtitle = storedLocation.length
-                
-                annotations.append(newAnnotation)
-            }
-            return annotations
-        }
-        catch {
-            print("Fetching Failed")
-        }
-        return nil
-    }
-    
-        private func addPullUpController() {
-            guard
-                let pullUpController = UIStoryboard(name: "Main", bundle: nil)
-                    .instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController
-                else { return }
-            
-            addPullUpController(pullUpController)
-        
+        map.zoomToUserLocation()
         
         //Mark: - Authorization
         locationManager.delegate = self
@@ -103,48 +61,66 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         map.mapType = MKMapType.standard
         map.showsUserLocation = true
         
-     
+        if let annotations = getData() {
+            map.addAnnotations(annotations)
+        }
+   
+        
     }
-//    private func configureView() {
-//    }
     
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func getData() -> [MKAnnotation]? {
+        
+       
+        
+        
+        
+        do {
+            storedLocations = try context.fetch(Fish.fetchRequest())
+            var annotations = [MKAnnotation]()
+            for storedLocation in storedLocations {
+                let newAnnotation = MyAnnotation(coordinate: CLLocationCoordinate2D(latitude: storedLocation.latitude, longitude: storedLocation.longitude))
+                newAnnotation.coordinate.latitude = storedLocation.latitude
+                newAnnotation.coordinate.longitude = storedLocation.longitude
+                newAnnotation.title = storedLocation.species
+                newAnnotation.subtitle = storedLocation.length
+                newAnnotation.newTime = storedLocation.time
+                newAnnotation.newBait = storedLocation.bait
+                newAnnotation.newNotes = storedLocation.notes
+                newAnnotation.newWaterTempDepth = storedLocation.water
+                newAnnotation.newWeatherCond = storedLocation.weather
+                
+                
+                
+                
+              // print(storedLocation.length)
+                let newLength = storedLocation.length
+                let newTime = newAnnotation.newTime
+//                let newBait = storedLocation.bait
+//                let newNotes = storedLocation.notes
+//                let newWaterTempDepth = storedLocation.water
+//                let newWeatherCond = weatherCond
+
+                myLength = newLength!
+                myTime = newTime!
+                
 //
-//        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-//
-//
-//        print("locations = \(locValue.latitude) \(locValue.longitude)")
-//
-//        if locations.count > 0 {
-//
-//            manager.stopUpdatingLocation()
-//        }
-//
-//
-//        let location = locations.last! as CLLocation
-//        let catchLocation = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-//
-//        let center = catchLocation
-//        let region = MKCoordinateRegionMake(center, MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025))
-//        map.setRegion(region, animated: true)
-//
-//        pointAnnotation = CatchAnnotation()
-//        pointAnnotation.pinImageName = "pin"
-//        pointAnnotation.coordinate = catchLocation
-//        pointAnnotation.title = catchSpecies + " " + catchTitle
-//        pointAnnotation.subtitle = catchSubTitle
-//
-//
-//        pinAnnotationView = MKPinAnnotationView(annotation: pointAnnotation, reuseIdentifier: "pin")
-//
-//
-//        map.addAnnotation(pinAnnotationView.annotation!)
-//
-//
-//    }
-//
-//
-//
+             
+                annotations.append(newAnnotation)
+                
+             
+                
+            }
+            
+            return annotations
+        }
+        catch {
+            print("Fetching Failed")
+        }
+        return nil
+    }
+    
+ 
+
     //MARK: - Custom Annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else {
@@ -153,113 +129,33 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
         let reuseIdentifier = "pin"
         var annotationView = map.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
+        
 
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
             annotationView?.canShowCallout = true
-            annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+           
+            annotationView?.loadCustomLines(customLines: [myLength, myTime])
+          
+           
         } else {
             annotationView?.annotation = annotation
         }
 
-        // let catchAnnotation = annotation as! CatchAnnotation
-        annotationView?.image = UIImage(named: "pushPin")
+        
+        annotationView?.image = UIImage(named: "fish")
 
-
-
-
-            //map.zoomToUserLocation()
 
          return annotationView
+       
 
         }
-    func mapView(_ MapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-
-        if control == annotationView.rightCalloutAccessoryView {
-            performSegue(withIdentifier: "showCatchDetails", sender: self)
-            print("Going to the next VC!")
-        }
+   
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        
+        
     }
-
-
-    //Add Saved Pin To Map
-    
-//    private func saveCatch() {
-//        let newFish = Fish(context: CoreDataStack.context)
-//        newFish.species = catchSpecies
-//        newFish.date = date
-//        newFish.length = length
-//        newFish.bait = bait
-//        newFish.water = waterTempDepth
-//        newFish.weather = weatherCond
-//
-//
-//        for location in locationList {
-//            let locationObject = Location(context: CoreDataStack.context)
-//
-//            locationObject.latitude = location.coordinate.latitude
-//            locationObject.longitude = location.coordinate.longitude
-//            newFish.addToLocations(locationObject)
-//        }
-//
-//        CoreDataStack.saveContext()
-//
-//        fish = newFish
-//
-//        loadMap()
-//    }
-    
-//    private func mapRegion() -> MKCoordinateRegion? {
-//        guard
-//            let locations = fish?.locations,
-//            locations.count > 0
-//            else {
-//                return nil
-//        }
-//
-//        let latitudes = locations.map { location -> Double in
-//            let location = location as! Location
-//            return location.latitude
-//        }
-//
-//        let longitudes = locations.map { location -> Double in
-//            let location = location as! Location
-//            return location.longitude
-//        }
-//        return mapRegion()
-//    }
-//
-//        private func points() -> MKPointAnnotation {
-//            guard let locations = fish?.locations else {
-//                return MKPointAnnotation()
-//            }
-//
-//            let coords: [CLLocationCoordinate2D] = locations.map { location in
-//                let location = location as! Location
-//                return CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-//            }
-//            return MKPointAnnotation()
-//        }
-//    private func loadMap() {
-//        guard
-//            let locations = fish?.locations,
-//            locations.count > 0,
-//            let region = mapRegion()
-//            else {
-//                let alert = UIAlertController(title: "Error",
-//                                              message: "Sorry, this map has no catch locations saved",
-//                                              preferredStyle: .alert)
-//                alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-//                present(alert, animated: true)
-//                return
-//        }
-//
-//
-//        map.addAnnotations([points()])
-//
-//    }
-//
-
     
     func stopRecording() {
         
@@ -290,8 +186,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         
     }
-}
 
+}
 
     extension MKMapView {
         func zoomToUserLocation() {
@@ -311,7 +207,28 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         
 }
-
+extension MKAnnotationView {
+    
+    func loadCustomLines(customLines: [String]) {
+        let stackView = self.stackView()
+        for line in customLines {
+            let label = UILabel()
+            label.text = line
+            stackView.addArrangedSubview(label)
+        }
+        self.detailCalloutAccessoryView = stackView
+    }
+    
+    
+    
+    private func stackView() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        return stackView
+    }
+}
 
 
 

@@ -19,6 +19,7 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var loadingView: UIActivityIndicatorView!
     @IBOutlet weak var messageLabel: UILabel!
 
+    @IBOutlet weak var savePicToPhone: UILabel!
     @IBOutlet weak var bottomPanel: UIView!
     @IBOutlet weak var resetButton: UIButton!
     
@@ -181,7 +182,7 @@ final class MeasureViewController: UIViewController {
         photoTaken.isHidden = false
         photoTakenButton.isHidden = false
         savePicButton.isHidden = false
-        
+        savePicToPhone.isHidden = false
         
        
     func didTakePic(_image: UIImage)  {
@@ -208,6 +209,7 @@ final class MeasureViewController: UIViewController {
         let pic = sceneView.snapshot()
         UIImageWriteToSavedPhotosAlbum(pic, self, nil, nil)
         savePicButton.isHidden = true
+        savePicToPhone.isHidden = true
   picSaved.isHidden = false
     }
     
@@ -274,6 +276,7 @@ extension MeasureViewController {
         photoTaken.isHidden = true
         photoTakenButton.isHidden = true
         savePicButton.isHidden = true
+        savePicToPhone.isHidden = true
         targetImageView.isHidden = false
     }
     
@@ -299,6 +302,7 @@ extension MeasureViewController {
         instructionsText.lineBreakMode = .byWordWrapping
         photoTakenButton.isHidden = true
         savePicButton.isHidden = true
+        savePicToPhone.isHidden = true
         picSaved.isHidden = true
         pressToRecLabel.isHidden = false
         pressToStopRecLabel.isHidden = true

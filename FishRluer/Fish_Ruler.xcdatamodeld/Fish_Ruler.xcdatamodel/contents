@@ -8,6 +8,7 @@
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="species" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="water" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="weather" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Location" inverseName="fish" inverseEntity="Location" syncable="YES"/>
@@ -19,7 +20,7 @@
         <relationship name="fish" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Fish" inverseName="locations" inverseEntity="Fish" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Fish" positionX="-27" positionY="18" width="128" height="195"/>
+        <element name="Fish" positionX="-27" positionY="18" width="128" height="210"/>
         <element name="Location" positionX="-18" positionY="108" width="128" height="105"/>
     </elements>
 </model>

@@ -27,7 +27,11 @@ class SearchViewController: PullUpController {
 
     private var locations = [(title: String, location: CLLocationCoordinate2D)]()
     private var fishKind = String()
+    var fish: Fish!
     
+    //Stored info
+    private var storedLocations: [Fish]! = []
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     // MARK: - Lifecycle
     
@@ -48,6 +52,7 @@ class SearchViewController: PullUpController {
    
     }
 
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -64,6 +69,19 @@ class SearchViewController: PullUpController {
 //        locations.append(("Dublin", CLLocationCoordinate2D(latitude: 53.3244431, longitude: -6.3857869)))
 //        locations.append(("Reykjavik", CLLocationCoordinate2D(latitude: 64.1335484, longitude: -21.9224815)))
     }
+    
+    func getData() -> [MKAnnotation]? {
+        
+        do {
+            storedLocations = try context.fetch(Fish.fetchRequest())
+        }
+    
+    catch {
+    print("Fetching Failed")
+    }
+    return nil
+}
+    
 
     // MARK: - PullUpController
     
@@ -117,7 +135,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
                                                      for: indexPath) as? SearchResultCell
             else { return UITableViewCell() }
         
-        cell.configure(title: locations[indexPath.row].title)
+        cell.configure(title: fish.species!)
         return cell
     }
     
@@ -131,3 +149,4 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
  
     }
 }
+

@@ -62,6 +62,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         super.viewDidLoad()
     
         
+        
         setupView()
         
         //Mark: - Authorization
@@ -88,9 +89,10 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
             manager.stopUpdatingLocation()
         }
         
+       
+        
         let location = locations.last! as CLLocation
         let catchLocation = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-        
         let center = catchLocation
         let region = MKCoordinateRegionMake(center, MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025))
         mapView.setRegion(region, animated: true)
@@ -100,6 +102,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         pointAnnotation.coordinate = catchLocation
         pointAnnotation.title = length
         pointAnnotation.subtitle = catchTime.text
+    
         
         pinAnnotationView = MKPinAnnotationView(annotation: pointAnnotation, reuseIdentifier: "pin")
         
@@ -114,12 +117,16 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     
     //MARK: - Custom Annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+       
+       
         let reuseIdentifier = "pin"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
         
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
             annotationView?.canShowCallout = true
+            
+            
         } else {
             annotationView?.annotation = annotation
         }
@@ -165,12 +172,15 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         
     @IBAction func addInfo(_ sender: UIButton) {
     
+   
     
         let fishKind = fishSpeciesLabel.text!
         let waterTempDepth = waterTempConditions.text!
         let bait =  baitUsed.text!
         let weatherCond = currentWeather.text!
         let notes = moreNotes.text!
+        let catchTimeandDate = catchTime.text!
+    
 
         let coordinate = pointAnnotation.coordinate
 
@@ -179,51 +189,23 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         newPin.longitude = coordinate.longitude
         newPin.species = fishKind
         newPin.length = length
+        newPin.water = waterTempDepth
+        newPin.bait = bait
+        newPin.weather = weatherCond
+        newPin.notes = notes
+        newPin.time = catchTimeandDate
+        
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
         print("saved bitches")
+        
+        let alert = UIAlertController(title: "Saved!", message: "See your fish on the map, or continue catching", preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+        
+        alert.addAction(UIAlertAction(title: "Go to map", style: .default, handler: {action in self.performSegue(withIdentifier: "showCatchDetails", sender: self)}))
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
 
-//        Fish.setValue(fishKind, forKey: "species")
-//        Fish.setValue(date, forKey: "date")
-//        Fish.setValue(length, forKey: "length")
-//        Fish.setValue(waterTempDepth, forKey: "water")
-//        Fish.setValue(bait, forKey: "bait")
-//        Fish.setValue(weatherCond, forKey: "weather")
-//        Fish.setValue(notes, forKey: "notes")
-//        Fish.setValue(coordinate.latitude as Double, forKey: "latitude")
-//        Fish.setValue(coordinate.longitude as Double, forKey: "longitude")
-
-//        for location in locationList {
-//            let locationObject = Fish(context: CoreDataStack.context)
-//            locationObject.species = fishSpeciesLabel.text
-//            locationObject.latitude = location.coordinate.latitude
-//            locationObject.longitude = location.coordinate.longitude
-//            print("321")
-        
-        
-      
-        
-//        do {
-//            try context.save()
-//        } catch {
-//            print("Failed saving")
-//        }
-//
-//        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Fish")
-//        //request.predicate = NSPredicate(format: "age = %@", "12")
-//        request.returnsObjectsAsFaults = false
-//        do {
-//            let result = try context.fetch(request)
-//            for data in result as! [NSManagedObject] {
-//                print(data.value(forKey: "species") as! String)
-//            }
-//
-//        } catch {
-//
-//            print("Failed")
-//        }
-//
-//    }
     }
     
         
@@ -238,6 +220,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         if segue.destination is MapViewController{
             
             let mapVC = segue.destination as? MapViewController
+        
             let catchTitle = pointAnnotation.title
             let catchSubTitle = pointAnnotation.subtitle
             let catchSpecies = fishSpeciesLabel.text
@@ -259,8 +242,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
             mapVC?.catchSubTitle = catchSubTitle!
             mapVC?.catchSpecies = catchSpecies!
             
-            let destination = segue.destination as! MapViewController
-            destination.fish = fish
+
         }
     }
 }
@@ -271,11 +253,7 @@ extension ImageDisplayViewController {
         showPic.image = showMyPic
         fishLength.text = length
         
-      
-        
-        
-        
-        
+    
         
         formater.dateFormat = "MM/dd/yyyy   hh:mm"
         let result = formater.string(from: date)
