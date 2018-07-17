@@ -21,11 +21,19 @@ class MyAnnotation: NSObject, MKAnnotation {
     var newWaterTempDepth: String?
     var newWeatherCond: String?
     var detailCalloutAccessoryView: UIStackView?
-   
+    var catchID: String?
     
     
-    init(coordinate: CLLocationCoordinate2D){
+    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, newLength: String, newTime: String, newBait: String, newNotes: String, newWaterTempDepth: String, newWeatherCond: String){
         self.coordinate = coordinate
+        self.title = title
+        self.subtitle = subtitle
+        self.newLength = newLength
+        self.newTime = newTime
+        self.newBait = newBait
+        self.newNotes = newNotes
+        self.newWaterTempDepth = newWaterTempDepth
+        self.newWeatherCond = newWeatherCond
     }
 
    

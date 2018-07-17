@@ -13,6 +13,8 @@
 		7F00DCF720BE3AA4001A2C9E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F00DCF520BE3AA4001A2C9E /* LaunchScreen.storyboard */; };
 		7F05756820F81D18008B3101 /* myAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F05756720F81D17008B3101 /* myAnnotation.swift */; };
 		7F05756E20F84A76008B3101 /* CalloutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F05756D20F84A76008B3101 /* CalloutViewController.swift */; };
+		7F05757D20FE2EB3008B3101 /* calloutDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F05757B20FE2EB3008B3101 /* calloutDetailViewController.swift */; };
+		7F05757E20FE2EB3008B3101 /* calloutDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7F05757C20FE2EB3008B3101 /* calloutDetailViewController.xib */; };
 		7F23050720F58BAD00052AB2 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F23050620F58BAD00052AB2 /* CoreDataStack.swift */; };
 		7F2583B420D2E2FC000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2583B320D2E2FB000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift */; };
 		7F6DCD4920E583FF004D22C1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DCD4820E583FF004D22C1 /* MapViewController.swift */; };
@@ -38,6 +40,8 @@
 		7F00DCF820BE3AA4001A2C9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F05756720F81D17008B3101 /* myAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myAnnotation.swift; sourceTree = "<group>"; };
 		7F05756D20F84A76008B3101 /* CalloutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutViewController.swift; sourceTree = "<group>"; };
+		7F05757B20FE2EB3008B3101 /* calloutDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = calloutDetailViewController.swift; sourceTree = "<group>"; };
+		7F05757C20FE2EB3008B3101 /* calloutDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = calloutDetailViewController.xib; sourceTree = "<group>"; };
 		7F23050620F58BAD00052AB2 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		7F2583B320D2E2FB000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImagePropertyOrientation+UIImageOrientation.swift"; sourceTree = "<group>"; };
 		7F6DCD4820E583FF004D22C1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +121,8 @@
 		7F70911D20C83A5E00265230 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				7F05757B20FE2EB3008B3101 /* calloutDetailViewController.swift */,
+				7F05757C20FE2EB3008B3101 /* calloutDetailViewController.xib */,
 				7F05756D20F84A76008B3101 /* CalloutViewController.swift */,
 				7F05756720F81D17008B3101 /* myAnnotation.swift */,
 				7F23050620F58BAD00052AB2 /* CoreDataStack.swift */,
@@ -193,6 +199,7 @@
 			files = (
 				7F00DCF720BE3AA4001A2C9E /* LaunchScreen.storyboard in Resources */,
 				7F00DCF420BE3AA4001A2C9E /* Assets.xcassets in Resources */,
+				7F05757E20FE2EB3008B3101 /* calloutDetailViewController.xib in Resources */,
 				7F00DCF220BE3A8F001A2C9E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,6 +278,7 @@
 				7F00DCEF20BE3A8F001A2C9E /* MeasureViewController.swift in Sources */,
 				7F6DCDC020F50819004D22C1 /* Fish_Ruler.xcdatamodeld in Sources */,
 				7F70912120C83B6200265230 /* SCNVector3.swift in Sources */,
+				7F05757D20FE2EB3008B3101 /* calloutDetailViewController.swift in Sources */,
 				7F6DCD9920F468FA004D22C1 /* AppDelegate.swift in Sources */,
 				7F05756E20F84A76008B3101 /* CalloutViewController.swift in Sources */,
 				7F23050720F58BAD00052AB2 /* CoreDataStack.swift in Sources */,

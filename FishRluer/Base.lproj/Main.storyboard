@@ -369,10 +369,35 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="detailsView" destination="nbR-qR-71J" id="S5h-VR-faM"/>
                         <outlet property="map" destination="sCR-se-NIg" id="G4z-A1-eEe"/>
+                        <outlet property="sizeLabel" destination="8Em-vZ-MAy" id="hhr-Cg-fhD"/>
+                        <outlet property="speciesLabel" destination="Nik-fM-zlK" id="378-aR-HeE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tNb-vj-p2c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" restorationIdentifier="detailView" id="nbR-qR-71J">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nik-fM-zlK">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="28"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Em-vZ-MAy">
+                            <rect key="frame" x="0.0" y="36" width="240" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <viewLayoutGuide key="safeArea" id="KZ1-sI-4GU"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="5542" y="570"/>
         </scene>
@@ -672,6 +697,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ia2-2P-1th"/>
-        <segue reference="h46-xh-9vR"/>
+        <segue reference="oXl-Jv-wzw"/>
     </inferredMetricsTieBreakers>
 </document>

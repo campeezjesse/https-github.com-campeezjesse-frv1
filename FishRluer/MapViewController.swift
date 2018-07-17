@@ -29,8 +29,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var time: String = ""
     
    
-    var myLength: String = ""
-    var myTime = ""
+    var myLength: String? = ""
+    var myTime: String? = ""
+    var myBait: String? = ""
+    var myWeather: String? = ""
+    var myWater: String? = ""
+    var myNotes: String? = ""
+    
+    var myFishAnnotation: [MyAnnotation] = []
     
     
     var fish: Fish!
@@ -45,6 +51,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     @IBOutlet weak var map: MKMapView!
 
+    
+
+    @IBOutlet var detailsView: UIView!
+    @IBOutlet weak var speciesLabel: UILabel!
+    @IBOutlet weak var sizeLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +90,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             storedLocations = try context.fetch(Fish.fetchRequest())
             var annotations = [MKAnnotation]()
             for storedLocation in storedLocations {
-                let newAnnotation = MyAnnotation(coordinate: CLLocationCoordinate2D(latitude: storedLocation.latitude, longitude: storedLocation.longitude))
+                let newAnnotation = MyAnnotation(coordinate: CLLocationCoordinate2D(latitude: storedLocation.latitude, longitude: storedLocation.longitude), title: "", subtitle: "", newLength: "", newTime: "", newBait: "", newNotes: "", newWaterTempDepth: "", newWeatherCond: "")
                 newAnnotation.coordinate.latitude = storedLocation.latitude
                 newAnnotation.coordinate.longitude = storedLocation.longitude
                 newAnnotation.title = storedLocation.species
@@ -88,22 +100,32 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 newAnnotation.newNotes = storedLocation.notes
                 newAnnotation.newWaterTempDepth = storedLocation.water
                 newAnnotation.newWeatherCond = storedLocation.weather
-                
-                
-                
-                
-              // print(storedLocation.length)
-                let newLength = storedLocation.length
-                let newTime = newAnnotation.newTime
-//                let newBait = storedLocation.bait
-//                let newNotes = storedLocation.notes
-//                let newWaterTempDepth = storedLocation.water
-//                let newWeatherCond = weatherCond
 
-                myLength = newLength!
-                myTime = newTime!
+        
+                let newLength: String?
+                let newCatchTime: String?
+                let newCatchBait: String?
+                let newCatchWater: String?
+                let newCatchWeather: String?
+                let newCatchNotes: String?
                 
-//
+                newLength = storedLocation.length
+                newCatchTime = storedLocation.time
+                newCatchBait = storedLocation.bait
+                newCatchWater = storedLocation.water
+                newCatchWeather = storedLocation.weather
+                newCatchNotes = storedLocation.notes
+
+
+                myLength = newLength
+                myTime = newCatchTime
+                myBait = newCatchBait
+                myWater = newCatchWater
+                myWeather = newCatchWeather
+                myNotes = newCatchNotes
+                
+              
+                
              
                 annotations.append(newAnnotation)
                 
@@ -118,7 +140,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         return nil
     }
-    
+   
  
 
     //MARK: - Custom Annotation
@@ -134,9 +156,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         if annotationView == nil {
             annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
             annotationView?.canShowCallout = true
-           
-            annotationView?.loadCustomLines(customLines: [myLength, myTime])
-          
+           annotationView?.detailCalloutAccessoryView = detailsView
+            
+          annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
            
         } else {
             annotationView?.annotation = annotation
@@ -145,18 +167,48 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         annotationView?.image = UIImage(named: "fish")
 
-
+        configureDetailView(annotationView: annotationView!)
+        
+        
+        
          return annotationView
-       
+    
 
         }
-   
+    
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        let alert = UIAlertController(title: "Remove This Catch and All info attatched", message: "This can not be undone", preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
         
-        
+        alert.addAction(UIAlertAction(title: "DELETE", style: .default, handler: {action in self.delete(MKAnnotation.self)}))
+        alert.addAction(cancelAction)
+        self.present(alert, animated: true, completion: nil)
         
     }
+    func configureDetailView(annotationView: MKAnnotationView) {
+
+        
+
+        let detailView = detailsView
+        let views = ["detailView": detailView]
     
+      sizeLabel.text = myLength
+        speciesLabel.text = myTime
+       
+        
+        detailView?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[detailView(300)]", options: [], metrics: nil, views: views))
+        detailView?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[detailView(200)]", options: [], metrics: nil, views: views))
+
+
+        annotationView.detailCalloutAccessoryView = detailView
+    }
+//
+//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+//
+//
+//
+//    }
+//
     func stopRecording() {
         
         RPScreenRecorder.shared().stopRecording { (previewController, error) in
@@ -219,7 +271,7 @@ extension MKAnnotationView {
         self.detailCalloutAccessoryView = stackView
     }
     
-    
+  
     
     private func stackView() -> UIStackView {
         let stackView = UIStackView()
@@ -230,6 +282,17 @@ extension MKAnnotationView {
     }
 }
 
+//extension Fish: MKAnnotation {
+//    public var coordinate: CLLocationCoordinate2D {
+//
+//
+//        let latDegrees = CLLocationDegrees(latitude)
+//        let longDegrees = CLLocationDegrees(longitude)
+//        return CLLocationCoordinate2D(latitude: latDegrees, longitude: longDegrees)
+//
+//
+//    }
+//}
 
 
 
