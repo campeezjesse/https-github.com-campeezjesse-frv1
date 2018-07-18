@@ -13,6 +13,7 @@ import ReplayKit
 import CoreData
 
 
+
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
  
@@ -124,7 +125,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 myWeather = newCatchWeather
                 myNotes = newCatchNotes
                 
-              
+              sizeLabel.text = newAnnotation.subtitle
                 
              
                 annotations.append(newAnnotation)
@@ -154,12 +155,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
 
         if annotationView == nil {
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
-            annotationView?.canShowCallout = true
-           annotationView?.detailCalloutAccessoryView = detailsView
-            
-          annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-           
+            annotationView = FishAnnotationViewController(annotation: annotation, reuseIdentifier: reuseIdentifier)
+//           annotationView?.canShowCallout = true
+//           annotationView?.detailCalloutAccessoryView = detailsView
+//
+//          annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+//
         } else {
             annotationView?.annotation = annotation
         }
@@ -167,42 +168,47 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         annotationView?.image = UIImage(named: "fish")
 
-        configureDetailView(annotationView: annotationView!)
+       // configureDetailView(annotationView: annotationView!)
         
-        
+        //annotationView?.addSubview(detailsView)
         
          return annotationView
     
 
         }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let alert = UIAlertController(title: "Remove This Catch and All info attatched", message: "This can not be undone", preferredStyle: .actionSheet)
-        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
-        
-        alert.addAction(UIAlertAction(title: "DELETE", style: .default, handler: {action in self.delete(MKAnnotation.self)}))
-        alert.addAction(cancelAction)
-        self.present(alert, animated: true, completion: nil)
-        
-    }
-    func configureDetailView(annotationView: MKAnnotationView) {
-
-        
-
-        let detailView = detailsView
-        let views = ["detailView": detailView]
-    
-      sizeLabel.text = myLength
-        speciesLabel.text = myTime
-       
-        
-        detailView?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[detailView(300)]", options: [], metrics: nil, views: views))
-        detailView?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[detailView(200)]", options: [], metrics: nil, views: views))
-
-
-        annotationView.detailCalloutAccessoryView = detailView
-    }
+//    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+//        let alertController = KOAlertController("Remove This Catch and All info attatched", "This can not be undone")
 //
+//        alertController.addAction(KOAlertButton(.default, title:"Close")) {
+//
+//        }
+    //    self.present(alertController, animated: false) {}
+      //  let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+        
+//        alert.addAction(UIAlertAction(title: "DELETE", style: .default, handler: {action in self.delete(MKAnnotation.self)}))
+//        alert.addAction(cancelAction)
+     //   self.present(alert, animated: true, completion: nil)
+        
+  //  }
+//    func configureDetailView(annotationView: MKAnnotationView) {
+//
+//
+//
+//        let detailView = detailsView
+//        let views = ["detailView": detailView]
+//
+//     // sizeLabel.text = self.length
+//     //   speciesLabel.text = myTime
+//
+//
+//        detailView?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:[detailView(300)]", options: [], metrics: nil, views: views))
+//        detailView?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[detailView(200)]", options: [], metrics: nil, views: views))
+//
+//
+//        annotationView.detailCalloutAccessoryView = detailView
+//    }
+
 //    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
 //
 //
