@@ -184,13 +184,36 @@ final class MeasureViewController: UIViewController {
         savePicButton.isHidden = false
         savePicToPhone.isHidden = false
         
+        
+//        let alertPicVC = UIAlertController(title: "Nice Catch!", message: "What would you like to do with the picture?", preferredStyle: .actionSheet)
+       
+        
+        //alertPicVC.addAction(UIAlertAction(title: "Save to Phone?", style: .default)
+        
+//        let saveAction = UIAlertAction(title: "Save", style: .default) { action in
+//            let image = self.sceneView.snapshot(){
+//                savePic()
+//            }
+//        }
+//        alertPicVC.addAction(UIAlertAction(title: DistanceUnit.inch.title, style: .default) { [weak self] _ in
+//            self?.unit = .inch
+//        })
+//        alertPicVC.addAction(UIAlertAction(title: DistanceUnit.meter.title, style: .default) { [weak self] _ in
+//            self?.unit = .meter
+//        })
+//        alertPicVC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        present(alertPicVC, animated: true, completion: nil)
+//
+    
+
+        
        
     func didTakePic(_image: UIImage)  {
         
         }
     }
     
-    
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is ImageDisplayViewController{
@@ -211,6 +234,8 @@ final class MeasureViewController: UIViewController {
         savePicButton.isHidden = true
         savePicToPhone.isHidden = true
   picSaved.isHidden = false
+        
+           
     }
     
     

@@ -54,9 +54,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
     
 
-    @IBOutlet var detailsView: UIView!
-    @IBOutlet weak var speciesLabel: UILabel!
-    @IBOutlet weak var sizeLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -103,30 +100,30 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 newAnnotation.newWeatherCond = storedLocation.weather
 
         
-                let newLength: String?
-                let newCatchTime: String?
-                let newCatchBait: String?
-                let newCatchWater: String?
-                let newCatchWeather: String?
-                let newCatchNotes: String?
-                
-                newLength = storedLocation.length
-                newCatchTime = storedLocation.time
-                newCatchBait = storedLocation.bait
-                newCatchWater = storedLocation.water
-                newCatchWeather = storedLocation.weather
-                newCatchNotes = storedLocation.notes
-
-
-                myLength = newLength
-                myTime = newCatchTime
-                myBait = newCatchBait
-                myWater = newCatchWater
-                myWeather = newCatchWeather
-                myNotes = newCatchNotes
-                
-              sizeLabel.text = newAnnotation.subtitle
-                
+//                let newLength: String?
+//                let newCatchTime: String?
+//                let newCatchBait: String?
+//                let newCatchWater: String?
+//                let newCatchWeather: String?
+//                let newCatchNotes: String?
+//
+//                newLength = storedLocation.length
+//                newCatchTime = storedLocation.time
+//                newCatchBait = storedLocation.bait
+//                newCatchWater = storedLocation.water
+//                newCatchWeather = storedLocation.weather
+//                newCatchNotes = storedLocation.notes
+//
+//
+//                myLength = newLength
+//                myTime = newCatchTime
+//                myBait = newCatchBait
+//                myWater = newCatchWater
+//                myWeather = newCatchWeather
+//                myNotes = newCatchNotes
+//
+//
+//                
              
                 annotations.append(newAnnotation)
                 
@@ -156,17 +153,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
         if annotationView == nil {
             annotationView = FishAnnotationViewController(annotation: annotation, reuseIdentifier: reuseIdentifier)
-//           annotationView?.canShowCallout = true
-//           annotationView?.detailCalloutAccessoryView = detailsView
-//
-//          annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-//
+
         } else {
             annotationView?.annotation = annotation
         }
 
         
-        annotationView?.image = UIImage(named: "fish")
+       // annotationView?.image = UIImage(named: "fish")
 
        // configureDetailView(annotationView: annotationView!)
         
@@ -265,28 +258,28 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         
 }
-extension MKAnnotationView {
-    
-    func loadCustomLines(customLines: [String]) {
-        let stackView = self.stackView()
-        for line in customLines {
-            let label = UILabel()
-            label.text = line
-            stackView.addArrangedSubview(label)
-        }
-        self.detailCalloutAccessoryView = stackView
-    }
-    
-  
-    
-    private func stackView() -> UIStackView {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.alignment = .fill
-        return stackView
-    }
-}
+//extension MKAnnotationView {
+//    
+//    func loadCustomLines(customLines: [String]) {
+//        let stackView = self.stackView()
+//        for line in customLines {
+//            let label = UILabel()
+//            label.text = line
+//            stackView.addArrangedSubview(label)
+//        }
+//        self.detailCalloutAccessoryView = stackView
+//    }
+//    
+//  
+//    
+//    private func stackView() -> UIStackView {
+//        let stackView = UIStackView()
+//        stackView.axis = .vertical
+//        stackView.distribution = .fillEqually
+//        stackView.alignment = .fill
+//        return stackView
+//    }
+//}
 
 //extension Fish: MKAnnotation {
 //    public var coordinate: CLLocationCoordinate2D {
