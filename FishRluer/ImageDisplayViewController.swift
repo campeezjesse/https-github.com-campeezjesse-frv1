@@ -74,6 +74,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         mapView.delegate = self
         mapView.mapType = MKMapType.standard
         mapView.showsUserLocation = true
+       
         
     }
 
@@ -250,18 +251,18 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
 extension ImageDisplayViewController {
     fileprivate func setupView() {
         
-        showPic.image = showMyPic
-        fishLength.text = length
         
-    
+        formater.dateFormat = "MM/dd/yyyy 'at'  hh:mm a"
+        formater.amSymbol = "AM"
+        formater.pmSymbol = "PM"
         
-        formater.dateFormat = "MM/dd/yyyy   hh:mm"
         let result = formater.string(from: date)
+        
         catchTime.text = result
         
         let image = showMyPic
         showPic.image = image
-       // updateClassifications(for: image)
+       
         
         var currentLocation: CLLocation!
         

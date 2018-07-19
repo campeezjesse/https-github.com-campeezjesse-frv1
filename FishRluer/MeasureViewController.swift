@@ -32,7 +32,7 @@ final class MeasureViewController: UIViewController {
     
 
     @IBOutlet weak var savePicButton: UIButton!
-    @IBOutlet weak var picSaved: UIImageView!
+
 
     
     @IBOutlet weak var instructionsText: UILabel!
@@ -79,7 +79,7 @@ final class MeasureViewController: UIViewController {
         
       
         
-        let touch: UITouch = touches.first as! UITouch
+        let touch: UITouch = touches.first!
         
         if (touch.view == bottomPanel) {
          
@@ -103,7 +103,17 @@ final class MeasureViewController: UIViewController {
             bottomPanel.isHidden = true
             targetImageView.isHidden = true
             
-           
+            // the alert view
+            let alert = UIAlertController(title: "Take Picture", message: "to add details about fish and save to map", preferredStyle: .alert)
+            self.present(alert, animated: true, completion: nil)
+            
+            // change to desired number of seconds (in this case 5 seconds)
+            let when = DispatchTime.now() + 1.5
+            DispatchQueue.main.asyncAfter(deadline: when){
+                // your code with delay
+                alert.dismiss(animated: true, completion: nil)
+            }
+            
        
         }
     }
@@ -184,6 +194,17 @@ final class MeasureViewController: UIViewController {
         savePicButton.isHidden = false
         savePicToPhone.isHidden = false
         
+        // the alert view
+        let alert = UIAlertController(title: "Save Picture To Your Phone", message: "tap picture to add details to your catch", preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+        
+        // change to desired number of seconds (in this case 5 seconds)
+        let when = DispatchTime.now() + 2
+        DispatchQueue.main.asyncAfter(deadline: when){
+            // your code with delay
+            alert.dismiss(animated: true, completion: nil)
+        }
+        
         
 //        let alertPicVC = UIAlertController(title: "Nice Catch!", message: "What would you like to do with the picture?", preferredStyle: .actionSheet)
        
@@ -210,6 +231,7 @@ final class MeasureViewController: UIViewController {
        
     func didTakePic(_image: UIImage)  {
         
+       
         }
     }
     
@@ -225,6 +247,7 @@ final class MeasureViewController: UIViewController {
             vc?.length = messageLabel.text!
            
             stopRecording()
+            session.pause()
             
     }
 }
@@ -233,7 +256,18 @@ final class MeasureViewController: UIViewController {
         UIImageWriteToSavedPhotosAlbum(pic, self, nil, nil)
         savePicButton.isHidden = true
         savePicToPhone.isHidden = true
-  picSaved.isHidden = false
+ 
+        
+        // the alert view
+        let alert = UIAlertController(title: "Saved to phone", message: "so you can show it off later!", preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+        
+        // change to desired number of seconds (in this case 5 seconds)
+        let when = DispatchTime.now() + 2
+        DispatchQueue.main.asyncAfter(deadline: when){
+            // your code with delay
+            alert.dismiss(animated: true, completion: nil)
+        }
         
            
     }
@@ -275,7 +309,7 @@ extension MeasureViewController: ARSCNViewDelegate {
 
 extension MeasureViewController {
     @IBAction func meterButtonTapped(button: UIButton) {
-        let alertVC = UIAlertController(title: "Settings", message: "Please select distance unit options", preferredStyle: .actionSheet)
+        let alertVC = UIAlertController(title: "Settings", message: "Please select distance unit options", preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: DistanceUnit.centimeter.title, style: .default) { [weak self] _ in
             self?.unit = .centimeter
         })
@@ -328,7 +362,7 @@ extension MeasureViewController {
         photoTakenButton.isHidden = true
         savePicButton.isHidden = true
         savePicToPhone.isHidden = true
-        picSaved.isHidden = true
+       
         pressToRecLabel.isHidden = false
         pressToStopRecLabel.isHidden = true
         stopButton.isHidden = true
