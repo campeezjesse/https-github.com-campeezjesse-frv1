@@ -30,13 +30,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var time: String = ""
     
    
-    var myLength: String? = ""
-    var myTime: String? = ""
-    var myBait: String? = ""
-    var myWeather: String? = ""
-    var myWater: String? = ""
-    var myNotes: String? = ""
-    
+//    var myLength: String? = ""
+//    var myTime: String? = ""
+//    var myBait: String? = ""
+//    var myWeather: String? = ""
+//    var myWater: String? = ""
+//    var myNotes: String? = ""
+//
     var myFishAnnotation: [MyAnnotation] = []
     
     
@@ -208,35 +208,35 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 //
 //    }
 //
-    func stopRecording() {
-        
-        RPScreenRecorder.shared().stopRecording { (previewController, error) in
-            if error == nil {
-                
-                let alertController = UIAlertController(title: "Recording", message: "You can view your recording to edit and share, or delete to try again", preferredStyle: .alert)
-                
-                let discardAction = UIAlertAction(title: "Delete", style: .default) { (action: UIAlertAction) in
-                    RPScreenRecorder.shared().discardRecording(handler: { () -> Void in
-                        // Executed once recording has successfully been discarded
-                    })
-                }
-                
-                let viewAction = UIAlertAction(title: "View", style: .default, handler: { (action) in
-                    previewController?.previewControllerDelegate = self as? RPPreviewViewControllerDelegate
-                    self.present(previewController!, animated: true, completion: nil)
-                })
-                
-                alertController.addAction(discardAction)
-                alertController.addAction(viewAction)
-                
-                self.present(alertController, animated: true, completion: nil)
-                
-            } else {
-                print(error ?? "")
-            }
-        }
-        
-    }
+//    func stopRecording() {
+//
+//        RPScreenRecorder.shared().stopRecording { (previewController, error) in
+//            if error == nil {
+//
+//                let alertController = UIAlertController(title: "Recording", message: "You can view your recording to edit and share, or delete to try again", preferredStyle: .alert)
+//
+//                let discardAction = UIAlertAction(title: "Delete", style: .default) { (action: UIAlertAction) in
+//                    RPScreenRecorder.shared().discardRecording(handler: { () -> Void in
+//                        // Executed once recording has successfully been discarded
+//                    })
+//                }
+//
+//                let viewAction = UIAlertAction(title: "View", style: .default, handler: { (action) in
+//                    previewController?.previewControllerDelegate = self as? RPPreviewViewControllerDelegate
+//                    self.present(previewController!, animated: true, completion: nil)
+//                })
+//
+//                alertController.addAction(discardAction)
+//                alertController.addAction(viewAction)
+//
+//                self.present(alertController, animated: true, completion: nil)
+//
+//            } else {
+//                print(error ?? "")
+//            }
+//        }
+//
+//   }
 
 }
 

@@ -110,7 +110,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save pic to phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLC-EE-hJZ">
-                                        <rect key="frame" x="280.5" y="48" width="86.5" height="12"/>
+                                        <rect key="frame" x="280" y="48" width="87" height="12"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <color key="textColor" red="1" green="0.05529965748" blue="0.10268027289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -154,7 +154,6 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="showPic:" destination="gN0-Dv-Pgk" eventType="touchUpInside" id="02n-5p-zWd"/>
                                     <segue destination="feL-YA-4KA" kind="show" identifier="addInfoToPic" id="klf-jH-LwW"/>
                                 </connections>
                             </button>
@@ -227,6 +226,12 @@
                                     <constraint firstItem="3jK-R2-zlg" firstAttribute="leading" secondItem="jI7-cr-Qrh" secondAttribute="leading" constant="31" id="zpH-iZ-ufO"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Point camera at fish..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JBt-dB-Eqz">
+                                <rect key="frame" x="80.5" y="349" width="214.5" height="26"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="22"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -244,6 +249,7 @@
                             <constraint firstItem="xUQ-WK-nff" firstAttribute="centerX" secondItem="h3W-oo-j3I" secondAttribute="centerX" id="LBJ-EM-E7i"/>
                             <constraint firstItem="S1T-88-EGz" firstAttribute="centerX" secondItem="OgF-PA-VRC" secondAttribute="centerX" id="M54-mc-ZfD"/>
                             <constraint firstItem="lDO-DL-JKe" firstAttribute="centerX" secondItem="hHd-T4-7SA" secondAttribute="centerX" id="MmC-36-5iK"/>
+                            <constraint firstItem="JBt-dB-Eqz" firstAttribute="top" secondItem="Sd1-0O-Dmd" secondAttribute="bottom" constant="8" symbolic="YES" id="Oko-QU-W70"/>
                             <constraint firstItem="AoU-wC-ykI" firstAttribute="trailing" secondItem="Koc-i9-ovN" secondAttribute="trailing" id="Pfk-fs-e5m"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cZc-2P-ecF" secondAttribute="trailing" constant="20" symbolic="YES" id="QiT-Am-OjI"/>
                             <constraint firstItem="hbD-Dw-WzR" firstAttribute="bottom" secondItem="Xvd-gY-HQZ" secondAttribute="bottom" constant="12" id="RCh-4e-Wcn"/>
@@ -264,6 +270,7 @@
                             <constraint firstItem="xUQ-WK-nff" firstAttribute="baseline" secondItem="fnA-Nx-2vX" secondAttribute="baseline" id="oTw-BQ-VGI"/>
                             <constraint firstItem="hbD-Dw-WzR" firstAttribute="trailing" secondItem="Sd1-0O-Dmd" secondAttribute="trailing" id="q0e-Ej-bvB"/>
                             <constraint firstItem="jI7-cr-Qrh" firstAttribute="trailing" secondItem="AoU-wC-ykI" secondAttribute="trailing" constant="-81" id="qCR-2K-tSW"/>
+                            <constraint firstItem="JBt-dB-Eqz" firstAttribute="centerX" secondItem="h3W-oo-j3I" secondAttribute="centerX" id="sMT-2C-Jht"/>
                             <constraint firstItem="AoU-wC-ykI" firstAttribute="top" secondItem="h3W-oo-j3I" secondAttribute="top" id="sPv-pM-xrd"/>
                             <constraint firstItem="OgF-PA-VRC" firstAttribute="leading" secondItem="Xvd-gY-HQZ" secondAttribute="trailing" constant="14" id="tM4-w5-dpv"/>
                             <constraint firstItem="SRQ-WC-kZe" firstAttribute="centerX" secondItem="h3W-oo-j3I" secondAttribute="centerX" id="z16-D4-43u"/>
@@ -282,6 +289,7 @@
                         <outlet property="outputImageView" destination="OgF-PA-VRC" id="rPh-1D-Byf"/>
                         <outlet property="photoTaken" destination="OgF-PA-VRC" id="Ew4-1B-drq"/>
                         <outlet property="photoTakenButton" destination="S1T-88-EGz" id="UQM-g2-Z2K"/>
+                        <outlet property="pointAtFishLabel" destination="JBt-dB-Eqz" id="Wg3-mx-fzN"/>
                         <outlet property="pressToRecLabel" destination="fnA-Nx-2vX" id="N8e-4i-tD0"/>
                         <outlet property="pressToStopRecLabel" destination="hHd-T4-7SA" id="Ufe-9w-HxS"/>
                         <outlet property="recVid" destination="lDO-DL-JKe" id="d61-jH-rdW"/>
@@ -460,7 +468,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" text="Weather:  104 partly cloudy no wind" borderStyle="bezel" adjustsFontSizeToFit="NO" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="DJ5-rQ-GbN">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" text="Weather:  " borderStyle="bezel" adjustsFontSizeToFit="NO" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="DJ5-rQ-GbN">
                                                 <rect key="frame" x="0.0" y="268" width="375" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="fXO-NG-OBh"/>
@@ -469,7 +477,7 @@
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" text="Bait:  Dropshot Roboworm morning Dawn" borderStyle="bezel" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="37v-BP-5Xu">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" text="Bait:  " borderStyle="bezel" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="37v-BP-5Xu">
                                                 <rect key="frame" x="0.0" y="215" width="375" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="7kv-iO-nVZ"/>
@@ -478,7 +486,7 @@
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="Water Depth/Temp:  6 foot 76 deg" borderStyle="bezel" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="goY-q8-bSE">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="Water Depth/Temp:  " borderStyle="bezel" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="goY-q8-bSE">
                                                 <rect key="frame" x="0.0" y="162" width="375" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="oIr-9R-ZDW"/>
@@ -487,7 +495,7 @@
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="Date/Time:  06/12/2018  11:42" borderStyle="bezel" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Z7F-y5-WVB">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="Date/Time:  " borderStyle="bezel" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Z7F-y5-WVB">
                                                 <rect key="frame" x="0.0" y="109" width="375" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="tse-LR-Qmc"/>
@@ -496,7 +504,7 @@
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light" returnKeyType="done"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="length: 21.34 inches" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LG1-Xy-gwJ">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="length: " borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LG1-Xy-gwJ">
                                                 <rect key="frame" x="0.0" y="56" width="375" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="Z4l-uq-FxB"/>
@@ -505,7 +513,7 @@
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="Species:  Largemouth" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="shc-HW-zIT">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="Species:  " borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="shc-HW-zIT">
                                                 <rect key="frame" x="0.0" y="3" width="375" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="Pxu-KL-lfX"/>
@@ -514,7 +522,7 @@
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Notes: Fish was tight to trees very agressive " translatesAutoresizingMaskIntoConstraints="NO" id="qy9-M5-eNz">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Notes: " translatesAutoresizingMaskIntoConstraints="NO" id="qy9-M5-eNz">
                                                 <rect key="frame" x="8" y="321" width="375" height="69"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -669,7 +677,7 @@
         <image name="targetWhite" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="UUB-w3-whT"/>
-        <segue reference="oXl-Jv-wzw"/>
+        <segue reference="ia2-2P-1th"/>
+        <segue reference="h46-xh-9vR"/>
     </inferredMetricsTieBreakers>
 </document>

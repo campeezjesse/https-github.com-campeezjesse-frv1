@@ -19,11 +19,17 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>3</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>For AR</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>To show you the location of your fish</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>To show you where the fish are</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To show where you caught it</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>To save pics of your fish</string>
 	<key>NSPhotoLibraryUsageDescription</key>
@@ -49,11 +55,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>To show you where the fish are</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>To show you the location of your fish</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>To show where you caught it</string>
 </dict>
 </plist>

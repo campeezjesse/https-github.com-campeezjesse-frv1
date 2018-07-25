@@ -39,7 +39,8 @@ final class MeasureViewController: UIViewController {
 
     @IBOutlet weak var photoTakenButton: UIButton!
     @IBOutlet weak var photoTaken: UIImageView!
-
+    @IBOutlet weak var pointAtFishLabel: UILabel!
+    
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var cameraButtonImage: UIImageView!
     
@@ -108,7 +109,7 @@ final class MeasureViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
             
             // change to desired number of seconds (in this case 5 seconds)
-            let when = DispatchTime.now() + 1.5
+            let when = DispatchTime.now() + 1
             DispatchQueue.main.asyncAfter(deadline: when){
                 // your code with delay
                 alert.dismiss(animated: true, completion: nil)
@@ -194,37 +195,26 @@ final class MeasureViewController: UIViewController {
         savePicButton.isHidden = false
         savePicToPhone.isHidden = false
         
-        // the alert view
-        let alert = UIAlertController(title: "Save Picture To Your Phone", message: "tap picture to add details to your catch", preferredStyle: .alert)
+
+
+        let alert = UIAlertController(title: "Nice Catch!", message: "What would you like to do with the picture?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+        
+        
+        
+        alert.addAction(UIAlertAction(title: "Save pic and add details", style: .default, handler: {
+            action in self.performSegue(withIdentifier: "addInfoToPic", sender: self)
+            self.savePic(alert)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Save to photos", style: .default, handler: {action in self.savePic(alert)}))
+        
+        alert.addAction(UIAlertAction(title: "Add catch details to save on map ", style: .default, handler: {action in self.performSegue(withIdentifier: "addInfoToPic", sender: self)}))
+        
+        alert.addAction(cancelAction)
+        
         self.present(alert, animated: true, completion: nil)
         
-        // change to desired number of seconds (in this case 5 seconds)
-        let when = DispatchTime.now() + 2
-        DispatchQueue.main.asyncAfter(deadline: when){
-            // your code with delay
-            alert.dismiss(animated: true, completion: nil)
-        }
-        
-        
-//        let alertPicVC = UIAlertController(title: "Nice Catch!", message: "What would you like to do with the picture?", preferredStyle: .actionSheet)
-       
-        
-        //alertPicVC.addAction(UIAlertAction(title: "Save to Phone?", style: .default)
-        
-//        let saveAction = UIAlertAction(title: "Save", style: .default) { action in
-//            let image = self.sceneView.snapshot(){
-//                savePic()
-//            }
-//        }
-//        alertPicVC.addAction(UIAlertAction(title: DistanceUnit.inch.title, style: .default) { [weak self] _ in
-//            self?.unit = .inch
-//        })
-//        alertPicVC.addAction(UIAlertAction(title: DistanceUnit.meter.title, style: .default) { [weak self] _ in
-//            self?.unit = .meter
-//        })
-//        alertPicVC.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//        present(alertPicVC, animated: true, completion: nil)
-//
     
 
         
@@ -263,7 +253,7 @@ final class MeasureViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
         
         // change to desired number of seconds (in this case 5 seconds)
-        let when = DispatchTime.now() + 2
+        let when = DispatchTime.now() + 0.5
         DispatchQueue.main.asyncAfter(deadline: when){
             // your code with delay
             alert.dismiss(animated: true, completion: nil)
@@ -272,12 +262,7 @@ final class MeasureViewController: UIViewController {
            
     }
     
-    
-    
-    
-    @IBAction func showPic(_ sender: Any) {
-       
-    }
+  
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -350,6 +335,7 @@ extension MeasureViewController {
         sceneView.delegate = self
         sceneView.session = session
         loadingView.startAnimating()
+        pointAtFishLabel.isHidden = false
        
         messageLabel.text = "Looking for your fish..."
         messageLabel.lineBreakMode = .byWordWrapping
@@ -393,6 +379,7 @@ extension MeasureViewController {
             messageLabel.text = "Get Length"
         }
         loadingView.stopAnimating()
+        pointAtFishLabel.isHidden = true
         if isMeasuring {
             if startValue == vectorZero {
                 startValue = worldPosition
@@ -403,6 +390,13 @@ extension MeasureViewController {
             currentLine?.update(to: endValue)
             messageLabel.text = currentLine?.distance(to: endValue) ?? "Calculating…"
         }
+//        pointAtFishLabel.isHidden = true
+//        if isMeasuring {
+//            if startValue == vectorZero {
+//                startValue = worldPosition
+//                currentLine = Line(sceneView: sceneView, startVector: startValue, unit: unit)
+//                
+//            }
     }
 }
 extension MeasureViewController: RPPreviewViewControllerDelegate {

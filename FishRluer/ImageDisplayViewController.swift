@@ -16,13 +16,13 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     
     
     var showMyPic = UIImage()
-    var fishKind: String = ""
-    var length: String = ""
+    var fishKind: String? = ""
+    var length: String? = ""
     var date = Date()
-    var waterTempDepth: String = ""
-    var bait: String = ""
-    var weatherCond: String = ""
-    var notes: String = ""
+    var waterTempDepth: String? = ""
+    var bait: String? = ""
+    var weatherCond: String? = ""
+    var notes: String? = ""
     
 
    
@@ -58,9 +58,15 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     private var fish: Fish?
     private var locationList: [CLLocation] = []
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        
+       
+       
+
         
         
         setupView()
@@ -77,9 +83,11 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
        
         
     }
-
+    
+   
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
+      
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         
         
@@ -93,6 +101,8 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
        
         
         let location = locations.last! as CLLocation
+            
+     
         let catchLocation = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
         let center = catchLocation
         let region = MKCoordinateRegionMake(center, MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025))
@@ -138,49 +148,76 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         return annotationView
     }
     
-    func stopRecording() {
-        
-        RPScreenRecorder.shared().stopRecording { (previewController, error) in
-            if error == nil {
-                
-                let alertController = UIAlertController(title: "Recording", message: "You can view your recording to edit and share, or delete to try again", preferredStyle: .alert)
-                
-                let discardAction = UIAlertAction(title: "Delete", style: .default) { (action: UIAlertAction) in
-                    RPScreenRecorder.shared().discardRecording(handler: { () -> Void in
-                        // Executed once recording has successfully been discarded
-                    })
-                }
-                
-                let viewAction = UIAlertAction(title: "View", style: .default, handler: { (action) in
-                    previewController?.previewControllerDelegate = self as? RPPreviewViewControllerDelegate
-                    self.present(previewController!, animated: true, completion: nil)
-                })
-                
-                alertController.addAction(discardAction)
-                alertController.addAction(viewAction)
-                
-                self.present(alertController, animated: true, completion: nil)
-                
-            } else {
-                print(error ?? "")
-            }
-        }
-        
-    }
+//    func stopRecording() {
+//        
+//        RPScreenRecorder.shared().stopRecording { (previewController, error) in
+//            if error == nil {
+//                
+//                let alertController = UIAlertController(title: "Recording", message: "You can view your recording to edit and share, or delete to try again", preferredStyle: .alert)
+//                
+//                let discardAction = UIAlertAction(title: "Delete", style: .default) { (action: UIAlertAction) in
+//                    RPScreenRecorder.shared().discardRecording(handler: { () -> Void in
+//                        // Executed once recording has successfully been discarded
+//                    })
+//                }
+//                
+//                let viewAction = UIAlertAction(title: "View", style: .default, handler: { (action) in
+//                    previewController?.previewControllerDelegate = self as? RPPreviewViewControllerDelegate
+//                    self.present(previewController!, animated: true, completion: nil)
+//                })
+//                
+//                alertController.addAction(discardAction)
+//                alertController.addAction(viewAction)
+//                
+//                self.present(alertController, animated: true, completion: nil)
+//                
+//            } else {
+//                print(error ?? "")
+//            }
+//        }
+//        
+//    }
 
 
     
         
     @IBAction func addInfo(_ sender: UIButton) {
     
-   
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined, .restricted, .denied:
+                let alert = UIAlertController(title: "Location Needed", message: "There was an error finding you!", preferredStyle: .alert)
+                
+                let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+                    guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                        return
+                    }
+                    
+                    if UIApplication.shared.canOpenURL(settingsUrl) {
+                        UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                            print("Settings opened: \(success)") // Prints true
+                        })
+                    }
+                }
+                alert.addAction(settingsAction)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+                alert.addAction(cancelAction)
+                
+                present(alert, animated: true, completion: nil)
+            
+                
+            case .authorizedAlways, .authorizedWhenInUse:
+         
+            
+            
+        
     
-        let fishKind = fishSpeciesLabel.text!
-        let waterTempDepth = waterTempConditions.text!
-        let bait =  baitUsed.text!
-        let weatherCond = currentWeather.text!
-        let notes = moreNotes.text!
-        let catchTimeandDate = catchTime.text!
+        let fishKind = fishSpeciesLabel.text
+        let waterTempDepth = waterTempConditions.text
+        let bait =  baitUsed.text
+        let weatherCond = currentWeather.text
+        let notes = moreNotes.text
+        let catchTimeandDate = catchTime.text
     
 
         let coordinate = pointAnnotation.coordinate
@@ -198,9 +235,10 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
-        print("saved bitches")
+       
         
-        let alert = UIAlertController(title: "Saved!", message: "See your fish on the map, or continue catching", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Saved!", message: "See your fish on the map, or continue catching", preferredStyle: .alert)
+            
         let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
         
         alert.addAction(UIAlertAction(title: "Go to map", style: .default, handler: {action in self.performSegue(withIdentifier: "showCatchDetails", sender: self)}))
@@ -208,7 +246,8 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         self.present(alert, animated: true, completion: nil)
 
     }
-    
+        }
+    }
         
     
     @IBAction func goBackButton(_ sender: Any) {
@@ -219,6 +258,8 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is MapViewController{
+            
+            
             
             let mapVC = segue.destination as? MapViewController
         
@@ -263,6 +304,7 @@ extension ImageDisplayViewController {
         let image = showMyPic
         showPic.image = image
        
+        fishLength.text = length
         
         var currentLocation: CLLocation!
         
@@ -276,6 +318,7 @@ extension ImageDisplayViewController {
             longitudeLabel.text = "\(currentLocation.coordinate.longitude)"
         }
        
+        
     }
 }
 
