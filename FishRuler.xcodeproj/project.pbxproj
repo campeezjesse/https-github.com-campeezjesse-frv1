@@ -24,6 +24,7 @@
 		7F70911F20C83AE700265230 /* ARSCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70911E20C83AE700265230 /* ARSCNView.swift */; };
 		7F70912120C83B6200265230 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70912020C83B6200265230 /* SCNVector3.swift */; };
 		7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */; };
+		7FDDD29021114C400048E28E /* PicturePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDDD28F21114C400048E28E /* PicturePreviewViewController.swift */; };
 		7FDFA4E02110D45A00F831A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDFA4DF2110D45A00F831A2 /* AppDelegate.swift */; };
 		D63F34634AF6DA967E3FF56C /* Pods_FishRuler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CCDBA481F8C75AF92153C3F /* Pods_FishRuler.framework */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		7F70911E20C83AE700265230 /* ARSCNView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSCNView.swift; sourceTree = "<group>"; };
 		7F70912020C83B6200265230 /* SCNVector3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3.swift; sourceTree = "<group>"; };
 		7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
+		7FDDD28F21114C400048E28E /* PicturePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturePreviewViewController.swift; sourceTree = "<group>"; };
 		7FDFA4DF2110D45A00F831A2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +126,7 @@
 		7F70911D20C83A5E00265230 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				7FDDD28F21114C400048E28E /* PicturePreviewViewController.swift */,
 				7F05756720F81D17008B3101 /* myAnnotation.swift */,
 				7F23050620F58BAD00052AB2 /* CoreDataStack.swift */,
 				7F6DCD9220F3EDD1004D22C1 /* CatchAnnotation.swift */,
@@ -271,6 +274,7 @@
 			files = (
 				7F6DCD4920E583FF004D22C1 /* MapViewController.swift in Sources */,
 				7F05758620FECC83008B3101 /* FishAnnotationViewController.swift in Sources */,
+				7FDDD29021114C400048E28E /* PicturePreviewViewController.swift in Sources */,
 				7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */,
 				7F05756820F81D18008B3101 /* myAnnotation.swift in Sources */,
 				7F00DCEF20BE3A8F001A2C9E /* MeasureViewController.swift in Sources */,
@@ -435,7 +439,10 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FishRluer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Campeez.FishRuler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -455,7 +462,10 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = FishRluer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Campeez.FishRuler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

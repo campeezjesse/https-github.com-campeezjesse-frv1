@@ -37,17 +37,19 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var startMeasureButton: UIButton!
     @IBOutlet weak var stopMeasureButton: UIButton!
 
+    @IBOutlet weak var buttonViewParent: UIView!
     @IBOutlet weak var recAnimation: NVActivityIndicatorView!
     
+    @IBOutlet weak var cameraButton: UIButton!
     
     
 
-    @IBOutlet weak var photoTakenButton: UIButton!
+//    @IBOutlet weak var photoTakenButton: UIButton!
     @IBOutlet weak var photoTaken: UIImageView!
-    @IBOutlet weak var pointAtFishLabel: UILabel!
+  //  @IBOutlet weak var pointAtFishLabel: UILabel!
     
-    @IBOutlet weak var cameraButton: UIButton!
-    @IBOutlet weak var cameraButtonImage: UIImageView!
+   // @IBOutlet weak var cameraButton: UIButton!
+  //  @IBOutlet weak var cameraButtonImage: UIImageView!
     
     fileprivate lazy var session = ARSession()
     fileprivate lazy var sessionConfiguration = ARWorldTrackingConfiguration()
@@ -60,8 +62,8 @@ final class MeasureViewController: UIViewController {
     fileprivate lazy var unit: DistanceUnit = .inch
     fileprivate lazy var isRecording: Bool = false
     
-    
    
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,16 +108,16 @@ final class MeasureViewController: UIViewController {
             targetImageView.isHidden = true
             stopMeasureButton.isHidden = true
             
-            // the alert view
-            let alert = UIAlertController(title: "Take Picture", message: "to add details about fish and save to map", preferredStyle: .alert)
-            self.present(alert, animated: true, completion: nil)
-            
-            // change to desired number of seconds (in this case 5 seconds)
-            let when = DispatchTime.now() + 1
-            DispatchQueue.main.asyncAfter(deadline: when){
-                // your code with delay
-                alert.dismiss(animated: true, completion: nil)
-            }
+//            // the alert view
+//            let alert = UIAlertController(title: "Take Picture", message: "to add details about fish and save to map", preferredStyle: .alert)
+//            self.present(alert, animated: true, completion: nil)
+//
+//            // change to desired number of seconds (in this case 5 seconds)
+//            let when = DispatchTime.now() + 1
+//            DispatchQueue.main.asyncAfter(deadline: when){
+//                // your code with delay
+//                alert.dismiss(animated: true, completion: nil)
+//            }
             
        
         }
@@ -127,8 +129,11 @@ final class MeasureViewController: UIViewController {
   
         if RPScreenRecorder.shared().isAvailable {
             
+            
             RPScreenRecorder.shared().startRecording(handler: { (error) in
                 if error == nil {
+                    print("recording")
+                    
                 } else {
                     print(error ?? "")
                     self.messageLabel.text = "Error recording occurred"
@@ -139,10 +144,12 @@ final class MeasureViewController: UIViewController {
 
     func stopRecording() {
        
-        RPScreenRecorder.shared().stopRecording { (previewController, error) in
+        RPScreenRecorder.shared().stopRecording { [unowned self] (previewController, error) in
             if error == nil {
                 
-                let alertController = UIAlertController(title: "Recording", message: "You can view your recording to edit and share, or delete to try again", preferredStyle: .alert)
+                print("recording ended")
+                
+                let alertController = UIAlertController(title: "Done", message: "You can view your video to edit and share, or delete to try again", preferredStyle: .alert)
                 
                 let discardAction = UIAlertAction(title: "Delete", style: .default) { (action: UIAlertAction) in
                     RPScreenRecorder.shared().discardRecording(handler: { () -> Void in
@@ -167,35 +174,10 @@ final class MeasureViewController: UIViewController {
         
     }
 
-    
-    
-//    @IBAction func startVideoRec(_ sender: Any) {
-//        if isRecording {
-//            stopRecording()
-//            isRecording = false
-//        } else {
-//            startRecording()
-//            isRecording = true
-//            //pressToRecLabel.isHidden = true
-//            pressToStopRecLabel.isHidden = false
-//            stopButton.isHidden = false
-//            recVid.isHidden = true
-//        }
-//    }
-//
-//
-//    @IBAction func stopRec(_ sender: Any) {
-//        stopRecording()
-//        pressToRecLabel.isHidden = false
-//        pressToStopRecLabel.isHidden = true
-//        stopButton.isHidden = true
-//        recVid.isHidden = false
-//    }
-    
     @IBAction func takePic(_ sender: Any) {
        outputImageView.image = sceneView.snapshot()
         photoTaken.isHidden = false
-        photoTakenButton.isHidden = false
+       // photoTakenButton.isHidden = false
         savePicButton.isHidden = false
         savePicToPhone.isHidden = false
         
@@ -219,32 +201,23 @@ final class MeasureViewController: UIViewController {
         
         self.present(alert, animated: true, completion: nil)
         
-    
-
-        
-       
-    func didTakePic(_image: UIImage)  {
-        
-       
-        }
+   
     }
-    
-
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is ImageDisplayViewController{
+        if segue.destination is PicturePreviewViewController{
             
-            let vc = segue.destination as? ImageDisplayViewController
+            let vc = segue.destination as? PicturePreviewViewController
             
-         let myPic = sceneView.snapshot()
+            let myPic = sceneView.snapshot()
             vc?.showMyPic = myPic
-            vc?.length = messageLabel.text!
-           
-            stopRecording()
             session.pause()
             
+        }
     }
-}
+
+    
+
     @IBAction func savePic(_ sender: Any) {
         let pic = sceneView.snapshot()
         UIImageWriteToSavedPhotosAlbum(pic, self, nil, nil)
@@ -323,7 +296,7 @@ extension MeasureViewController {
         stopMeasureButton.isHidden = true
         
         photoTaken.isHidden = true
-        photoTakenButton.isHidden = true
+      //  photoTakenButton.isHidden = true
         savePicButton.isHidden = true
         savePicToPhone.isHidden = true
         targetImageView.isHidden = false
@@ -340,8 +313,7 @@ extension MeasureViewController {
         sceneView.delegate = self
         sceneView.session = session
         loadingView.startAnimating()
-        pointAtFishLabel.isHidden = false
-       
+     
         messageLabel.text = "Looking for your fish..."
         messageLabel.lineBreakMode = .byWordWrapping
         messageLabel.numberOfLines = 0
@@ -350,9 +322,7 @@ extension MeasureViewController {
         startMeasureButton.isHidden = false
         stopMeasureButton.isHidden = true
         cameraButton.isHidden = false
-        cameraButtonImage.isHidden = false
-        
-        photoTakenButton.isHidden = true
+    
         savePicButton.isHidden = true
         savePicToPhone.isHidden = true
        
@@ -373,11 +343,12 @@ extension MeasureViewController {
         self.stopMeasureButton.layer.cornerRadius = 5
         self.stopMeasureButton.layer.masksToBounds = true
         
+       cameraButton.layer.borderWidth = 8
+        cameraButton.layer.cornerRadius = cameraButton.frame.height/2
+        cameraButton.layer.masksToBounds = false
         
-        
-        
-        
-        
+
+    
         // Add "long" press gesture recognizer
         let tap = UILongPressGestureRecognizer(target: self, action: #selector(tapHandler))
         tap.minimumPressDuration = 0.3
@@ -387,24 +358,26 @@ extension MeasureViewController {
     // called by gesture recognizer
     @objc func tapHandler(gesture: UITapGestureRecognizer) {
         
-        
+      
         // handle touch down and touch up events separately
         if gesture.state == .began {
-            cameraButtonImage.isHidden = true
+            cameraButton.isHidden = true
             recAnimation.isHidden = false
             pressToStopRecLabel.isHidden = false
             recAnimation.startAnimating()
-            startRecording()
-            
+           startRecording()
+     
             
         } else if  gesture.state == .ended {
-            cameraButtonImage.isHidden = false
+            print("touch ended")
+       stopRecording()
             recAnimation.isHidden = true
             pressToStopRecLabel.isHidden = true
             recAnimation.stopAnimating()
-            stopRecording()
+            cameraButton.isHidden = false 
+        }
     }
-    }
+    
     fileprivate func resetValues() {
         isMeasuring = false
         startValue = SCNVector3()
@@ -423,7 +396,7 @@ extension MeasureViewController {
             messageLabel.text = "Get Length"
         }
         loadingView.stopAnimating()
-        pointAtFishLabel.isHidden = true
+  
         if isMeasuring {
             if startValue == vectorZero {
                 startValue = worldPosition
@@ -434,13 +407,7 @@ extension MeasureViewController {
             currentLine?.update(to: endValue)
             messageLabel.text = currentLine?.distance(to: endValue) ?? "Calculating…"
         }
-//        pointAtFishLabel.isHidden = true
-//        if isMeasuring {
-//            if startValue == vectorZero {
-//                startValue = worldPosition
-//                currentLine = Line(sceneView: sceneView, startVector: startValue, unit: unit)
-//                
-//            }
+
     }
 }
 extension MeasureViewController: RPPreviewViewControllerDelegate {
@@ -452,5 +419,16 @@ extension MeasureViewController: RPPreviewViewControllerDelegate {
     /* @abstract Called when the view controller is finished and returns a set of activity types that the user has completed on the recording. The built in activity types are listed in UIActivity.h. */
     public func previewController(_ previewController: RPPreviewViewController, didFinishWithActivityTypes activityTypes: Set<String>) {
         
+    }
+}
+
+extension UILabel {
+    func blink() {
+        self.alpha = 0.0;
+        UIView.animate(withDuration: 0.4, //Time duration you want,
+            delay: 0.0,
+            options: [.curveEaseInOut, .autoreverse, .repeat],
+            animations: { [weak self] in self?.alpha = 1.0 },
+            completion: { [weak self] _ in self?.alpha = 0.0 })
     }
 }
