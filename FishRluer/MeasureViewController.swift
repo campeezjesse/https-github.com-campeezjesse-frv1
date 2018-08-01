@@ -11,6 +11,7 @@ import SceneKit
 import ARKit
 import CoreLocation
 import ReplayKit
+import NVActivityIndicatorView
 
 
 final class MeasureViewController: UIViewController {
@@ -20,22 +21,26 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var messageLabel: UILabel!
 
     @IBOutlet weak var savePicToPhone: UILabel!
-    @IBOutlet weak var bottomPanel: UIView!
+
     @IBOutlet weak var resetButton: UIButton!
     
     @IBOutlet weak var outputImageView: UIImageView!
     @IBOutlet weak var titleView: UIView!
-    @IBOutlet weak var recVid: UIButton!
-    @IBOutlet weak var stopButton: UIButton!
-    @IBOutlet weak var pressToRecLabel: UILabel!
+//    @IBOutlet weak var recVid: UIButton!
+//    @IBOutlet weak var stopButton: UIButton!
+//    @IBOutlet weak var pressToRecLabel: UILabel!
     @IBOutlet weak var pressToStopRecLabel: UILabel!
     
 
     @IBOutlet weak var savePicButton: UIButton!
 
+    @IBOutlet weak var startMeasureButton: UIButton!
+    @IBOutlet weak var stopMeasureButton: UIButton!
 
+    @IBOutlet weak var recAnimation: NVActivityIndicatorView!
     
-    @IBOutlet weak var instructionsText: UILabel!
+    
+    
 
     @IBOutlet weak var photoTakenButton: UIButton!
     @IBOutlet weak var photoTaken: UIImageView!
@@ -56,6 +61,8 @@ final class MeasureViewController: UIViewController {
     fileprivate lazy var isRecording: Bool = false
     
     
+   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupScene()
@@ -74,35 +81,30 @@ final class MeasureViewController: UIViewController {
     }
 
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        super.touchesBegan(touches, with: event)
-        
-      
-        
-        let touch: UITouch = touches.first!
-        
-        if (touch.view == bottomPanel) {
-         
+    @IBAction func startMeasurePressed(_ sender: Any) {
+   
         
         resetValues()
         isMeasuring = true
         targetImageView.image = UIImage(named: "targetGreen")
-        bottomPanel.isHidden = true
-            
+        startMeasureButton.isHidden = true
+        stopMeasureButton.isHidden = false
+        
             
         }
-    }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+    @IBAction func stopMeasurePressed(_ sender: Any) {
+  
         isMeasuring = false
         targetImageView.image = UIImage(named: "targetWhite")
         if let line = currentLine {
             lines.append(line)
             currentLine = nil
             resetButton.isHidden = false
-            bottomPanel.isHidden = true
+            startMeasureButton.isHidden = true
             targetImageView.isHidden = true
+            stopMeasureButton.isHidden = true
             
             // the alert view
             let alert = UIAlertController(title: "Take Picture", message: "to add details about fish and save to map", preferredStyle: .alert)
@@ -165,28 +167,30 @@ final class MeasureViewController: UIViewController {
         
     }
 
-    @IBAction func startVideoRec(_ sender: Any) {
-        if isRecording {
-            stopRecording()
-            isRecording = false
-        } else {
-            startRecording()
-            isRecording = true
-            pressToRecLabel.isHidden = true
-            pressToStopRecLabel.isHidden = false
-            stopButton.isHidden = false
-            recVid.isHidden = true
-        }
-    }
     
     
-    @IBAction func stopRec(_ sender: Any) {
-        stopRecording()
-        pressToRecLabel.isHidden = false
-        pressToStopRecLabel.isHidden = true
-        stopButton.isHidden = true
-        recVid.isHidden = false
-    }
+//    @IBAction func startVideoRec(_ sender: Any) {
+//        if isRecording {
+//            stopRecording()
+//            isRecording = false
+//        } else {
+//            startRecording()
+//            isRecording = true
+//            //pressToRecLabel.isHidden = true
+//            pressToStopRecLabel.isHidden = false
+//            stopButton.isHidden = false
+//            recVid.isHidden = true
+//        }
+//    }
+//
+//
+//    @IBAction func stopRec(_ sender: Any) {
+//        stopRecording()
+//        pressToRecLabel.isHidden = false
+//        pressToStopRecLabel.isHidden = true
+//        stopButton.isHidden = true
+//        recVid.isHidden = false
+//    }
     
     @IBAction func takePic(_ sender: Any) {
        outputImageView.image = sceneView.snapshot()
@@ -315,8 +319,9 @@ extension MeasureViewController {
             line.removeFromParentNode()
         }
         lines.removeAll()
-        instructionsText.isHidden = false
-        bottomPanel.isHidden = false
+        startMeasureButton.isHidden = false
+        stopMeasureButton.isHidden = true
+        
         photoTaken.isHidden = true
         photoTakenButton.isHidden = true
         savePicButton.isHidden = true
@@ -341,32 +346,71 @@ extension MeasureViewController {
         messageLabel.lineBreakMode = .byWordWrapping
         messageLabel.numberOfLines = 0
         resetButton.isHidden = true
-        bottomPanel.isHidden = false
+        
+        startMeasureButton.isHidden = false
+        stopMeasureButton.isHidden = true
         cameraButton.isHidden = false
         cameraButtonImage.isHidden = false
-        instructionsText.lineBreakMode = .byWordWrapping
+        
         photoTakenButton.isHidden = true
         savePicButton.isHidden = true
         savePicToPhone.isHidden = true
        
-        pressToRecLabel.isHidden = false
+        //pressToRecLabel.isHidden = false
         pressToStopRecLabel.isHidden = true
-        stopButton.isHidden = true
+      //  stopButton.isHidden = true
        
         session.run(sessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
         resetValues()
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         
-        self.bottomPanel.layer.borderWidth = 3
-        self.bottomPanel.layer.cornerRadius = 5
-        self.bottomPanel.layer.masksToBounds = true
+        self.startMeasureButton.layer.borderWidth = 3
+        self.startMeasureButton.layer.cornerRadius = 5
+        self.startMeasureButton.layer.masksToBounds = true
+        
+        self.stopMeasureButton.layer.borderWidth = 3
+        self.stopMeasureButton.layer.cornerRadius = 5
+        self.stopMeasureButton.layer.masksToBounds = true
+        
+        
+        
+        
+        
+        
+        // Add "long" press gesture recognizer
+        let tap = UILongPressGestureRecognizer(target: self, action: #selector(tapHandler))
+        tap.minimumPressDuration = 0.3
+        cameraButton.addGestureRecognizer(tap)
     }
     
+    // called by gesture recognizer
+    @objc func tapHandler(gesture: UITapGestureRecognizer) {
+        
+        
+        // handle touch down and touch up events separately
+        if gesture.state == .began {
+            cameraButtonImage.isHidden = true
+            recAnimation.isHidden = false
+            pressToStopRecLabel.isHidden = false
+            recAnimation.startAnimating()
+            startRecording()
+            
+            
+        } else if  gesture.state == .ended {
+            cameraButtonImage.isHidden = false
+            recAnimation.isHidden = true
+            pressToStopRecLabel.isHidden = true
+            recAnimation.stopAnimating()
+            stopRecording()
+    }
+    }
     fileprivate func resetValues() {
         isMeasuring = false
         startValue = SCNVector3()
         endValue =  SCNVector3()
+        
+        stopMeasureButton.isHidden = true
     }
     
     fileprivate func detectObjects() {
