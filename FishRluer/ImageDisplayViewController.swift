@@ -15,7 +15,7 @@ import CoreData
 class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate{
     
     
-    var showMyPic = UIImage()
+
     var fishKind: String? = ""
     var length: String? = ""
     var date = Date()
@@ -41,7 +41,6 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     @IBOutlet weak var fishLength: UITextField!
     @IBOutlet weak var latitudeLabel: UILabel!
     @IBOutlet weak var longitudeLabel: UILabel!
-    @IBOutlet weak var showPic: UIImageView!
     @IBOutlet weak var fishSpeciesLabel: UITextField!
     @IBOutlet weak var catchTime: UITextField!
     @IBOutlet weak var mapView: MKMapView!
@@ -148,36 +147,6 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         return annotationView
     }
     
-//    func stopRecording() {
-//        
-//        RPScreenRecorder.shared().stopRecording { (previewController, error) in
-//            if error == nil {
-//                
-//                let alertController = UIAlertController(title: "Recording", message: "You can view your recording to edit and share, or delete to try again", preferredStyle: .alert)
-//                
-//                let discardAction = UIAlertAction(title: "Delete", style: .default) { (action: UIAlertAction) in
-//                    RPScreenRecorder.shared().discardRecording(handler: { () -> Void in
-//                        // Executed once recording has successfully been discarded
-//                    })
-//                }
-//                
-//                let viewAction = UIAlertAction(title: "View", style: .default, handler: { (action) in
-//                    previewController?.previewControllerDelegate = self as? RPPreviewViewControllerDelegate
-//                    self.present(previewController!, animated: true, completion: nil)
-//                })
-//                
-//                alertController.addAction(discardAction)
-//                alertController.addAction(viewAction)
-//                
-//                self.present(alertController, animated: true, completion: nil)
-//                
-//            } else {
-//                print(error ?? "")
-//            }
-//        }
-//        
-//    }
-
 
     
         
@@ -241,7 +210,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
             
         let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
         
-        alert.addAction(UIAlertAction(title: "Go to map", style: .default, handler: {action in self.performSegue(withIdentifier: "showCatchDetails", sender: self)}))
+        alert.addAction(UIAlertAction(title: "Go to map", style: .default, handler: {action in self.performSegue(withIdentifier: "addInfoToMap", sender: self)}))
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
 
@@ -301,8 +270,8 @@ extension ImageDisplayViewController {
         
         catchTime.text = result
         
-        let image = showMyPic
-        showPic.image = image
+//        let image = showMyPic
+//        showPic.image = image
        
         fishLength.text = length
         

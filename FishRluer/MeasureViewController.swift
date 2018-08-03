@@ -20,7 +20,7 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var loadingView: UIActivityIndicatorView!
     @IBOutlet weak var messageLabel: UILabel!
 
-    @IBOutlet weak var savePicToPhone: UILabel!
+   // @IBOutlet weak var savePicToPhone: UILabel!
 
     @IBOutlet weak var resetButton: UIButton!
     
@@ -32,7 +32,7 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var pressToStopRecLabel: UILabel!
     
 
-    @IBOutlet weak var savePicButton: UIButton!
+   // @IBOutlet weak var savePicButton: UIButton!
 
     @IBOutlet weak var startMeasureButton: UIButton!
     @IBOutlet weak var stopMeasureButton: UIButton!
@@ -42,10 +42,12 @@ final class MeasureViewController: UIViewController {
     
     @IBOutlet weak var cameraButton: UIButton!
     
+    @IBOutlet weak var saveDetailsButton: UIButton!
+    @IBOutlet weak var saveDetailsLabel: UILabel!
     
 
 //    @IBOutlet weak var photoTakenButton: UIButton!
-    @IBOutlet weak var photoTaken: UIImageView!
+    @IBOutlet weak var photoTaken: UIButton!
   //  @IBOutlet weak var pointAtFishLabel: UILabel!
     
    // @IBOutlet weak var cameraButton: UIButton!
@@ -123,6 +125,31 @@ final class MeasureViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is ImageDisplayViewController{
+            
+            let vc = segue.destination as? ImageDisplayViewController
+            let vc2 = segue.destination as? PicturePreviewViewController
+            
+            let myPic = sceneView.snapshot()
+            vc2?.showMyPic = myPic
+            vc?.length = messageLabel.text!
+            
+            
+            session.pause()
+            
+//            if segue.destination is PicturePreviewViewController{
+//
+//                let vc2 = segue.destination as? PicturePreviewViewController
+//
+//                let myPic = outputImageView.image
+//                vc2?.showMyPic = myPic!
+//
+//                session.pause()
+       //     }
+            
+        }
+    }
     
     func startRecording() {
         
@@ -178,8 +205,8 @@ final class MeasureViewController: UIViewController {
        outputImageView.image = sceneView.snapshot()
         photoTaken.isHidden = false
        // photoTakenButton.isHidden = false
-        savePicButton.isHidden = false
-        savePicToPhone.isHidden = false
+      //  savePicButton.isHidden = false
+      //  savePicToPhone.isHidden = false
         
 
 
@@ -188,14 +215,14 @@ final class MeasureViewController: UIViewController {
         
         
         
-        alert.addAction(UIAlertAction(title: "Save pic and add details", style: .default, handler: {
-            action in self.performSegue(withIdentifier: "addInfoToPic", sender: self)
+        alert.addAction(UIAlertAction(title: "Save pic and add info", style: .default, handler: {
+            action in self.performSegue(withIdentifier: "saveDetails", sender: self)
             self.savePic(alert)
         }))
         
         alert.addAction(UIAlertAction(title: "Save to photos", style: .default, handler: {action in self.savePic(alert)}))
         
-        alert.addAction(UIAlertAction(title: "Add catch details to save on map ", style: .default, handler: {action in self.performSegue(withIdentifier: "addInfoToPic", sender: self)}))
+        alert.addAction(UIAlertAction(title: "Add more info and save on map ", style: .default, handler: {action in self.performSegue(withIdentifier: "saveDetails", sender: self)}))
         
         alert.addAction(cancelAction)
         
@@ -204,25 +231,29 @@ final class MeasureViewController: UIViewController {
    
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.destination is PicturePreviewViewController{
-            
-            let vc = segue.destination as? PicturePreviewViewController
-            
-            let myPic = sceneView.snapshot()
-            vc?.showMyPic = myPic
-            session.pause()
-            
-        }
+   
+    @IBAction func addDetails(_ sender: Any) {
+//
+//   performSegue(withIdentifier: "addDetails", sender: self)
+//
+//                let vc = segue.destination as? ImageDisplayViewController
+//
+//
+//               // vc?.showMyPic = myPic
+//                vc?.length = messageLabel.text!
+//
+//                stopRecording()
+//                session.pause()
     }
-
     
+    
+
 
     @IBAction func savePic(_ sender: Any) {
         let pic = sceneView.snapshot()
         UIImageWriteToSavedPhotosAlbum(pic, self, nil, nil)
-        savePicButton.isHidden = true
-        savePicToPhone.isHidden = true
+      //  savePicButton.isHidden = true
+     //   savePicToPhone.isHidden = true
  
         
         // the alert view
@@ -239,7 +270,21 @@ final class MeasureViewController: UIViewController {
            
     }
     
-  
+    @IBAction func showAlertToSave(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "Ready To Save", message: "Save your picture to show off", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+        
+      
+        
+        alert.addAction(UIAlertAction(title: "Save to photos", style: .default, handler: {action in self.savePic(alert)}))
+      
+        alert.addAction(cancelAction)
+      
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -294,11 +339,11 @@ extension MeasureViewController {
         lines.removeAll()
         startMeasureButton.isHidden = false
         stopMeasureButton.isHidden = true
-        
+        outputImageView.isHidden = true
         photoTaken.isHidden = true
       //  photoTakenButton.isHidden = true
-        savePicButton.isHidden = true
-        savePicToPhone.isHidden = true
+//        savePicButton.isHidden = true
+//        savePicToPhone.isHidden = true
         targetImageView.isHidden = false
     }
     
@@ -323,9 +368,9 @@ extension MeasureViewController {
         stopMeasureButton.isHidden = true
         cameraButton.isHidden = false
     
-        savePicButton.isHidden = true
-        savePicToPhone.isHidden = true
-       
+//        savePicButton.isHidden = true
+//        savePicToPhone.isHidden = true
+//
         //pressToRecLabel.isHidden = false
         pressToStopRecLabel.isHidden = true
       //  stopButton.isHidden = true
