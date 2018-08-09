@@ -20,19 +20,15 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var loadingView: UIActivityIndicatorView!
     @IBOutlet weak var messageLabel: UILabel!
 
-   // @IBOutlet weak var savePicToPhone: UILabel!
-
     @IBOutlet weak var resetButton: UIButton!
     
     @IBOutlet weak var outputImageView: UIImageView!
     @IBOutlet weak var titleView: UIView!
-//    @IBOutlet weak var recVid: UIButton!
-//    @IBOutlet weak var stopButton: UIButton!
-//    @IBOutlet weak var pressToRecLabel: UILabel!
+
     @IBOutlet weak var pressToStopRecLabel: UILabel!
     
 
-   // @IBOutlet weak var savePicButton: UIButton!
+ 
 
     @IBOutlet weak var startMeasureButton: UIButton!
     @IBOutlet weak var stopMeasureButton: UIButton!
@@ -44,15 +40,8 @@ final class MeasureViewController: UIViewController {
     
     @IBOutlet weak var saveDetailsButton: UIButton!
     @IBOutlet weak var saveDetailsLabel: UILabel!
-    
-
-//    @IBOutlet weak var photoTakenButton: UIButton!
+ 
     @IBOutlet weak var photoTaken: UIButton!
-  //  @IBOutlet weak var pointAtFishLabel: UILabel!
-    
-   // @IBOutlet weak var cameraButton: UIButton!
-  //  @IBOutlet weak var cameraButtonImage: UIImageView!
-    
     fileprivate lazy var session = ARSession()
     fileprivate lazy var sessionConfiguration = ARWorldTrackingConfiguration()
     fileprivate lazy var isMeasuring = false;
@@ -80,8 +69,10 @@ final class MeasureViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        session.pause()
-        session.run(sceneView.session.configuration!)
+       // session.pause()
+      //  session.run(sceneView.session.configuration!)
+        session.run(sessionConfiguration, options: [.resetTracking])
+        resetValues()
     }
 
     
@@ -110,16 +101,7 @@ final class MeasureViewController: UIViewController {
             targetImageView.isHidden = true
             stopMeasureButton.isHidden = true
             
-//            // the alert view
-//            let alert = UIAlertController(title: "Take Picture", message: "to add details about fish and save to map", preferredStyle: .alert)
-//            self.present(alert, animated: true, completion: nil)
-//
-//            // change to desired number of seconds (in this case 5 seconds)
-//            let when = DispatchTime.now() + 1
-//            DispatchQueue.main.asyncAfter(deadline: when){
-//                // your code with delay
-//                alert.dismiss(animated: true, completion: nil)
-//            }
+
             
        
         }
@@ -129,24 +111,16 @@ final class MeasureViewController: UIViewController {
         if segue.destination is ImageDisplayViewController{
             
             let vc = segue.destination as? ImageDisplayViewController
-            let vc2 = segue.destination as? PicturePreviewViewController
             
-            let myPic = sceneView.snapshot()
-            vc2?.showMyPic = myPic
+            
+           // let myPic = sceneView.snapshot()
+           
             vc?.length = messageLabel.text!
             
             
             session.pause()
             
-//            if segue.destination is PicturePreviewViewController{
-//
-//                let vc2 = segue.destination as? PicturePreviewViewController
-//
-//                let myPic = outputImageView.image
-//                vc2?.showMyPic = myPic!
-//
-//                session.pause()
-       //     }
+
             
         }
     }
@@ -204,10 +178,7 @@ final class MeasureViewController: UIViewController {
     @IBAction func takePic(_ sender: Any) {
        outputImageView.image = sceneView.snapshot()
         photoTaken.isHidden = false
-       // photoTakenButton.isHidden = false
-      //  savePicButton.isHidden = false
-      //  savePicToPhone.isHidden = false
-        
+      
 
 
         let alert = UIAlertController(title: "Nice Catch!", message: "What would you like to do with the picture?", preferredStyle: .alert)
@@ -215,11 +186,11 @@ final class MeasureViewController: UIViewController {
         
         
         
-        alert.addAction(UIAlertAction(title: "Save pic and add info", style: .default, handler: {
-            action in self.performSegue(withIdentifier: "saveDetails", sender: self)
-            self.savePic(alert)
-        }))
-        
+//        alert.addAction(UIAlertAction(title: "Save pic and add info", style: .default, handler: {
+//            action in self.performSegue(withIdentifier: "saveDetails", sender: self)
+//            self.savePic(alert)
+//        }))
+//
         alert.addAction(UIAlertAction(title: "Save to photos", style: .default, handler: {action in self.savePic(alert)}))
         
         alert.addAction(UIAlertAction(title: "Add more info and save on map ", style: .default, handler: {action in self.performSegue(withIdentifier: "saveDetails", sender: self)}))
@@ -233,17 +204,7 @@ final class MeasureViewController: UIViewController {
     
    
     @IBAction func addDetails(_ sender: Any) {
-//
-//   performSegue(withIdentifier: "addDetails", sender: self)
-//
-//                let vc = segue.destination as? ImageDisplayViewController
-//
-//
-//               // vc?.showMyPic = myPic
-//                vc?.length = messageLabel.text!
-//
-//                stopRecording()
-//                session.pause()
+
     }
     
     
@@ -252,9 +213,7 @@ final class MeasureViewController: UIViewController {
     @IBAction func savePic(_ sender: Any) {
         let pic = sceneView.snapshot()
         UIImageWriteToSavedPhotosAlbum(pic, self, nil, nil)
-      //  savePicButton.isHidden = true
-     //   savePicToPhone.isHidden = true
- 
+      
         
         // the alert view
         let alert = UIAlertController(title: "Saved to phone", message: "so you can show it off later!", preferredStyle: .alert)
