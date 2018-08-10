@@ -23,13 +23,10 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var resetButton: UIButton!
     
     @IBOutlet weak var outputImageView: UIImageView!
-    @IBOutlet weak var titleView: UIView!
+ //   @IBOutlet weak var titleView: UIView!
 
     @IBOutlet weak var pressToStopRecLabel: UILabel!
-    
-
  
-
     @IBOutlet weak var startMeasureButton: UIButton!
     @IBOutlet weak var stopMeasureButton: UIButton!
 
@@ -39,7 +36,7 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var cameraButton: UIButton!
     
     @IBOutlet weak var saveDetailsButton: UIButton!
-    @IBOutlet weak var saveDetailsLabel: UILabel!
+   // @IBOutlet weak var saveDetailsLabel: UILabel!
  
     @IBOutlet weak var photoTaken: UIButton!
     fileprivate lazy var session = ARSession()
@@ -69,8 +66,7 @@ final class MeasureViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-       // session.pause()
-      //  session.run(sceneView.session.configuration!)
+   
         session.run(sessionConfiguration, options: [.resetTracking])
         resetValues()
     }
@@ -175,6 +171,7 @@ final class MeasureViewController: UIViewController {
         
     }
 
+
     @IBAction func takePic(_ sender: Any) {
        outputImageView.image = sceneView.snapshot()
         photoTaken.isHidden = false
@@ -183,17 +180,12 @@ final class MeasureViewController: UIViewController {
 
         let alert = UIAlertController(title: "Nice Catch!", message: "What would you like to do with the picture?", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
-        
-        
-        
-//        alert.addAction(UIAlertAction(title: "Save pic and add info", style: .default, handler: {
-//            action in self.performSegue(withIdentifier: "saveDetails", sender: self)
-//            self.savePic(alert)
-//        }))
-//
+
         alert.addAction(UIAlertAction(title: "Save to photos", style: .default, handler: {action in self.savePic(alert)}))
         
         alert.addAction(UIAlertAction(title: "Add more info and save on map ", style: .default, handler: {action in self.performSegue(withIdentifier: "saveDetails", sender: self)}))
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {action in self.removePreview(alert)}))
         
         alert.addAction(cancelAction)
         
@@ -228,6 +220,9 @@ final class MeasureViewController: UIViewController {
         
            
     }
+    func removePreview(_ sender: Any) {
+        outputImageView.isHidden = true
+    }
     
     @IBAction func showAlertToSave(_ sender: Any) {
         
@@ -237,6 +232,8 @@ final class MeasureViewController: UIViewController {
       
         
         alert.addAction(UIAlertAction(title: "Save to photos", style: .default, handler: {action in self.savePic(alert)}))
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {action in self.removePreview(alert)}))
       
         alert.addAction(cancelAction)
       
@@ -259,7 +256,7 @@ extension MeasureViewController: ARSCNViewDelegate {
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
-        messageLabel.text = "Error occurred"
+        messageLabel.text = "Error occurred,Make sure camera is available"
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
@@ -290,8 +287,7 @@ extension MeasureViewController {
     }
     
     @IBAction func resetButtonTapped(button: UIButton) {
-      //  resetButton.isHidden = true
-        
+  
         for line in lines {
             line.removeFromParentNode()
         }
@@ -300,9 +296,6 @@ extension MeasureViewController {
         stopMeasureButton.isHidden = true
         outputImageView.isHidden = true
         photoTaken.isHidden = true
-      //  photoTakenButton.isHidden = true
-//        savePicButton.isHidden = true
-//        savePicToPhone.isHidden = true
         targetImageView.isHidden = false
     }
     
@@ -326,29 +319,27 @@ extension MeasureViewController {
         startMeasureButton.isHidden = false
         stopMeasureButton.isHidden = true
         cameraButton.isHidden = false
-    
-//        savePicButton.isHidden = true
-//        savePicToPhone.isHidden = true
-//
-        //pressToRecLabel.isHidden = false
         pressToStopRecLabel.isHidden = true
-      //  stopButton.isHidden = true
-       
+     
         session.run(sessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
         resetValues()
         
         navigationController?.setNavigationBarHidden(true, animated: false)
+     
         
-        self.startMeasureButton.layer.borderWidth = 3
+        self.startMeasureButton.layer.borderWidth = 5
+        self.startMeasureButton.layer.borderColor = UIColor.white.cgColor
         self.startMeasureButton.layer.cornerRadius = 5
         self.startMeasureButton.layer.masksToBounds = true
         
-        self.stopMeasureButton.layer.borderWidth = 3
+        self.stopMeasureButton.layer.borderWidth = 5
+        self.stopMeasureButton.layer.borderColor = UIColor.white.cgColor
         self.stopMeasureButton.layer.cornerRadius = 5
         self.stopMeasureButton.layer.masksToBounds = true
         
        cameraButton.layer.borderWidth = 8
         cameraButton.layer.cornerRadius = cameraButton.frame.height/2
+        cameraButton.layer.borderColor = UIColor.white.cgColor
         cameraButton.layer.masksToBounds = false
         
 
@@ -426,13 +417,4 @@ extension MeasureViewController: RPPreviewViewControllerDelegate {
     }
 }
 
-extension UILabel {
-    func blink() {
-        self.alpha = 0.0;
-        UIView.animate(withDuration: 0.4, //Time duration you want,
-            delay: 0.0,
-            options: [.curveEaseInOut, .autoreverse, .repeat],
-            animations: { [weak self] in self?.alpha = 1.0 },
-            completion: { [weak self] _ in self?.alpha = 0.0 })
-    }
-}
+
