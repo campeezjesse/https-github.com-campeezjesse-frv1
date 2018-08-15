@@ -27,6 +27,7 @@ final class MeasureViewController: UIViewController {
 
     @IBOutlet weak var pressToStopRecLabel: UILabel!
  
+    @IBOutlet weak var startStopView: UIView!
     @IBOutlet weak var startMeasureButton: UIButton!
     @IBOutlet weak var stopMeasureButton: UIButton!
 
@@ -57,6 +58,9 @@ final class MeasureViewController: UIViewController {
         super.viewDidLoad()
         setupScene()
         
+        checkCameraAccess()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,8 +70,9 @@ final class MeasureViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-   
+        
         session.run(sessionConfiguration, options: [.resetTracking])
+   
         resetValues()
     }
 
@@ -119,6 +124,42 @@ final class MeasureViewController: UIViewController {
 
             
         }
+    }
+    
+    func checkCameraAccess() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .denied:
+            print("Denied, request permission from settings")
+            presentCameraSettings()
+        case .restricted:
+            print("Restricted, device owner must approve")
+        case .authorized:
+            print("Authorized, proceed")
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { success in
+                if success {
+                    print("Permission granted, proceed")
+                } else {
+                    print("Permission denied")
+                }
+            }
+        }
+    }
+    
+    func presentCameraSettings() {
+        let alertController = UIAlertController(title: "Error",
+                                                message: "Camera access is denied",
+                                                preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .default))
+        alertController.addAction(UIAlertAction(title: "Settings", style: .cancel) { _ in
+            if let url = URL(string: UIApplicationOpenSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: { _ in
+                    // Handle
+                })
+            }
+        })
+        
+        present(alertController, animated: true)
     }
     
     func startRecording() {
@@ -252,11 +293,14 @@ extension MeasureViewController: ARSCNViewDelegate {
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         DispatchQueue.main.async { [weak self] in
             self?.detectObjects()
+            
+           
+            
         }
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
-        messageLabel.text = "Error occurred,Make sure camera is available"
+        messageLabel.text = "Looking For Camera"
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
@@ -315,7 +359,7 @@ extension MeasureViewController {
         messageLabel.lineBreakMode = .byWordWrapping
         messageLabel.numberOfLines = 0
         resetButton.isHidden = true
-        
+        startStopView.isHidden = true
         startMeasureButton.isHidden = false
         stopMeasureButton.isHidden = true
         cameraButton.isHidden = false
@@ -384,7 +428,8 @@ extension MeasureViewController {
     fileprivate func detectObjects() {
         guard let worldPosition = sceneView.realWorldVector(screenPosition: view.center) else { return }
         targetImageView.isHidden = false
-        resetButton.isHidden = false 
+        resetButton.isHidden = false
+        startStopView.isHidden = false
         
        
         if lines.isEmpty {
