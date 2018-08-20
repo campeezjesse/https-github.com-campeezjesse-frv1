@@ -22,6 +22,7 @@ final class MeasureViewController: UIViewController {
 
     @IBOutlet weak var resetButton: UIButton!
     
+    @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var outputImageView: UIImageView!
  //   @IBOutlet weak var titleView: UIView!
 
@@ -216,6 +217,7 @@ final class MeasureViewController: UIViewController {
     @IBAction func takePic(_ sender: Any) {
        outputImageView.image = sceneView.snapshot()
         photoTaken.isHidden = false
+        saveImageButton.isEnabled = true
       
 
 
@@ -263,6 +265,7 @@ final class MeasureViewController: UIViewController {
     }
     func removePreview(_ sender: Any) {
         outputImageView.isHidden = true
+        saveImageButton.isHidden = true
     }
     
     @IBAction func showAlertToSave(_ sender: Any) {
@@ -339,6 +342,7 @@ extension MeasureViewController {
         startMeasureButton.isHidden = false
         stopMeasureButton.isHidden = true
         outputImageView.isHidden = true
+        saveImageButton.isHidden = true
         photoTaken.isHidden = true
         targetImageView.isHidden = false
     }
@@ -364,7 +368,7 @@ extension MeasureViewController {
         stopMeasureButton.isHidden = true
         cameraButton.isHidden = false
         pressToStopRecLabel.isHidden = true
-     
+     saveImageButton.isEnabled = false
         session.run(sessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
         resetValues()
         
