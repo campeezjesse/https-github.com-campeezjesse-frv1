@@ -63,7 +63,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         locationManager.startUpdatingLocation()
         
         
-        map.mapType = MKMapType.standard
+        map.mapType = MKMapType.satelliteFlyover
         map.showsUserLocation = true
         
         if let annotations = getData() {
