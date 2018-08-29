@@ -72,7 +72,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
    
         
     }
-    
+
     func getData() -> [MKAnnotation]? {
         
        
@@ -93,6 +93,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 newAnnotation.newNotes = storedLocation.notes
                 newAnnotation.newWaterTempDepth = storedLocation.water
                 newAnnotation.newWeatherCond = storedLocation.weather
+                
 
         
 
@@ -110,8 +111,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         return nil
     }
-   
 
+    
     //MARK: - Custom Annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else {
@@ -136,8 +137,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
     
 
-}
 
+}
     extension MKMapView {
         func zoomToUserLocation() {
             self.zoomToUserLocation(latitudinalMeters: 1000, longitudinalMeters: 1000)
@@ -156,7 +157,55 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         
 }
+extension MapViewController: ExampleCalloutViewDelegate {
+    func mapView(_ mapView: MKMapView, didTapDetailsButton button: UIButton, for annotation: MKAnnotation) {
+        
+     
+        
+        let alert = UIAlertController(title: "Edit or Delete", message: "Any changes are permenate!", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        let deleteDataAction = UIAlertAction(title: "delete", style: .destructive, handler: { action in
+            
+            self.map.removeAnnotation(annotation)
+            print(annotation.title!)
+//
+//            let pinLat = annotation.coordinate.latitude
+//            let pinLong = annotation.coordinate.longitude
+////
+////            let latitude = pinLocation
+////
+//
+//            let selectedAnnotation = MyAnnotation(coordinate: CLLocationCoordinate2D(latitude: pinLat, longitude: pinLong), title: "", subtitle: "", newLength: "", newTime: "", newBait: "", newNotes: "", newWaterTempDepth: "", newWeatherCond: "")
+//
+//            let time = selectedAnnotation.newTime
+//         //   let time = annotation.title
+//       //  let annotation = selectedAnnotation
+//                do{
+//                    let species = "Species: bass"
+//                    let request: NSFetchRequest<Fish> = Fish.fetchRequest()
+////                    let predicate = NSPredicate(format: "species == %@", species)
+////                    request.predicate = predicate
+//                    request.predicate = NSPredicate(format: "species == %@", species)
+//                     let objects = try? self.context.fetch(request)
+//                   // if let result = try? self.context.fetch(request) {
+//                    for object in objects! {
+//
+//                            print(object)
+//                           // self.context.delete(object)
+//                        }
+//                    }
+//
+        })
 
-
-
+        
+        alert.addAction(UIAlertAction(title: "Add more info and save on map ", style: .default, handler: {action in self.performSegue(withIdentifier: "editInfo", sender: self)}))
+        
+       
+        alert.addAction(cancelAction)
+        alert.addAction(deleteDataAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+}
 

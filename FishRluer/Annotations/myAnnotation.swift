@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class MyAnnotation: NSObject, MKAnnotation {
     
@@ -21,7 +22,10 @@ class MyAnnotation: NSObject, MKAnnotation {
     var newWaterTempDepth: String?
     var newWeatherCond: String?
     var detailCalloutAccessoryView: UIStackView?
-    var catchID: String?
+    var objectID: NSManagedObjectID?
+    
+    
+
     
     
     init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, newLength: String, newTime: String, newBait: String, newNotes: String, newWaterTempDepth: String, newWeatherCond: String){
@@ -34,6 +38,8 @@ class MyAnnotation: NSObject, MKAnnotation {
         self.newNotes = newNotes
         self.newWaterTempDepth = newWaterTempDepth
         self.newWeatherCond = newWeatherCond
+        //self.objectID = objectID
+        
     }
 
    

@@ -25,6 +25,7 @@
 		7F70912120C83B6200265230 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70912020C83B6200265230 /* SCNVector3.swift */; };
 		7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */; };
 		7FDFA4E02110D45A00F831A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDFA4DF2110D45A00F831A2 /* AppDelegate.swift */; };
+		7FFE81A521346C500030F4CA /* EditAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFE81A321346C500030F4CA /* EditAnnotationViewController.swift */; };
 		D63F34634AF6DA967E3FF56C /* Pods_FishRuler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CCDBA481F8C75AF92153C3F /* Pods_FishRuler.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		7F70912020C83B6200265230 /* SCNVector3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3.swift; sourceTree = "<group>"; };
 		7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
 		7FDFA4DF2110D45A00F831A2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7FFE81A321346C500030F4CA /* EditAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAnnotationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,29 +106,47 @@
 		7F00DCEB20BE3A8F001A2C9E /* FishRluer */ = {
 			isa = PBXGroup;
 			children = (
-				7F05758520FECC83008B3101 /* FishAnnotationViewController.swift */,
-				7F05757B20FE2EB3008B3101 /* CalloutView.swift */,
-				7F05756D20F84A76008B3101 /* CatchCalloutView.swift */,
-				7F6DCDBE20F50819004D22C1 /* Fish_Ruler.xcdatamodeld */,
 				7F00DCEE20BE3A8F001A2C9E /* MeasureViewController.swift */,
 				7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */,
 				7F6DCD4820E583FF004D22C1 /* MapViewController.swift */,
+				7FDFA4DF2110D45A00F831A2 /* AppDelegate.swift */,
+				7F4834712136E4B9007C8927 /* Annotations */,
+				7F4834702136E465007C8927 /* CoreData */,
 				7F70911D20C83A5E00265230 /* Support */,
 				7F00DCF020BE3A8F001A2C9E /* Main.storyboard */,
 				7F00DCF320BE3AA4001A2C9E /* Assets.xcassets */,
 				7F00DCF520BE3AA4001A2C9E /* LaunchScreen.storyboard */,
 				7F00DCF820BE3AA4001A2C9E /* Info.plist */,
-				7FDFA4DF2110D45A00F831A2 /* AppDelegate.swift */,
 			);
 			path = FishRluer;
+			sourceTree = "<group>";
+		};
+		7F4834702136E465007C8927 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				7F6DCDBE20F50819004D22C1 /* Fish_Ruler.xcdatamodeld */,
+				7F23050620F58BAD00052AB2 /* CoreDataStack.swift */,
+			);
+			name = CoreData;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		7F4834712136E4B9007C8927 /* Annotations */ = {
+			isa = PBXGroup;
+			children = (
+				7F6DCD9220F3EDD1004D22C1 /* CatchAnnotation.swift */,
+				7F05756720F81D17008B3101 /* myAnnotation.swift */,
+				7FFE81A321346C500030F4CA /* EditAnnotationViewController.swift */,
+				7F05758520FECC83008B3101 /* FishAnnotationViewController.swift */,
+				7F05757B20FE2EB3008B3101 /* CalloutView.swift */,
+				7F05756D20F84A76008B3101 /* CatchCalloutView.swift */,
+			);
+			path = Annotations;
 			sourceTree = "<group>";
 		};
 		7F70911D20C83A5E00265230 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				7F05756720F81D17008B3101 /* myAnnotation.swift */,
-				7F23050620F58BAD00052AB2 /* CoreDataStack.swift */,
-				7F6DCD9220F3EDD1004D22C1 /* CatchAnnotation.swift */,
 				7F70911B20C83A4B00265230 /* Line.swift */,
 				7F70911E20C83AE700265230 /* ARSCNView.swift */,
 				7F70912020C83B6200265230 /* SCNVector3.swift */,
@@ -270,6 +290,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F6DCD4920E583FF004D22C1 /* MapViewController.swift in Sources */,
+				7FFE81A521346C500030F4CA /* EditAnnotationViewController.swift in Sources */,
 				7F05758620FECC83008B3101 /* FishAnnotationViewController.swift in Sources */,
 				7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */,
 				7F05756820F81D18008B3101 /* myAnnotation.swift in Sources */,
