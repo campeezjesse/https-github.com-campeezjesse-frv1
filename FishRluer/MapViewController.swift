@@ -32,10 +32,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
    
 
     var myFishAnnotation: [MyAnnotation] = []
+    var selectedAnnotation: MyAnnotation?
     
     
     var fish: Fish!
     var storedLocations: [Fish]! = []
+    var catches: [Fish]! = []
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
    
@@ -111,6 +113,37 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         return nil
     }
+    
+    func  deletePin() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let requestDel = NSFetchRequest<NSFetchRequestResult>(entityName: "Fish")
+        
+        let thisCatch = selectedAnnotation?.title
+        requestDel.returnsObjectsAsFaults = false
+
+        let predicateDel = NSPredicate(format: "species == %d", thisCatch!)
+        requestDel.predicate = predicateDel
+
+
+        do {
+            let locations = try context.fetch(requestDel)
+            for location in locations{
+                context.delete(location as! NSManagedObject)
+                
+                self.map.removeAnnotation(selectedAnnotation!)
+                print("pinDeleted")
+            }
+        } catch {
+            print("Failed")
+        }
+        
+        do {
+            try context.save()
+        } catch {
+            print("Failed saving")
+        }
+    }
 
     
     //MARK: - Custom Annotation
@@ -136,7 +169,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
         }
     
-
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        self.selectedAnnotation = view.annotation as? MyAnnotation
+        
+        print(selectedAnnotation?.title!)
+    }
 
 }
     extension MKMapView {
@@ -166,36 +203,31 @@ extension MapViewController: ExampleCalloutViewDelegate {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         let deleteDataAction = UIAlertAction(title: "delete", style: .destructive, handler: { action in
+    
+            let pinTitle = self.selectedAnnotation?.newTime
+       
+                do{
+                    let request: NSFetchRequest<Fish> = Fish.fetchRequest()
+                    let predicate = NSPredicate(format: "time == %@", pinTitle!)
+                    request.predicate = predicate
+                   
+                    let locations = try self.context.fetch(request)
+                    for location in locations{
+                        self.context.delete(location)
+                        
+                        self.map.removeAnnotation(self.selectedAnnotation!)
+                        print("pinDeleted")
+                    }
+                } catch {
+                    print("Failed")
+            }
             
-            self.map.removeAnnotation(annotation)
-            print(annotation.title!)
-//
-//            let pinLat = annotation.coordinate.latitude
-//            let pinLong = annotation.coordinate.longitude
-////
-////            let latitude = pinLocation
-////
-//
-//            let selectedAnnotation = MyAnnotation(coordinate: CLLocationCoordinate2D(latitude: pinLat, longitude: pinLong), title: "", subtitle: "", newLength: "", newTime: "", newBait: "", newNotes: "", newWaterTempDepth: "", newWeatherCond: "")
-//
-//            let time = selectedAnnotation.newTime
-//         //   let time = annotation.title
-//       //  let annotation = selectedAnnotation
-//                do{
-//                    let species = "Species: bass"
-//                    let request: NSFetchRequest<Fish> = Fish.fetchRequest()
-////                    let predicate = NSPredicate(format: "species == %@", species)
-////                    request.predicate = predicate
-//                    request.predicate = NSPredicate(format: "species == %@", species)
-//                     let objects = try? self.context.fetch(request)
-//                   // if let result = try? self.context.fetch(request) {
-//                    for object in objects! {
-//
-//                            print(object)
-//                           // self.context.delete(object)
-//                        }
-//                    }
-//
+            do {
+                try self.context.save()
+            } catch {
+                print("Failed saving")
+            }
+        
         })
 
         
