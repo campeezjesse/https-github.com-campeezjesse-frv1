@@ -172,9 +172,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         self.selectedAnnotation = view.annotation as? MyAnnotation
         
-        print(selectedAnnotation?.title!)
+        //print(selectedAnnotation?.title!)
     }
 
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.destination is EditAnnotationViewController{
+//            
+//            let vc = segue.destination as? EditAnnotationViewController
+//            
+//            
+//            
+//            vc?.labelText = (selectedAnnotation?.newLength)!
+////            vc?.catchSpecies = (selectedAnnotation?.title)!
+////            vc?.catchDate = (selectedAnnotation?.newTime)!
+////
+//            
+//       
+//        }
+//    }
 }
     extension MKMapView {
         func zoomToUserLocation() {

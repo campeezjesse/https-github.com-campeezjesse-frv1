@@ -48,7 +48,6 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     @IBOutlet weak var baitUsed: UITextField!
     @IBOutlet weak var currentWeather: UITextField!
     @IBOutlet weak var moreNotes: UITextView!
-
     @IBOutlet weak var waterTempConditions: UITextField!
     
   

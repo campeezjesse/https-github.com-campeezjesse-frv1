@@ -17,6 +17,8 @@
 		7F05758620FECC83008B3101 /* FishAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F05758520FECC83008B3101 /* FishAnnotationViewController.swift */; };
 		7F23050720F58BAD00052AB2 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F23050620F58BAD00052AB2 /* CoreDataStack.swift */; };
 		7F2583B420D2E2FC000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2583B320D2E2FB000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift */; };
+		7F48348C2142BD65007C8927 /* CatchesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F48348B2142BD65007C8927 /* CatchesTableViewController.swift */; };
+		7F48348E2142C138007C8927 /* CatchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F48348D2142C138007C8927 /* CatchTableViewController.swift */; };
 		7F6DCD4920E583FF004D22C1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DCD4820E583FF004D22C1 /* MapViewController.swift */; };
 		7F6DCD9320F3EDD1004D22C1 /* CatchAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DCD9220F3EDD1004D22C1 /* CatchAnnotation.swift */; };
 		7F6DCDC020F50819004D22C1 /* Fish_Ruler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DCDBE20F50819004D22C1 /* Fish_Ruler.xcdatamodeld */; };
@@ -25,7 +27,6 @@
 		7F70912120C83B6200265230 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70912020C83B6200265230 /* SCNVector3.swift */; };
 		7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */; };
 		7FDFA4E02110D45A00F831A2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDFA4DF2110D45A00F831A2 /* AppDelegate.swift */; };
-		7FFE81A521346C500030F4CA /* EditAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FFE81A321346C500030F4CA /* EditAnnotationViewController.swift */; };
 		D63F34634AF6DA967E3FF56C /* Pods_FishRuler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CCDBA481F8C75AF92153C3F /* Pods_FishRuler.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,8 @@
 		7F05758520FECC83008B3101 /* FishAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FishAnnotationViewController.swift; sourceTree = "<group>"; };
 		7F23050620F58BAD00052AB2 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		7F2583B320D2E2FB000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImagePropertyOrientation+UIImageOrientation.swift"; sourceTree = "<group>"; };
+		7F48348B2142BD65007C8927 /* CatchesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchesTableViewController.swift; sourceTree = "<group>"; };
+		7F48348D2142C138007C8927 /* CatchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchTableViewController.swift; sourceTree = "<group>"; };
 		7F6DCD4820E583FF004D22C1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		7F6DCD9220F3EDD1004D22C1 /* CatchAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CatchAnnotation.swift; path = "/Users/user1/Desktop/FishRluer/FishRluer/New Group/CatchAnnotation.swift"; sourceTree = "<absolute>"; };
 		7F6DCDBF20F50819004D22C1 /* Fish_Ruler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Fish_Ruler.xcdatamodel; sourceTree = "<group>"; };
@@ -53,7 +56,6 @@
 		7F70912020C83B6200265230 /* SCNVector3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3.swift; sourceTree = "<group>"; };
 		7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
 		7FDFA4DF2110D45A00F831A2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7FFE81A321346C500030F4CA /* EditAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAnnotationViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */,
 				7F6DCD4820E583FF004D22C1 /* MapViewController.swift */,
 				7FDFA4DF2110D45A00F831A2 /* AppDelegate.swift */,
+				7F483486213F5087007C8927 /* TableView */,
 				7F4834712136E4B9007C8927 /* Annotations */,
 				7F4834702136E465007C8927 /* CoreData */,
 				7F70911D20C83A5E00265230 /* Support */,
@@ -136,12 +139,21 @@
 			children = (
 				7F6DCD9220F3EDD1004D22C1 /* CatchAnnotation.swift */,
 				7F05756720F81D17008B3101 /* myAnnotation.swift */,
-				7FFE81A321346C500030F4CA /* EditAnnotationViewController.swift */,
 				7F05758520FECC83008B3101 /* FishAnnotationViewController.swift */,
 				7F05757B20FE2EB3008B3101 /* CalloutView.swift */,
 				7F05756D20F84A76008B3101 /* CatchCalloutView.swift */,
 			);
 			path = Annotations;
+			sourceTree = "<group>";
+		};
+		7F483486213F5087007C8927 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				7F48348D2142C138007C8927 /* CatchTableViewController.swift */,
+				7F48348B2142BD65007C8927 /* CatchesTableViewController.swift */,
+			);
+			name = TableView;
+			path = Annotations/TableView;
 			sourceTree = "<group>";
 		};
 		7F70911D20C83A5E00265230 /* Support */ = {
@@ -289,8 +301,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F48348E2142C138007C8927 /* CatchTableViewController.swift in Sources */,
 				7F6DCD4920E583FF004D22C1 /* MapViewController.swift in Sources */,
-				7FFE81A521346C500030F4CA /* EditAnnotationViewController.swift in Sources */,
 				7F05758620FECC83008B3101 /* FishAnnotationViewController.swift in Sources */,
 				7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */,
 				7F05756820F81D18008B3101 /* myAnnotation.swift in Sources */,
@@ -302,6 +314,7 @@
 				7F05756E20F84A76008B3101 /* CatchCalloutView.swift in Sources */,
 				7F23050720F58BAD00052AB2 /* CoreDataStack.swift in Sources */,
 				7F70911F20C83AE700265230 /* ARSCNView.swift in Sources */,
+				7F48348C2142BD65007C8927 /* CatchesTableViewController.swift in Sources */,
 				7F2583B420D2E2FC000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */,
 				7F6DCD9320F3EDD1004D22C1 /* CatchAnnotation.swift in Sources */,
 				7F70911C20C83A4B00265230 /* Line.swift in Sources */,
