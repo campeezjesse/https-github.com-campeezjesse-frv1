@@ -11,6 +11,7 @@ import CoreLocation
 import MapKit
 import ReplayKit
 import CoreData
+import ForecastIO
 
 class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate{
     
@@ -26,7 +27,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     
 
    
-
+    //let client = DarkSkyClient(apiKey: "0c6c3aca0c9f41065a7bffbedaa74dcd")
     let formater = DateFormatter()
     let locationManager = CLLocationManager()
     
@@ -50,13 +51,19 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     @IBOutlet weak var moreNotes: UITextView!
     @IBOutlet weak var waterTempConditions: UITextField!
     
-  
+    
+    @IBOutlet weak var theTemp: UILabel!
+    @IBOutlet weak var theSummary: UILabel!
+    @IBOutlet weak var theWind: UILabel!
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private var fish: Fish?
     private var locationList: [CLLocation] = []
     
     
+    let client = DarkSkyClient(apiKey: "0c6c3aca0c9f41065a7bffbedaa74dcd")
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,6 +119,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         pointAnnotation.title = length
         pointAnnotation.subtitle = catchTime.text
     
+        //catchTime.text becomes annotation subtitle. This is used as objectID for selected annotation in mapView
         
         pinAnnotationView = MKPinAnnotationView(annotation: pointAnnotation, reuseIdentifier: "pin")
         
@@ -126,6 +134,10 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     
     //MARK: - Custom Annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        guard !(annotation is MKUserLocation) else {
+            return nil
+        }
        
        
         let reuseIdentifier = "pin"
@@ -148,11 +160,9 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     
 
     
-        
     @IBAction func addInfo(_ sender: UIButton) {
         
-       // func requestLocation() {
-    
+  
         if CLLocationManager.locationServicesEnabled() {
 
 
@@ -180,9 +190,9 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
 
             case .authorizedAlways, .authorizedWhenInUse:
         
-//                func requestLocation() {
 
-        
+
+    //this is where we set the information to be saved into the coreData model named "Fish"
     
         let fishKind = fishSpeciesLabel.text
         let waterTempDepth = waterTempConditions.text
@@ -196,6 +206,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
        
 
         let newPin = Fish(context: context)
+        
         newPin.latitude = myCoordinate.latitude
         newPin.longitude = myCoordinate.longitude
         newPin.species = fishKind
@@ -205,6 +216,9 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         newPin.weather = weatherCond
         newPin.notes = notes
         newPin.time = catchTimeandDate
+        newPin.currentTemp = theTemp.text
+        newPin.weatherSummary = theSummary.text
+        newPin.windSpeed = theWind.text
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
@@ -301,6 +315,7 @@ extension ImageDisplayViewController {
     fileprivate func setupView() {
         
         
+        
         formater.dateFormat = "MM/dd/yyyy 'at'  hh:mm a"
         formater.amSymbol = "AM"
         formater.pmSymbol = "PM"
@@ -309,10 +324,9 @@ extension ImageDisplayViewController {
         
         catchTime.text = result
         
-//        let image = showMyPic
-//        showPic.image = image
-       
         fishLength.text = length
+        
+        
         
         var currentLocation: CLLocation?
         
@@ -331,6 +345,48 @@ extension ImageDisplayViewController {
             longitudeLabel.text = "\(myLong)"
         }
        
+            let myLat = currentLocation?.coordinate.latitude
+            let myLong = currentLocation?.coordinate.longitude
+            
+       
+            client.getForecast(latitude: myLat!, longitude: myLong!) { result in
+                switch result {
+                    
+                case .success(let currentForecast, let requestMetadata):
+                    if let currentTemp: Double = currentForecast.currently?.temperature {
+//                        print(currentTemp)
+
+                        DispatchQueue.main.async {
+                            self.theTemp.text = String(Int(round(currentTemp))) + "˚F"
+                        }
+                       
+                    
+                    if let summaryInfo: String = currentForecast.currently?.summary {
+                        print(summaryInfo)
+                        DispatchQueue.main.async {
+                            self.currentWeather.text = summaryInfo  + " " + String(Int(round(currentTemp))) + "˚F"
+                        }
+                        }
+                         if let wind: Double = currentForecast.currently?.windSpeed {
+                            DispatchQueue.main.async {
+                                self.theWind.text = String(Int(round(wind))) + "MPH Winds"
+                    }
+                    }
+                        if let summaryInfo: String = currentForecast.currently?.summary {
+                            print(summaryInfo)
+                            DispatchQueue.main.async {
+                                self.theSummary.text = summaryInfo
+                            }
+                        }
+                    }
+                    print(requestMetadata)
+                    
+                case .failure(let error):
+                    
+                    print(error)
+                }
+            }
     }
 }
+    
 }

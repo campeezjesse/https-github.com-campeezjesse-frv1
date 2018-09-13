@@ -11,6 +11,8 @@ import MapKit
 import CoreLocation
 import ReplayKit
 import CoreData
+import PullUpController
+
 
 
 
@@ -49,12 +51,29 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     @IBOutlet weak var map: MKMapView!
 
     
+    //for pullUp
+    private func makeSearchViewControllerIfNeeded() -> PullUpController {
+        let currentPullUpController = childViewControllers
+            .filter({ $0 is PullUpController })
+            .first as? PullUpController
+        if let currentPullUpController = currentPullUpController {
+            return currentPullUpController
+        } else {
+            return UIStoryboard(name: "Main", bundle: nil)
+                .instantiateViewController(withIdentifier: "PullUpController") as! PullUpController
+        }
+    }
+    
     
 
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addPullUpController()
+        
+       // let pullUpController = makeSearchViewControllerIfNeeded()
         
         map.zoomToUserLocation()
         
@@ -73,6 +92,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
    
         
+    }
+    
+    private func addPullUpController() {
+        let pullUpController = makeSearchViewControllerIfNeeded()
+        addPullUpController(pullUpController, animated: true)
     }
 
     func getData() -> [MKAnnotation]? {
@@ -172,24 +196,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         self.selectedAnnotation = view.annotation as? MyAnnotation
         
-        //print(selectedAnnotation?.title!)
+      //  performSegue(withIdentifier: "seeCatch", sender: Any?(PullUpController.self))
     }
 
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.destination is EditAnnotationViewController{
-//            
-//            let vc = segue.destination as? EditAnnotationViewController
-//            
-//            
-//            
-//            vc?.labelText = (selectedAnnotation?.newLength)!
-////            vc?.catchSpecies = (selectedAnnotation?.title)!
-////            vc?.catchDate = (selectedAnnotation?.newTime)!
-////
-//            
-//       
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is CatchDetailsViewController{
+            
+            let vc = segue.destination as? CatchDetailsViewController
+            
+            
+            
+            vc?.catchID = (selectedAnnotation?.newTime)!
+
+        }
+    }
 }
     extension MKMapView {
         func zoomToUserLocation() {
@@ -212,47 +232,49 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 extension MapViewController: ExampleCalloutViewDelegate {
     func mapView(_ mapView: MKMapView, didTapDetailsButton button: UIButton, for annotation: MKAnnotation) {
         
-     
+     performSegue(withIdentifier: "editInfo", sender: self)
         
-        let alert = UIAlertController(title: "Edit or Delete", message: "Any changes are permenate!", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        //below code will present an allert with options
         
-        let deleteDataAction = UIAlertAction(title: "delete", style: .destructive, handler: { action in
-    
-            let pinTitle = self.selectedAnnotation?.newTime
-       
-                do{
-                    let request: NSFetchRequest<Fish> = Fish.fetchRequest()
-                    let predicate = NSPredicate(format: "time == %@", pinTitle!)
-                    request.predicate = predicate
-                   
-                    let locations = try self.context.fetch(request)
-                    for location in locations{
-                        self.context.delete(location)
-                        
-                        self.map.removeAnnotation(self.selectedAnnotation!)
-                        print("pinDeleted")
-                    }
-                } catch {
-                    print("Failed")
-            }
-            
-            do {
-                try self.context.save()
-            } catch {
-                print("Failed saving")
-            }
-        
-        })
-
-        
-        alert.addAction(UIAlertAction(title: "Add more info and save on map ", style: .default, handler: {action in self.performSegue(withIdentifier: "editInfo", sender: self)}))
-        
-       
-        alert.addAction(cancelAction)
-        alert.addAction(deleteDataAction)
-        
-        self.present(alert, animated: true, completion: nil)
+//        let alert = UIAlertController(title: "Edit or Delete", message: "Any changes are permenate!", preferredStyle: .alert)
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//
+//        let deleteDataAction = UIAlertAction(title: "delete", style: .destructive, handler: { action in
+//
+//            let pinTitle = self.selectedAnnotation?.newTime
+//
+//                do{
+//                    let request: NSFetchRequest<Fish> = Fish.fetchRequest()
+//                    let predicate = NSPredicate(format: "time == %@", pinTitle!)
+//                    request.predicate = predicate
+//
+//                    let locations = try self.context.fetch(request)
+//                    for location in locations{
+//                        self.context.delete(location)
+//
+//                        self.map.removeAnnotation(self.selectedAnnotation!)
+//                        print("pinDeleted")
+//                    }
+//                } catch {
+//                    print("Failed")
+//            }
+//
+//            do {
+//                try self.context.save()
+//            } catch {
+//                print("Failed saving")
+//            }
+//
+//        })
+//
+//
+//        alert.addAction(UIAlertAction(title: "Add more info and save on map ", style: .default, handler: {action in self.performSegue(withIdentifier: "editInfo", sender: self)}))
+//
+//
+//        alert.addAction(cancelAction)
+//        alert.addAction(deleteDataAction)
+//
+//        self.present(alert, animated: true, completion: nil)
     }
 }
 
