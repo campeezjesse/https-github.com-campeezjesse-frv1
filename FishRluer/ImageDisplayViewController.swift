@@ -50,6 +50,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     @IBOutlet weak var currentWeather: UITextField!
     @IBOutlet weak var moreNotes: UITextView!
     @IBOutlet weak var waterTempConditions: UITextField!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     
     @IBOutlet weak var theTemp: UILabel!
@@ -67,8 +68,12 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     
     override func viewDidLoad() {
         super.viewDidLoad()
+  
         
         
+        // setup keyboard event
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
        
        
 
@@ -89,6 +94,26 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @objc func keyboardWillShow(notification:NSNotification){
+        var userInfo = notification.userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        
+        var contentInset:UIEdgeInsets = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        scrollView.contentInset = contentInset
+    }
+    
+    @objc func keyboardWillHide(notification:NSNotification){
+        
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+    }
    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         

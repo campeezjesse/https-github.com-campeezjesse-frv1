@@ -704,6 +704,7 @@
                         <outlet property="longitudeLabel" destination="xkv-ui-QQr" id="E2k-ej-Aal"/>
                         <outlet property="mapView" destination="qCn-MD-idY" id="1jN-jW-U93"/>
                         <outlet property="moreNotes" destination="qy9-M5-eNz" id="aSH-Ar-p53"/>
+                        <outlet property="scrollView" destination="JC0-lV-Ffu" id="v4H-eT-tMu"/>
                         <outlet property="theSummary" destination="FbM-tV-ZOe" id="eXZ-1d-SzF"/>
                         <outlet property="theTemp" destination="2KH-1i-sGd" id="o8H-vD-4az"/>
                         <outlet property="theWind" destination="BR4-1z-Axs" id="e5R-lp-JaZ"/>
@@ -765,7 +766,7 @@
                                                                 </constraints>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light" returnKeyType="done"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                             </textField>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="length: " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bDC-tr-IX2">
                                                                 <rect key="frame" x="0.0" y="60" width="375" height="60"/>
@@ -774,7 +775,7 @@
                                                                 </constraints>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                                <textInputTraits key="textInputTraits"/>
+                                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                             </textField>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DZR-Pw-Bx5" userLabel="weatherView">
                                                                 <rect key="frame" x="0.0" y="120" width="375" height="130"/>
@@ -864,7 +865,7 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="Water Depth/Temp:  " textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="d1f-5T-XoZ">
                                                 <rect key="frame" x="0.0" y="60" width="375" height="60"/>
@@ -1038,6 +1039,7 @@
                         <outlet property="dateInfo" destination="W75-pD-kFx" id="PD5-8M-bua"/>
                         <outlet property="lengthInfo" destination="bDC-tr-IX2" id="Vmk-q2-QSS"/>
                         <outlet property="saveInfoButton" destination="SYV-Pf-c8Q" id="cYQ-n1-W0n"/>
+                        <outlet property="scrollView" destination="PTC-F3-yHR" id="ueD-rl-BAA"/>
                         <outlet property="speciesInfo" destination="WG6-l3-uVD" id="RFi-3D-T47"/>
                         <outlet property="tempInfo" destination="p2b-gK-wGy" id="ZHe-0J-wCr"/>
                         <outlet property="waterInfo" destination="d1f-5T-XoZ" id="cu9-Kc-bLu"/>
@@ -1061,6 +1063,6 @@
         <image name="targetWhite" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="M2b-Qa-D6z"/>
+        <segue reference="VpG-Ia-X6w"/>
     </inferredMetricsTieBreakers>
 </document>
