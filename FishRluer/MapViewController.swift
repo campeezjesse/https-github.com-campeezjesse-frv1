@@ -52,19 +52,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
     
     //for pullUp
-    private func makeSearchViewControllerIfNeeded() -> PullUpController {
+    private func makeSearchViewControllerIfNeeded() -> SearchViewController {
         let currentPullUpController = childViewControllers
-            .filter({ $0 is PullUpController })
-            .first as? PullUpController
+            .filter({ $0 is SearchViewController })
+            .first as? SearchViewController
         if let currentPullUpController = currentPullUpController {
             return currentPullUpController
         } else {
             return UIStoryboard(name: "Main", bundle: nil)
-                .instantiateViewController(withIdentifier: "PullUpController") as! PullUpController
+                .instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
         }
     }
-    
-    
 
     
     
@@ -72,6 +70,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         super.viewDidLoad()
         
         addPullUpController()
+      
         
        // let pullUpController = makeSearchViewControllerIfNeeded()
         
@@ -97,6 +96,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     private func addPullUpController() {
         let pullUpController = makeSearchViewControllerIfNeeded()
         addPullUpController(pullUpController, animated: true)
+    }
+    
+    func zoom(to location: CLLocationCoordinate2D) {
+        let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let region = MKCoordinateRegionMake(location, span)
+        
+        map.setRegion(region, animated: true)
     }
 
     func getData() -> [MKAnnotation]? {
@@ -222,7 +228,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             self.zoomToLocation(location: coordinate, latitudinalMeters: latitudinalMeters, longitudinalMeters: longitudinalMeters)
         }
         
-        func zoomToLocation(location : CLLocationCoordinate2D,latitudinalMeters:CLLocationDistance = 100,longitudinalMeters:CLLocationDistance = 100)
+        func zoomToLocation(location : CLLocationCoordinate2D,latitudinalMeters:CLLocationDistance = 1000,longitudinalMeters:CLLocationDistance = 1000)
         {
             let region = MKCoordinateRegionMakeWithDistance(location, latitudinalMeters, longitudinalMeters)
             setRegion(region, animated: true)
