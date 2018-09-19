@@ -12,7 +12,12 @@ import PullUpController
 import CoreData
 
 
+
+
 class SearchViewController: PullUpController {
+    
+    //Expand tableView cell
+ var selectedRowIndex = -1
     
     var resultSearchController:UISearchController? = nil
     var catches = [Fish]()
@@ -80,6 +85,8 @@ class SearchViewController: PullUpController {
         super.viewDidLayoutSubviews()
         
         view.layer.cornerRadius = 12
+//        view.layer.borderWidth = 1.0
+//        view.layer.borderColor = UIColor.black.cgColor
     }
     
     private func setupDataSource() {
@@ -188,15 +195,53 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             else { return UITableViewCell() }
         
         cell.configure(title: catches[indexPath.row].species!, subTitle: catches[indexPath.row].time!)
+        
+        let fishLength = "Length: " + catches[indexPath.row].length!
+        let fishBait = catches[indexPath.row].bait
+        let water = catches[indexPath.row].water
+        let notes = catches[indexPath.row].notes
+        
+        let wind = catches[indexPath.row].windSpeed
+    
+        let temp = catches[indexPath.row].currentTemp
+        let summary = catches[indexPath.row].weatherSummary
+        
+        cell.lengthDetails.text = fishLength
+        cell.baitDetails.text = fishBait
+        cell.waterDetails.text = water
+        cell.notesDetails.text = notes
+        cell.windConditions.text = wind
+        cell.tempConditions.text = temp
+        cell.summaryConditions.text = summary
+        
+//        cell.layer.borderWidth = 3.0
+//        cell.layer.borderColor = UIColor.black.cgColor
+        
         return cell
     }
     
     // MARK: - UITableViewDelegate
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == selectedRowIndex {
+            return 450 //Expanded
+        }
+        return 61 //Not expanded
+    }
+ 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if selectedRowIndex == indexPath.row {
+            selectedRowIndex = -1
+        } else {
+            selectedRowIndex = indexPath.row
+            
+        }
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+ 
         view.endEditing(true)
-        pullUpControllerMoveToVisiblePoint(pullUpControllerMiddleStickyPoints[0], animated: true, completion: nil)
+      //  pullUpControllerMoveToVisiblePoint(pullUpControllerMiddleStickyPoints[0], animated: true, completion: nil)
         
         let fishPoint = catches[indexPath.row]
         let catchSpot = CLLocationCoordinate2DMake(fishPoint.latitude, fishPoint.longitude)
@@ -205,6 +250,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         (parent as? MapViewController)?.zoom(to: catchSpot)
         
     }
+
 }
 
 
