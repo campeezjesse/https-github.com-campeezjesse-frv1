@@ -22,6 +22,8 @@ class SearchViewController: PullUpController {
     var resultSearchController:UISearchController? = nil
     var catches = [Fish]()
     
+    var fishID: String = ""
+    
     var matchingItems:[MKMapItem] = []
     var mapView: MKMapView? = nil
     
@@ -43,6 +45,7 @@ class SearchViewController: PullUpController {
     @IBOutlet private weak var firstPreviewView: UIView!
     @IBOutlet private weak var secondPreviewView: UIView!
     @IBOutlet private weak var tableView: UITableView!
+
     
     private var locations = [(title: String, location: CLLocationCoordinate2D)]()
     
@@ -54,9 +57,7 @@ class SearchViewController: PullUpController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       // dismissKeyboard()
-        
-      // self.hideKeyboard()
+     
         tableView.keyboardDismissMode = .onDrag
  
         portraitSize = CGSize(width: min(UIScreen.main.bounds.width, UIScreen.main.bounds.height),
@@ -85,8 +86,7 @@ class SearchViewController: PullUpController {
         super.viewDidLayoutSubviews()
         
         view.layer.cornerRadius = 12
-//        view.layer.borderWidth = 1.0
-//        view.layer.borderColor = UIColor.black.cgColor
+
     }
     
     private func setupDataSource() {
@@ -107,7 +107,10 @@ class SearchViewController: PullUpController {
         
    }
     
-
+    @IBAction func editButtPressed(_ sender: Any) {
+        performSegue(withIdentifier: "editButt", sender: self)
+    }
+    
     // MARK: - PullUpController
     
     override var pullUpControllerPreferredSize: CGSize {
@@ -129,6 +132,19 @@ class SearchViewController: PullUpController {
     override var pullUpControllerIsBouncingEnabled: Bool {
         return false
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.destination is CatchDetailsViewController{
+//
+//            let vc = segue.destination as? CatchDetailsViewController
+//
+//
+//
+//
+//
+//        }
+//    }
+
     
 }
 
@@ -173,6 +189,8 @@ extension SearchViewController: UISearchBarDelegate {
                 let searchLocation = annotation.coordinate
                 
                 (self.parent as? MapViewController)?.zoom(to: searchLocation)
+                
+                self.pullUpControllerMoveToVisiblePoint(self.pullUpControllerPreviewOffset, animated: true, completion: nil)
             }
         }
         
@@ -196,10 +214,20 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.configure(title: catches[indexPath.row].species!, subTitle: catches[indexPath.row].time!)
         
+        cell.editButt.layer.borderColor = UIColor.black.cgColor
+        cell.editButt.layer.borderWidth = 2.0
+        cell.editButt.layer.cornerRadius = 0.5
+        
+        cell.directionsButt.layer.borderColor = UIColor.black.cgColor
+        cell.directionsButt.layer.borderWidth = 2.0
+        cell.directionsButt.layer.cornerRadius = 0.5
+
+        
         let fishLength = "Length: " + catches[indexPath.row].length!
         let fishBait = catches[indexPath.row].bait
         let water = catches[indexPath.row].water
         let notes = catches[indexPath.row].notes
+        let time = catches[indexPath.row].time
         
         let wind = catches[indexPath.row].windSpeed
     
@@ -214,10 +242,20 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         cell.tempConditions.text = temp
         cell.summaryConditions.text = summary
         
-//        cell.layer.borderWidth = 3.0
-//        cell.layer.borderColor = UIColor.black.cgColor
+        cell.fishID = time!
+        
+        fishID = time!
         
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is CatchDetailsViewController{
+            
+            let vc = segue.destination as? CatchDetailsViewController
+            
+            vc?.catchID = fishID
+        }
     }
     
     // MARK: - UITableViewDelegate
@@ -228,9 +266,15 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return 61 //Not expanded
     }
+    
  
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        if let lastStickyPoint = pullUpControllerAllStickyPoints.last {
+            pullUpControllerMoveToVisiblePoint(lastStickyPoint, animated: true, completion: nil)
+            
+        }
         
         if selectedRowIndex == indexPath.row {
             selectedRowIndex = -1
@@ -239,9 +283,9 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             
         }
         tableView.reloadRows(at: [indexPath], with: .automatic)
- 
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         view.endEditing(true)
-      //  pullUpControllerMoveToVisiblePoint(pullUpControllerMiddleStickyPoints[0], animated: true, completion: nil)
+     
         
         let fishPoint = catches[indexPath.row]
         let catchSpot = CLLocationCoordinate2DMake(fishPoint.latitude, fishPoint.longitude)

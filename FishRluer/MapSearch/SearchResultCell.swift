@@ -11,6 +11,8 @@ import UIKit
 
 class SearchResultCell: UITableViewCell {
     
+    var fishID: String = ""
+    
     @IBOutlet private weak var titleLabel: UILabel!
     
     @IBOutlet private weak var subTitleLabel: UILabel!
@@ -24,10 +26,13 @@ class SearchResultCell: UITableViewCell {
     @IBOutlet weak var tempConditions: UILabel!
     @IBOutlet weak var summaryConditions: UILabel!
     
+    @IBOutlet weak var editButt: UIButton!
+    @IBOutlet weak var directionsButt: UIButton!
     
     func configure(title: String, subTitle: String) {
         titleLabel.text = title
         subTitleLabel.text = subTitle
     }
+    
 }
 
