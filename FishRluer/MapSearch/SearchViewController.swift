@@ -1,9 +1,9 @@
 //
 //  SearchViewController.swift
-//  PullUpControllerDemo
+//  FishRluer
 //
-//  Created by Mario on 03/11/2017.
-//  Copyright © 2017 Mario. All rights reserved.
+//  Created by user1 on 5/29/18.
+//  Copyright © 2018 campeez. All rights reserved.
 //
 
 import UIKit
@@ -68,15 +68,15 @@ class SearchViewController: PullUpController {
         setupDataSource()
         
         willMoveToStickyPoint = { point in
-            print("willMoveToStickyPoint \(point)")
+          //  print("willMoveToStickyPoint \(point)")
         }
         
         didMoveToStickyPoint = { point in
-            print("didMoveToStickyPoint \(point)")
+          //  print("didMoveToStickyPoint \(point)")
         }
         
         onDrag = { point in
-            print("onDrag: \(point)")
+          //  print("onDrag: \(point)")
             
             self.view.endEditing(true)
         }
@@ -133,19 +133,7 @@ class SearchViewController: PullUpController {
         return false
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.destination is CatchDetailsViewController{
-//
-//            let vc = segue.destination as? CatchDetailsViewController
-//
-//
-//
-//
-//
-//        }
-//    }
 
-    
 }
 
 
@@ -214,13 +202,13 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.configure(title: catches[indexPath.row].species!, subTitle: catches[indexPath.row].time!)
         
-        cell.editButt.layer.borderColor = UIColor.black.cgColor
-        cell.editButt.layer.borderWidth = 2.0
-        cell.editButt.layer.cornerRadius = 0.5
-        
-        cell.directionsButt.layer.borderColor = UIColor.black.cgColor
-        cell.directionsButt.layer.borderWidth = 2.0
-        cell.directionsButt.layer.cornerRadius = 0.5
+//        cell.editButt.layer.borderColor = UIColor.black.cgColor
+//        cell.editButt.layer.borderWidth = 1.0
+//        cell.editButt.layer.cornerRadius = 0.5
+//
+//        cell.directionsButt.layer.borderColor = UIColor.black.cgColor
+//        cell.directionsButt.layer.borderWidth = 2.0
+//        cell.directionsButt.layer.cornerRadius = 0.5
 
         
         let fishLength = "Length: " + catches[indexPath.row].length!
@@ -271,10 +259,10 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if let lastStickyPoint = pullUpControllerAllStickyPoints.last {
-            pullUpControllerMoveToVisiblePoint(lastStickyPoint, animated: true, completion: nil)
+       // if let lastStickyPoint = pullUpControllerAllStickyPoints.last {
+            pullUpControllerMoveToVisiblePoint(pullUpControllerMiddleStickyPoints[0], animated: true, completion: nil)
             
-        }
+       // }
         
         if selectedRowIndex == indexPath.row {
             selectedRowIndex = -1
@@ -292,6 +280,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
  
         
         (parent as? MapViewController)?.zoom(to: catchSpot)
+        self.mapView?.selectAnnotation(catches[indexPath.row] as! MKAnnotation, animated: true)
         
     }
 

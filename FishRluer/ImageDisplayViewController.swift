@@ -27,7 +27,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     
 
    
-    //let client = DarkSkyClient(apiKey: "0c6c3aca0c9f41065a7bffbedaa74dcd")
+    
     let formater = DateFormatter()
     let locationManager = CLLocationManager()
     

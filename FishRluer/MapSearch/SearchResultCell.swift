@@ -1,11 +1,10 @@
 //
 //  SearchResultCell.swift
-//  PullUpControllerDemo
+//  FishRluer
 //
-//  Created by Mario on 04/11/2017.
-//  Copyright © 2017 Mario. All rights reserved.
+//  Created by user1 on 5/29/18.
+//  Copyright © 2018 campeez. All rights reserved.
 //
-
 import UIKit
 
 
@@ -27,7 +26,7 @@ class SearchResultCell: UITableViewCell {
     @IBOutlet weak var summaryConditions: UILabel!
     
     @IBOutlet weak var editButt: UIButton!
-    @IBOutlet weak var directionsButt: UIButton!
+
     
     func configure(title: String, subTitle: String) {
         titleLabel.text = title
