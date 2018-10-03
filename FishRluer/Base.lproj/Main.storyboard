@@ -905,7 +905,7 @@
         <!--Catch Details View Controller-->
         <scene sceneID="DeX-x5-W5I">
             <objects>
-                <viewController id="gAj-xt-mVJ" customClass="CatchDetailsViewController" customModule="FishRuler" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="additionalInfo" id="gAj-xt-mVJ" customClass="CatchDetailsViewController" customModule="FishRuler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uga-LW-10Z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1197,20 +1197,6 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <size key="freeformSize" width="375" height="1200"/>
-                    <connections>
-                        <outlet property="additionalInfo" destination="DWf-1H-aBL" id="Dl7-Ge-D7e"/>
-                        <outlet property="backButton" destination="Ubd-D8-BAm" id="QoL-vz-PbL"/>
-                        <outlet property="baitInfo" destination="YP3-Kj-7f8" id="DbR-hW-uLb"/>
-                        <outlet property="dateInfo" destination="W75-pD-kFx" id="PD5-8M-bua"/>
-                        <outlet property="lengthInfo" destination="bDC-tr-IX2" id="Vmk-q2-QSS"/>
-                        <outlet property="saveInfoButton" destination="SYV-Pf-c8Q" id="cYQ-n1-W0n"/>
-                        <outlet property="scrollView" destination="PTC-F3-yHR" id="ueD-rl-BAA"/>
-                        <outlet property="speciesInfo" destination="WG6-l3-uVD" id="RFi-3D-T47"/>
-                        <outlet property="tempInfo" destination="p2b-gK-wGy" id="ZHe-0J-wCr"/>
-                        <outlet property="waterInfo" destination="d1f-5T-XoZ" id="cu9-Kc-bLu"/>
-                        <outlet property="weatherSummaryInfo" destination="r3x-oY-hSc" id="uhZ-DP-UEZ"/>
-                        <outlet property="windInfo" destination="z7u-EO-pgH" id="LhM-EM-CC8"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mvQ-dt-zlk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1219,7 +1205,7 @@
         <!--Search View Controller-->
         <scene sceneID="APV-oY-v4Z">
             <objects>
-                <viewController storyboardIdentifier="SearchViewController" id="Ls2-6D-TVK" customClass="SearchViewController" customModule="FishRuler" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchViewController" id="Ls2-6D-TVK" customClass="SearchViewController" customModule="FishRuler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="TBi-Dq-CJG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1569,7 +1555,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="zws-0q-2Z6"/>
-        <segue reference="hne-sk-reT"/>
+        <segue reference="M2b-Qa-D6z"/>
         <segue reference="q96-cR-eaV"/>
     </inferredMetricsTieBreakers>
 </document>
