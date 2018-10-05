@@ -145,36 +145,38 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     
     func  deletePin() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
-        let requestDel = NSFetchRequest<NSFetchRequestResult>(entityName: "Fish")
-        
-        let thisCatch = selectedAnnotation?.title
-        requestDel.returnsObjectsAsFaults = false
+//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//        let context = appDelegate.persistentContainer.viewContext
+//        let requestDel = NSFetchRequest<NSFetchRequestResult>(entityName: "Fish")
+//
+//        let thisCatch = selectedAnnotation?.title
+//        requestDel.returnsObjectsAsFaults = false
+//
+//        let predicateDel = NSPredicate(format: "species == %d", thisCatch!)
+//        requestDel.predicate = predicateDel
+//
+//
+//        do {
+//            let locations = try context.fetch(requestDel)
+//            for location in locations{
+//                context.delete(location as! NSManagedObject)
+//
+//                self.map.removeAnnotation(selectedAnnotation!)
+//                print("pinDeleted")
+//            }
+//        } catch {
+//            print("Failed")
+//        }
+//
+//        do {
+//            try context.save()
+//        } catch {
+//            print("Failed saving")
+//        }
+//    }
 
-        let predicateDel = NSPredicate(format: "species == %d", thisCatch!)
-        requestDel.predicate = predicateDel
-
-
-        do {
-            let locations = try context.fetch(requestDel)
-            for location in locations{
-                context.delete(location as! NSManagedObject)
-                
-                self.map.removeAnnotation(selectedAnnotation!)
-                print("pinDeleted")
-            }
-        } catch {
-            print("Failed")
-        }
-        
-        do {
-            try context.save()
-        } catch {
-            print("Failed saving")
-        }
+        self.map.removeAnnotation(selectedAnnotation!)
     }
-
     
     //MARK: - Custom Annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -210,9 +212,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             let vc = segue.destination as? CatchDetailsViewController
             
+            let theID = selectedAnnotation?.newTime
             
-            
-            vc?.catchID = (selectedAnnotation?.newTime)!
+            vc?.catchID = theID!
 
         }
     }
@@ -230,6 +232,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         renderer.lineWidth = 5.0
         
         return renderer
+    }
+    
+    @IBAction func goBackButton(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+        
     }
 }
     extension MKMapView {

@@ -225,6 +225,10 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         let weatherCond = currentWeather.text
         let notes = moreNotes.text
         let catchTimeandDate = catchTime.text
+        let catchLength = fishLength.text
+        let catchWind = theWind.text
+        let catchTemp = theTemp.text
+        let catchWeatherSum = theSummary.text
     
 
          let myCoordinate = pointAnnotation.coordinate
@@ -235,15 +239,15 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         newPin.latitude = myCoordinate.latitude
         newPin.longitude = myCoordinate.longitude
         newPin.species = fishKind
-        newPin.length = length
+        newPin.length = catchLength
         newPin.water = waterTempDepth
         newPin.bait = bait
         newPin.weather = weatherCond
         newPin.notes = notes
         newPin.time = catchTimeandDate
-        newPin.currentTemp = theTemp.text
-        newPin.weatherSummary = theSummary.text
-        newPin.windSpeed = theWind.text
+        newPin.currentTemp = catchTemp
+        newPin.weatherSummary = catchWeatherSum
+        newPin.windSpeed = catchWind
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
