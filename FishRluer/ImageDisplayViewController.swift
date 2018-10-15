@@ -18,7 +18,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     
 
     var fishKind: String? = ""
-    var length: String? = ""
+    var length: String? = "Length: "
     var date = Date()
     var waterTempDepth: String? = ""
     var bait: String? = ""
@@ -93,6 +93,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
        
         
     }
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

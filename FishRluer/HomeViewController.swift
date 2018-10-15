@@ -34,7 +34,7 @@ navigationController?.setNavigationBarHidden(true, animated: false)
             
             
             
-            vc?.length = "Size: "
+           // vc?.length = "Size: "
             
         }
     }

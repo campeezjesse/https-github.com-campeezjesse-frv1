@@ -153,11 +153,11 @@ class CatchDetailsViewController: UIViewController {
         // date and time passed from annotation to be used as ID
         
         
-        let ID = catchID
+        let ID = dateTimeLabel.text
         
         do{
             let request: NSFetchRequest<Fish> = Fish.fetchRequest()
-            let predicate = NSPredicate(format: "time == %@", ID)
+            let predicate = NSPredicate(format: "time == %@", ID!)
             request.predicate = predicate
             
             let locations = try self.context.fetch(request)
@@ -198,7 +198,7 @@ class CatchDetailsViewController: UIViewController {
                     
                 })
                 
-//                activityIndicator.isHidden = false
+
                 
                 
             }

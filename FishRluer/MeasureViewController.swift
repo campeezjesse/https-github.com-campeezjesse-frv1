@@ -288,6 +288,16 @@ final class MeasureViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    @IBAction func swipeForCamera(_ sender: Any) {
+        
+        let cameraController = storyboard?.instantiateViewController(withIdentifier: "camera")
+        
+        addChildViewController(cameraController!)
+        view.addSubview((cameraController?.view)!)
+        cameraController?.didMove(toParentViewController: self)
+        
+        
+    }
 }
 
 // MARK: - ARSCNViewDelegate

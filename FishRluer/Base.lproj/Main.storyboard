@@ -291,21 +291,6 @@
             </objects>
             <point key="canvasLocation" x="7874" y="-927"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="ZWL-nd-uNb">
-            <objects>
-                <viewController id="09G-bS-vTx" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="xDj-0I-Cge">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="leN-T3-jPQ"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tBB-Ua-r81" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5644" y="3"/>
-        </scene>
         <!--Map View Controller-->
         <scene sceneID="f46-wa-F0W">
             <objects>
@@ -1588,7 +1573,7 @@
         <!--Camera-->
         <scene sceneID="V0c-TY-nRO">
             <objects>
-                <viewController title="Camera" id="y9V-wn-35c" customClass="CameraViewController" customModule="FishRuler" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="camera" title="Camera" id="y9V-wn-35c" customClass="CameraViewController" customModule="FishRuler" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mGj-pm-hda"/>
                         <viewControllerLayoutGuide type="bottom" id="p5Y-Ur-52o"/>
@@ -1801,7 +1786,7 @@
         <image name="targetWhite" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="FXo-Bh-nC1"/>
-        <segue reference="hne-sk-reT"/>
+        <segue reference="VoT-aD-1YR"/>
+        <segue reference="e3b-qS-oBl"/>
     </inferredMetricsTieBreakers>
 </document>

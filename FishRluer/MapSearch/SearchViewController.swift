@@ -211,7 +211,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 //        cell.directionsButt.layer.cornerRadius = 0.5
 
         
-        let fishLength = "Length: " + catches[indexPath.row].length!
+        let fishLength = catches[indexPath.row].length!
         let fishBait = catches[indexPath.row].bait
         let water = catches[indexPath.row].water
         let notes = catches[indexPath.row].notes

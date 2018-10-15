@@ -216,5 +216,14 @@ class CameraViewController: UIViewController {
                 qualityLabel.text = "Medium"
             }
         }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.destination is MeasureViewController{
+            
+            let vc = segue.destination as? MeasureViewController
+            
+            cameraView = vc?.sceneView
+            
+        }
+    }
 }
 
