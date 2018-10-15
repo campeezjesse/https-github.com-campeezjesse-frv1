@@ -94,8 +94,8 @@ final class Line {
         text = SCNText(string: "", extrusionDepth: 2)
         text.font = UIFont(name: "Helvetica", size: 25)
         text.firstMaterial?.diffuse.contents = color
-        text.alignmentMode  = kCAAlignmentCenter
-        text.truncationMode = kCATruncationMiddle
+        text.alignmentMode  = convertFromCATextLayerAlignmentMode(CATextLayerAlignmentMode.center)
+        text.truncationMode = convertFromCATextLayerTruncationMode(CATextLayerTruncationMode.middle)
         text.firstMaterial?.isDoubleSided = true
        // text.firstMaterial?.specular.contents = textFront
         //text.materials = [textSides, textFront]
@@ -138,4 +138,14 @@ final class Line {
         endNode.removeFromParentNode()
         textNode.removeFromParentNode()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCATextLayerAlignmentMode(_ input: CATextLayerAlignmentMode) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCATextLayerTruncationMode(_ input: CATextLayerTruncationMode) -> String {
+	return input.rawValue
 }

@@ -30,7 +30,7 @@ navigationController?.setNavigationBarHidden(true, animated: false)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is ImageDisplayViewController{
             
-            let vc = segue.destination as? ImageDisplayViewController
+           // let vc = segue.destination as? ImageDisplayViewController
             
             
             

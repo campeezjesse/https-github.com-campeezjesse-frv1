@@ -153,8 +153,8 @@ final class MeasureViewController: UIViewController {
                                                 preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default))
         alertController.addAction(UIAlertAction(title: "Settings", style: .cancel) { _ in
-            if let url = URL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.shared.open(url, options: [:], completionHandler: { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: { _ in
                     // Handle
                 })
             }
@@ -292,9 +292,9 @@ final class MeasureViewController: UIViewController {
         
         let cameraController = storyboard?.instantiateViewController(withIdentifier: "camera")
         
-        addChildViewController(cameraController!)
+        addChild(cameraController!)
         view.addSubview((cameraController?.view)!)
-        cameraController?.didMove(toParentViewController: self)
+        cameraController?.didMove(toParent: self)
         
         
     }
@@ -477,3 +477,8 @@ extension MeasureViewController: RPPreviewViewControllerDelegate {
 }
 
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
+}

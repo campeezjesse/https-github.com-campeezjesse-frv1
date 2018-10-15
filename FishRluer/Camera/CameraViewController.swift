@@ -115,7 +115,7 @@ class CameraViewController: UIViewController {
             cameraManager.showErrorBlock = { [weak self] (erTitle: String, erMessage: String) -> Void in
                 
                 let alertController = UIAlertController(title: erTitle, message: erMessage, preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: { (alertAction) -> Void in  }))
+                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { (alertAction) -> Void in  }))
                 
                 self?.present(alertController, animated: true, completion: nil)
             }
@@ -155,7 +155,7 @@ class CameraViewController: UIViewController {
                 })
             case .videoWithMic, .videoOnly:
                 cameraButton.isSelected = !cameraButton.isSelected
-                cameraButton.setTitle("", for: UIControlState.selected)
+                cameraButton.setTitle("", for: UIControl.State.selected)
                 
                 cameraButton.backgroundColor = cameraButton.isSelected ? redColor : lightBlue
                 if sender.isSelected {

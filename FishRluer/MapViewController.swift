@@ -53,7 +53,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     //for pullUp
     private func makeSearchViewControllerIfNeeded() -> SearchViewController {
-        let currentPullUpController = childViewControllers
+        let currentPullUpController = children
             .filter({ $0 is SearchViewController })
             .first as? SearchViewController
         if let currentPullUpController = currentPullUpController {
@@ -100,7 +100,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     func zoom(to location: CLLocationCoordinate2D) {
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-        let region = MKCoordinateRegionMake(location, span)
+        let region = MKCoordinateRegion.init(center: location, span: span)
         
         map.setRegion(region, animated: true)
     }
@@ -252,7 +252,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         func zoomToLocation(location : CLLocationCoordinate2D,latitudinalMeters:CLLocationDistance = 1000,longitudinalMeters:CLLocationDistance = 1000)
         {
-            let region = MKCoordinateRegionMakeWithDistance(location, latitudinalMeters, longitudinalMeters)
+            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: latitudinalMeters, longitudinalMeters: longitudinalMeters)
             setRegion(region, animated: true)
         }
         

@@ -72,8 +72,8 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         
         
         // setup keyboard event
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name:UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name:UIResponder.keyboardWillHideNotification, object: nil)
        
        
 
@@ -102,7 +102,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     
     @objc func keyboardWillShow(notification:NSNotification){
         var userInfo = notification.userInfo!
-        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
         keyboardFrame = self.view.convert(keyboardFrame, from: nil)
         
         var contentInset:UIEdgeInsets = self.scrollView.contentInset
@@ -136,7 +136,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
      
         let catchLocation = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
         let center = catchLocation
-        let region = MKCoordinateRegionMake(center, MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025))
+        let region = MKCoordinateRegion.init(center: center, span: MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025))
         mapView.setRegion(region, animated: true)
         
         pointAnnotation = CatchAnnotation()
@@ -197,7 +197,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
                 let alert = UIAlertController(title: "Location Needed", message: "There was an error finding you!", preferredStyle: .alert)
 
                 let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
-                    guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                    guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                         return
                     }
 
@@ -288,7 +288,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
                     let alert = UIAlertController(title: "Location Needed", message: "There was an error finding you!", preferredStyle: .alert)
                     
                     let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
-                        guard let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) else {
+                        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
                             return
                         }
                         

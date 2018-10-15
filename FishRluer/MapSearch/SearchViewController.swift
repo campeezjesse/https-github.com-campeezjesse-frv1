@@ -154,7 +154,7 @@ extension SearchViewController: UISearchBarDelegate {
         view.endEditing(true)
 
         
-        let searchRequest = MKLocalSearchRequest()
+        let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = searchBar.text
         
         let activeSearch = MKLocalSearch(request: searchRequest)
