@@ -107,9 +107,9 @@ class SearchViewController: PullUpController {
         
    }
     
-    @IBAction func editButtPressed(_ sender: Any) {
-        performSegue(withIdentifier: "editButt", sender: self)
-    }
+   // @IBAction func editButtPressed(_ sender: Any) {
+    //    performSegue(withIdentifier: "editButt", sender: self)
+    //}
     
     // MARK: - PullUpController
     

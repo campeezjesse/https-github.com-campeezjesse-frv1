@@ -27,6 +27,8 @@
 		7FA2BEA12165507B00EC4478 /* PullUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2BEA02165507B00EC4478 /* PullUpController.swift */; };
 		7FA2BEA22165516F00EC4478 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DCD4820E583FF004D22C1 /* MapViewController.swift */; };
 		7FA2BEA82165529F00EC4478 /* CatchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2BEA72165529F00EC4478 /* CatchDetailsViewController.swift */; };
+		7FA8A18021762DD400A06F3D /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA8A17F21762DD400A06F3D /* MenuTableViewController.swift */; };
+		7FA8A1832176344100A06F3D /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA8A1822176344100A06F3D /* MenuTableViewCell.swift */; };
 		7FBBB306216538D100982715 /* ARSCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBBB305216538D100982715 /* ARSCNView.swift */; };
 		7FCF397B2166CE97007163E2 /* ForecastIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FCF397A2166CE97007163E2 /* ForecastIO.framework */; };
 		7FCF397D2166CE9C007163E2 /* NVActivityIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FCF397C2166CE9C007163E2 /* NVActivityIndicatorView.framework */; };
@@ -64,6 +66,8 @@
 		7FA2BE9C21654ED500EC4478 /* CatchCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchCalloutView.swift; sourceTree = "<group>"; };
 		7FA2BEA02165507B00EC4478 /* PullUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullUpController.swift; sourceTree = "<group>"; };
 		7FA2BEA72165529F00EC4478 /* CatchDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CatchDetailsViewController.swift; path = FishRluer/CatchDetailsViewController.swift; sourceTree = SOURCE_ROOT; };
+		7FA8A17F21762DD400A06F3D /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
+		7FA8A1822176344100A06F3D /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		7FBBB305216538D100982715 /* ARSCNView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARSCNView.swift; sourceTree = "<group>"; };
 		7FCF397A2166CE97007163E2 /* ForecastIO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ForecastIO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FCF397C2166CE9C007163E2 /* NVActivityIndicatorView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NVActivityIndicatorView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,6 +142,7 @@
 				7FCF39802166FCAB007163E2 /* HomeViewController.swift */,
 				7F4834712136E4B9007C8927 /* Annotations */,
 				7F4834702136E465007C8927 /* CoreData */,
+				7FA8A18121762E5700A06F3D /* Menu */,
 				7F70911D20C83A5E00265230 /* Support */,
 				7FCF39862167CF59007163E2 /* Camera */,
 				7F48349E214C06AE007C8927 /* MapSearch */,
@@ -191,6 +196,15 @@
 			);
 			name = Support;
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		7FA8A18121762E5700A06F3D /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				7FA8A17F21762DD400A06F3D /* MenuTableViewController.swift */,
+				7FA8A1822176344100A06F3D /* MenuTableViewCell.swift */,
+			);
+			path = Menu;
 			sourceTree = "<group>";
 		};
 		7FCF39862167CF59007163E2 /* Camera */ = {
@@ -284,6 +298,7 @@
 				"${BUILT_PRODUCTS_DIR}/ForecastIO/ForecastIO.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/PullUpController/PullUpController.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -291,6 +306,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ForecastIO.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PullUpController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -344,9 +360,11 @@
 			files = (
 				7F05758620FECC83008B3101 /* FishAnnotationViewController.swift in Sources */,
 				7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */,
+				7FA8A1832176344100A06F3D /* MenuTableViewCell.swift in Sources */,
 				7F4834A0214C0B99007C8927 /* SearchViewController.swift in Sources */,
 				7F05756820F81D18008B3101 /* myAnnotation.swift in Sources */,
 				7FBBB306216538D100982715 /* ARSCNView.swift in Sources */,
+				7FA8A18021762DD400A06F3D /* MenuTableViewController.swift in Sources */,
 				7F00DCEF20BE3A8F001A2C9E /* MeasureViewController.swift in Sources */,
 				7F6DCDC020F50819004D22C1 /* Fish_Ruler.xcdatamodeld in Sources */,
 				7FA2BEA22165516F00EC4478 /* MapViewController.swift in Sources */,

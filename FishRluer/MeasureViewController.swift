@@ -20,8 +20,10 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var loadingView: UIActivityIndicatorView!
     @IBOutlet weak var messageLabel: UILabel!
 
+
     @IBOutlet weak var resetButton: UIButton!
     
+    @IBOutlet weak var goBackButton: UIImageView!
     @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var outputImageView: UIImageView!
  //   @IBOutlet weak var titleView: UIView!
@@ -37,6 +39,7 @@ final class MeasureViewController: UIViewController {
     
     @IBOutlet weak var cameraButton: UIButton!
     
+    @IBOutlet weak var saveFishButton: UIView!
     @IBOutlet weak var saveDetailsButton: UIButton!
    // @IBOutlet weak var saveDetailsLabel: UILabel!
  
@@ -102,7 +105,7 @@ final class MeasureViewController: UIViewController {
             startMeasureButton.isHidden = true
             targetImageView.isHidden = true
             stopMeasureButton.isHidden = true
-            
+            saveFishButton.isHidden = false
 
             
        
@@ -244,7 +247,10 @@ final class MeasureViewController: UIViewController {
     
     
 
-
+    @IBAction func backButtonPressed(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
+    
     @IBAction func savePic(_ sender: Any) {
         let pic = sceneView.snapshot()
         UIImageWriteToSavedPhotosAlbum(pic, self, nil, nil)
@@ -268,6 +274,7 @@ final class MeasureViewController: UIViewController {
         saveImageButton.isHidden = true
     }
     
+
     @IBAction func showAlertToSave(_ sender: Any) {
         
         let alert = UIAlertController(title: "Ready To Save", message: "Save your picture to show off", preferredStyle: .alert)
@@ -288,17 +295,18 @@ final class MeasureViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
-    @IBAction func swipeForCamera(_ sender: Any) {
-        
-        let cameraController = storyboard?.instantiateViewController(withIdentifier: "camera")
-        
-        addChild(cameraController!)
-        view.addSubview((cameraController?.view)!)
-        cameraController?.didMove(toParent: self)
-        
-        
-    }
 }
+//    @IBAction func swipeForCamera(_ sender: Any) {
+//
+//        let cameraController = storyboard?.instantiateViewController(withIdentifier: "camera")
+//
+//        addChild(cameraController!)
+//        view.addSubview((cameraController?.view)!)
+//        cameraController?.didMove(toParent: self)
+//
+//
+//    }
+//}
 
 // MARK: - ARSCNViewDelegate
 
@@ -328,6 +336,8 @@ extension MeasureViewController: ARSCNViewDelegate {
 // MARK: - Users Interactions
 
 extension MeasureViewController {
+    
+    // Change units
     @IBAction func meterButtonTapped(button: UIButton) {
         let alertVC = UIAlertController(title: "Settings", message: "Please select distance unit options", preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: DistanceUnit.centimeter.title, style: .default) { [weak self] _ in
@@ -355,6 +365,7 @@ extension MeasureViewController {
         saveImageButton.isHidden = true
         photoTaken.isHidden = true
         targetImageView.isHidden = false
+        saveFishButton.isHidden = true
     }
     
     
@@ -379,10 +390,13 @@ extension MeasureViewController {
         cameraButton.isHidden = false
         pressToStopRecLabel.isHidden = true
      saveImageButton.isEnabled = false
+        
+        saveFishButton.isHidden = true
         session.run(sessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
         resetValues()
         
-        navigationController?.setNavigationBarHidden(true, animated: false)
+        //navigationController?.setNavigationBarHidden(true, animated: false)
+        
      
         
         self.startMeasureButton.layer.borderWidth = 5

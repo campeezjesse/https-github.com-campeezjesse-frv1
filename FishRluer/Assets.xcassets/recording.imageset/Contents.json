@@ -10,15 +10,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "flash-off.png",
+      "filename" : "if_008_-_Record_2949810.png",
       "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
     "author" : "xcode"
-  },
-  "properties" : {
-    "template-rendering-intent" : "template"
   }
 }
