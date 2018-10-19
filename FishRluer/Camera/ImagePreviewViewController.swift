@@ -53,4 +53,15 @@ class ImagePreviewViewController: UIViewController {
         override var shouldAutorotate: Bool {
             return false
         }
+    
+
+        @IBAction func shareImage(_ sender: Any) {
+        
+        
+        //let image = UIImage(named: "Product")
+        let imageShare = [ image! ]
+        let activityViewController = UIActivityViewController(activityItems: imageShare , applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+    }
 }
