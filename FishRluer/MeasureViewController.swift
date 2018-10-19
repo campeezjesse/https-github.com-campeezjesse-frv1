@@ -12,6 +12,7 @@ import ARKit
 import CoreLocation
 import ReplayKit
 import NVActivityIndicatorView
+import AVKit
 
 
 
@@ -59,7 +60,9 @@ final class MeasureViewController: UIViewController {
     fileprivate lazy var unit: DistanceUnit = .inch
     fileprivate lazy var isRecording: Bool = false
  
- 
+ // AV Writer
+    var assetWriter:AVAssetWriter!
+    var videoInput:AVAssetWriterInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -176,61 +179,189 @@ final class MeasureViewController: UIViewController {
         present(alertController, animated: true)
     }
     
-    func startRecording() {
-        
-
-  
-        if RPScreenRecorder.shared().isAvailable {
-
-
-            RPScreenRecorder.shared().startRecording(handler: { (error) in
-                if error == nil {
-//                    print("recording")
+    func startRecording(withFileName fileName: String, recordingHandler:@escaping (Error?)-> Void)
+    {
+        if #available(iOS 11.0, *)
+        {
+            
+            let fileURL = URL(fileURLWithPath: ReplayFileUtil.filePath(fileName))
+            assetWriter = try! AVAssetWriter(outputURL: fileURL, fileType:
+                AVFileType.mp4)
+            let videoOutputSettings: Dictionary<String, Any> = [
+                AVVideoCodecKey : AVVideoCodecType.h264,
+                AVVideoWidthKey : UIScreen.main.bounds.size.width,
+                AVVideoHeightKey : UIScreen.main.bounds.size.height
+            ];
+            
+            videoInput  = AVAssetWriterInput (mediaType: AVMediaType.video, outputSettings: videoOutputSettings)
+            videoInput.expectsMediaDataInRealTime = true
+            assetWriter.add(videoInput)
+            
+            RPScreenRecorder.shared().startCapture(handler: { (sample, bufferType, error) in
+                //                print(sample,bufferType,error)
+                
+                recordingHandler(error)
+                
+                if CMSampleBufferDataIsReady(sample)
+                {
+                    if self.assetWriter.status == AVAssetWriter.Status.unknown
+                    {
+                        self.assetWriter.startWriting()
+                        self.assetWriter.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(sample))
+                    }
                     
-       
-                } else {
-                    print(error ?? "")
-                    self.messageLabel.text = "Error recording occurred"
-                }
-            })
-        }
-    }
-
-    func stopRecording() {
-        
-     self.recordingLabel.isHidden = true
-       
-        RPScreenRecorder.shared().stopRecording { [unowned self] (previewController, error) in
-            if error == nil {
-                
-                self.recordingLabel.isHidden = true
-                
-                let alertController = UIAlertController(title: "Done", message: "You can view your video to edit and share, or delete to try again", preferredStyle: .alert)
-                
-                let discardAction = UIAlertAction(title: "Delete", style: .default) { (action: UIAlertAction) in
-                    RPScreenRecorder.shared().discardRecording(handler: { () -> Void in
-                        // Executed once recording has successfully been discarded
-                    })
+                    if self.assetWriter.status == AVAssetWriter.Status.failed {
+                        print("Error occured, status = \(self.assetWriter.status.rawValue), \(self.assetWriter.error!.localizedDescription) \(String(describing: self.assetWriter.error))")
+                        return
+                    }
+                    
+                    if (bufferType == .video)
+                    {
+                        if self.videoInput.isReadyForMoreMediaData
+                        {
+                            self.videoInput.append(sample)
+                        }
+                    }
                 }
                 
-                let viewAction = UIAlertAction(title: "View", style: .default, handler: { (action) in
-                    previewController?.previewControllerDelegate = self
-                    self.present(previewController!, animated: true, completion: nil)
-                })
-                
-                alertController.addAction(discardAction)
-                alertController.addAction(viewAction)
-                
-                self.present(alertController, animated: true, completion: nil)
-                
-            } else {
-                print(error ?? "")
+            }) { (error) in
+                recordingHandler(error)
+                //                debugPrint(error)
             }
+        } else
+        {
+            // Fallback on earlier versions
         }
-        
     }
     
- 
+    func stopRecording(handler: @escaping (Error?) -> Void)
+    {
+        if #available(iOS 11.0, *)
+        {
+            RPScreenRecorder.shared().stopCapture
+                {    (error) in
+                    handler(error)
+                    self.assetWriter.finishWriting
+                        {
+                            print(ReplayFileUtil.fetchAllReplays())
+                            
+                    }
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+    
+//    func startRecording() {
+//
+//        let recorder = RPScreenRecorder.shared()
+//
+//
+//
+//        func startRecording(withFileName fileName: String, recordingHandler:@escaping (Error?)-> Void)
+//        {
+//            if #available(iOS 11.0, *)
+//            {
+//
+//                let fileURL = URL(fileURLWithPath: ReplayFileUtil.filePath(fileName))
+//                assetWriter = try! AVAssetWriter(outputURL: fileURL, fileType:
+//                    AVFileType.mp4)
+//                let videoOutputSettings: Dictionary<String, Any> = [
+//                    AVVideoCodecKey : AVVideoCodecType.h264,
+//                    AVVideoWidthKey : UIScreen.main.bounds.size.width,
+//                    AVVideoHeightKey : UIScreen.main.bounds.size.height
+//                ];
+//
+//                videoInput  = AVAssetWriterInput (mediaType: AVMediaType.video, outputSettings: videoOutputSettings)
+//                videoInput.expectsMediaDataInRealTime = true
+//                assetWriter.add(videoInput)
+//
+//                RPScreenRecorder.shared().startCapture(handler: { (sample, bufferType, error) in
+//                    //                print(sample,bufferType,error)
+//
+//                    recordingHandler(error)
+//
+//                    if CMSampleBufferDataIsReady(sample)
+//                    {
+//                        if self.assetWriter.status == AVAssetWriter.Status.unknown
+//                        {
+//                            self.assetWriter.startWriting()
+//                            self.assetWriter.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(sample))
+//                        }
+//
+//                        if self.assetWriter.status == AVAssetWriter.Status.failed {
+//                            print("Error occured, status = \(self.assetWriter.status.rawValue), \(self.assetWriter.error!.localizedDescription) \(String(describing: self.assetWriter.error))")
+//                            return
+//                        }
+//
+//                        if (bufferType == .video)
+//                        {
+//                            if self.videoInput.isReadyForMoreMediaData
+//                            {
+//                                self.videoInput.append(sample)
+//                            }
+//                        }
+//                    }
+//
+//                }) { (error) in
+//                    recordingHandler(error)
+//                    //                debugPrint(error)
+//                }
+//            } else
+//            {
+//                // Fallback on earlier versions
+//            }
+//        }
+//    }
+    
+//            RPScreenRecorder.shared().startRecording(handler: { (error) in
+//                if error == nil {
+////                    print("recording")
+//
+//
+//                } else {
+//                    print(error ?? "")
+//                    self.messageLabel.text = "Error recording occurred"
+//                }
+//            })
+//        }
+//    }
+
+//    func stopRecording() {
+//
+//     self.recordingLabel.isHidden = true
+//
+//        RPScreenRecorder.shared().stopRecording { [unowned self] (previewController, error) in
+//            if error == nil {
+//
+//                self.recordingLabel.isHidden = true
+//
+//                let alertController = UIAlertController(title: "Done", message: "You can view your video to edit and share, or delete to try again", preferredStyle: .alert)
+//
+//                let discardAction = UIAlertAction(title: "Delete", style: .default) { (action: UIAlertAction) in
+//                    RPScreenRecorder.shared().discardRecording(handler: { () -> Void in
+//                        // Executed once recording has successfully been discarded
+//                    })
+//                }
+//
+//                let viewAction = UIAlertAction(title: "View", style: .default, handler: { (action) in
+//                    previewController?.previewControllerDelegate = self
+//                    self.present(previewController!, animated: true, completion: nil)
+//                })
+//
+//                alertController.addAction(discardAction)
+//                alertController.addAction(viewAction)
+//
+//                self.present(alertController, animated: true, completion: nil)
+//
+//            } else {
+//                print(error ?? "")
+//            }
+//        }
+//
+//    }
+//
+//
 
     @IBAction func takePic(_ sender: Any) {
        outputImageView.image = sceneView.snapshot()
@@ -447,21 +578,44 @@ extension MeasureViewController {
     // called by gesture recognizer
     @objc func tapHandler(gesture: UITapGestureRecognizer) {
         
-      
         // handle touch down and touch up events separately
         if gesture.state == .began {
             
-        recordingLabel.isHidden = false
+            recordingLabel.isHidden = false
             controllsView.isHidden = true
             cameraButton.isHidden = true
             recAnimation.isHidden = false
             recAnimation.startAnimating()
-           startRecording()
-     
+            
+            let screenRecord = ScreenRecordCoordinator()
+            screenRecord.viewOverlay.stopButtonColor = UIColor.red
+            let randomNumber = arc4random_uniform(9999);
+            screenRecord.startRecording(withFileName: "coolScreenRecording\(randomNumber)", recordingHandler: { (error) in
+                print("Recording in progress")
+            }) { (error) in
+                print("Recording Complete")
+            }
+            
             
         } else if  gesture.state == .ended {
             print("touch ended")
-       stopRecording()
+            func stopRecording(handler: @escaping (Error?) -> Void)
+            {
+                if #available(iOS 11.0, *)
+                {
+                    RPScreenRecorder.shared().stopCapture
+                        {    (error) in
+                            handler(error)
+                            self.assetWriter.finishWriting
+                                {
+                                    print(ReplayFileUtil.fetchAllReplays())
+                                    
+                            }
+                    }
+                } else {
+                    // Fallback on earlier versions
+                }
+            }
             
             recordingLabel.isHidden = true
             
