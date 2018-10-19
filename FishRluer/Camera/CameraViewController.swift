@@ -44,8 +44,8 @@ class CameraViewController: UIViewController {
         override func viewDidLoad() {
             super.viewDidLoad()
             
-            outputImageView.tintColor = UIColor.black
-            flashModeImageView.tintColor = UIColor.black
+            outputImageView.tintColor = UIColor.white
+            flashModeImageView.tintColor = UIColor.white
             
             cameraManager.shouldEnableExposure = true
             
@@ -57,6 +57,7 @@ class CameraViewController: UIViewController {
             cameraButton.layer.cornerRadius = cameraButton.frame.height/2
             cameraButton.layer.borderColor = UIColor.white.cgColor
             cameraButton.layer.masksToBounds = false
+            
             
             askForPermissionsLabel.isHidden = true
             askForPermissionsLabel.backgroundColor = lightBlue
@@ -153,16 +154,7 @@ class CameraViewController: UIViewController {
         @IBAction func recordButtonTapped(_ sender: UIButton) {
             
 
-            UIView.animate(withDuration: 2.0,
-                           delay: 0,
-                           usingSpringWithDamping: CGFloat(0.20),
-                           initialSpringVelocity: CGFloat(6.0),
-                           options: UIView.AnimationOptions.allowUserInteraction,
-                           animations: {
-                            sender.transform = CGAffineTransform.identity
-            },
-                           completion: { Void in()  }
-            )
+
 
             switch cameraManager.cameraOutputMode {
             case .stillImage:
@@ -191,16 +183,20 @@ class CameraViewController: UIViewController {
                 
                 cameraButton.backgroundColor = redColor
                 
-               // let image = UIImage(named: "recording")
+                let image = UIImage(named: "recording2")
                 
                 if sender.isSelected {
                     cameraManager.startRecordingVideo()
+                    cameraButton.setImage(image, for: UIControl.State.selected)
+                    cameraButton.backgroundColor = UIColor.clear
+                    
                     
                     
                     
                 } else {
                     cameraManager.stopVideoRecording({ (videoURL, error) -> Void in
                         if error != nil {
+                       
                             self.cameraManager.showErrorBlock("Error occurred", "Cannot save video.")
                         }
                     })
@@ -294,3 +290,12 @@ class CameraViewController: UIViewController {
 //        }
 //    }
 //}
+extension UIButton {
+    func setBackgroundColor(_ color: UIColor, forState controlState: UIControl.State) {
+        let colorImage = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1)).image { _ in
+            color.setFill()
+            UIBezierPath(rect: CGRect(x: 0, y: 0, width: 1, height: 1)).fill()
+        }
+        setBackgroundImage(colorImage, for: controlState)
+    }
+}

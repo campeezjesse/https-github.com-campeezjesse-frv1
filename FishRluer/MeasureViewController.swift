@@ -14,21 +14,24 @@ import ReplayKit
 import NVActivityIndicatorView
 
 
+
 final class MeasureViewController: UIViewController {
     @IBOutlet weak var sceneView: ARSCNView!
     @IBOutlet weak var targetImageView: UIImageView!
     @IBOutlet weak var loadingView: UIActivityIndicatorView!
     @IBOutlet weak var messageLabel: UILabel!
 
-
+    @IBOutlet weak var recordingLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
+    
     @IBOutlet weak var resetButton: UIButton!
     
-    @IBOutlet weak var goBackButton: UIImageView!
+
     @IBOutlet weak var saveImageButton: UIButton!
     @IBOutlet weak var outputImageView: UIImageView!
  //   @IBOutlet weak var titleView: UIView!
 
-    @IBOutlet weak var pressToStopRecLabel: UILabel!
+
  
     @IBOutlet weak var startStopView: UIView!
     @IBOutlet weak var startMeasureButton: UIButton!
@@ -42,7 +45,8 @@ final class MeasureViewController: UIViewController {
     @IBOutlet weak var saveFishButton: UIView!
     @IBOutlet weak var saveDetailsButton: UIButton!
    // @IBOutlet weak var saveDetailsLabel: UILabel!
- 
+    @IBOutlet weak var controllsView: UIView!
+    
     @IBOutlet weak var photoTaken: UIButton!
     fileprivate lazy var session = ARSession()
     fileprivate lazy var sessionConfiguration = ARWorldTrackingConfiguration()
@@ -54,8 +58,7 @@ final class MeasureViewController: UIViewController {
     fileprivate var currentLine: Line?
     fileprivate lazy var unit: DistanceUnit = .inch
     fileprivate lazy var isRecording: Bool = false
-    
-   
+ 
  
     
     override func viewDidLoad() {
@@ -63,13 +66,20 @@ final class MeasureViewController: UIViewController {
         setupScene()
         
         checkCameraAccess()
-        
-        
+
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.isIdleTimerDisabled = true
+        
+
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -116,9 +126,7 @@ final class MeasureViewController: UIViewController {
         if segue.destination is ImageDisplayViewController{
             
             let vc = segue.destination as? ImageDisplayViewController
-            
-            
-           // let myPic = sceneView.snapshot()
+
            
             vc?.length = messageLabel.text!
             
@@ -129,6 +137,8 @@ final class MeasureViewController: UIViewController {
             
         }
     }
+    
+
     
     func checkCameraAccess() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
@@ -168,14 +178,16 @@ final class MeasureViewController: UIViewController {
     
     func startRecording() {
         
+
   
         if RPScreenRecorder.shared().isAvailable {
-            
-            
+
+
             RPScreenRecorder.shared().startRecording(handler: { (error) in
                 if error == nil {
-                    print("recording")
+//                    print("recording")
                     
+       
                 } else {
                     print(error ?? "")
                     self.messageLabel.text = "Error recording occurred"
@@ -185,11 +197,13 @@ final class MeasureViewController: UIViewController {
     }
 
     func stopRecording() {
+        
+     self.recordingLabel.isHidden = true
        
         RPScreenRecorder.shared().stopRecording { [unowned self] (previewController, error) in
             if error == nil {
                 
-                print("recording ended")
+                self.recordingLabel.isHidden = true
                 
                 let alertController = UIAlertController(title: "Done", message: "You can view your video to edit and share, or delete to try again", preferredStyle: .alert)
                 
@@ -215,29 +229,31 @@ final class MeasureViewController: UIViewController {
         }
         
     }
-
+    
+ 
 
     @IBAction func takePic(_ sender: Any) {
        outputImageView.image = sceneView.snapshot()
         photoTaken.isHidden = false
         saveImageButton.isEnabled = true
+        saveFishButton.isHidden = false
       
 
 
-        let alert = UIAlertController(title: "Nice Catch!", message: "What would you like to do with the picture?", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
-
-        alert.addAction(UIAlertAction(title: "Save to photos", style: .default, handler: {action in self.savePic(alert)}))
-        
-        alert.addAction(UIAlertAction(title: "Add more info and save on map ", style: .default, handler: {action in self.performSegue(withIdentifier: "saveDetails", sender: self)}))
-        
-        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {action in self.removePreview(alert)}))
-        
-        alert.addAction(cancelAction)
-        
-        self.present(alert, animated: true, completion: nil)
-        
-   
+//        let alert = UIAlertController(title: "Nice Catch!", message: "What would you like to do with the picture?", preferredStyle: .alert)
+//        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
+//
+//        alert.addAction(UIAlertAction(title: "Save to photos", style: .default, handler: {action in self.savePic(alert)}))
+//
+//        alert.addAction(UIAlertAction(title: "Add more info and save on map ", style: .default, handler: {action in self.performSegue(withIdentifier: "saveDetails", sender: self)}))
+//
+//        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: {action in self.removePreview(alert)}))
+//
+//        alert.addAction(cancelAction)
+//
+//        self.present(alert, animated: true, completion: nil)
+//
+//
     }
     
    
@@ -251,6 +267,7 @@ final class MeasureViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+
     @IBAction func savePic(_ sender: Any) {
         let pic = sceneView.snapshot()
         UIImageWriteToSavedPhotosAlbum(pic, self, nil, nil)
@@ -274,13 +291,26 @@ final class MeasureViewController: UIViewController {
         saveImageButton.isHidden = true
     }
     
+    
 
     @IBAction func showAlertToSave(_ sender: Any) {
         
         let alert = UIAlertController(title: "Ready To Save", message: "Save your picture to show off", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
         
-      
+        alert.addAction(UIAlertAction(title: "View and Edit", style: .default, handler: {action in
+            let image = self.outputImageView.image
+            
+            let vc: ImagePreviewViewController? = self.storyboard?.instantiateViewController(withIdentifier: "ImageVC") as? ImagePreviewViewController
+            if let validVC: ImagePreviewViewController = vc,
+                let capturedImage = image {
+                validVC.image = capturedImage
+          
+                
+                self.navigationController?.pushViewController(validVC, animated: true)
+            }
+            
+            }))
         
         alert.addAction(UIAlertAction(title: "Save to photos", style: .default, handler: {action in self.savePic(alert)}))
         
@@ -292,21 +322,9 @@ final class MeasureViewController: UIViewController {
         
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
 }
-//    @IBAction func swipeForCamera(_ sender: Any) {
-//
-//        let cameraController = storyboard?.instantiateViewController(withIdentifier: "camera")
-//
-//        addChild(cameraController!)
-//        view.addSubview((cameraController?.view)!)
-//        cameraController?.didMove(toParent: self)
-//
-//
-//    }
-//}
+
+
 
 // MARK: - ARSCNViewDelegate
 
@@ -315,8 +333,7 @@ extension MeasureViewController: ARSCNViewDelegate {
         DispatchQueue.main.async { [weak self] in
             self?.detectObjects()
             
-           
-            
+    
         }
     }
     
@@ -332,6 +349,7 @@ extension MeasureViewController: ARSCNViewDelegate {
         messageLabel.text = "Interruption ended"
     }
 }
+
 
 // MARK: - Users Interactions
 
@@ -388,8 +406,8 @@ extension MeasureViewController {
         startMeasureButton.isHidden = false
         stopMeasureButton.isHidden = true
         cameraButton.isHidden = false
-        pressToStopRecLabel.isHidden = true
      saveImageButton.isEnabled = false
+        recordingLabel.isHidden = true
         
         saveFishButton.isHidden = true
         session.run(sessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
@@ -420,6 +438,10 @@ extension MeasureViewController {
         let tap = UILongPressGestureRecognizer(target: self, action: #selector(tapHandler))
         tap.minimumPressDuration = 0.3
         cameraButton.addGestureRecognizer(tap)
+        
+
+        
+    
     }
     
     // called by gesture recognizer
@@ -428,9 +450,11 @@ extension MeasureViewController {
       
         // handle touch down and touch up events separately
         if gesture.state == .began {
+            
+        recordingLabel.isHidden = false
+            controllsView.isHidden = true
             cameraButton.isHidden = true
             recAnimation.isHidden = false
-            pressToStopRecLabel.isHidden = false
             recAnimation.startAnimating()
            startRecording()
      
@@ -438,8 +462,12 @@ extension MeasureViewController {
         } else if  gesture.state == .ended {
             print("touch ended")
        stopRecording()
+            
+            recordingLabel.isHidden = true
+            
+       controllsView.isHidden = false
+            
             recAnimation.isHidden = true
-            pressToStopRecLabel.isHidden = true
             recAnimation.stopAnimating()
             cameraButton.isHidden = false 
         }
@@ -459,6 +487,8 @@ extension MeasureViewController {
         resetButton.isHidden = false
         startStopView.isHidden = false
         
+      
+        
        
         if lines.isEmpty {
             messageLabel.text = "Get Length"
@@ -475,9 +505,10 @@ extension MeasureViewController {
             currentLine?.update(to: endValue)
             messageLabel.text = currentLine?.distance(to: endValue) ?? "Calculating…"
         }
-
     }
 }
+
+
 extension MeasureViewController: RPPreviewViewControllerDelegate {
     public func previewControllerDidFinish(_ previewController: RPPreviewViewController) {
         previewController.dismiss(animated: true, completion: nil)
