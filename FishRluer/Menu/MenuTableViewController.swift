@@ -25,18 +25,50 @@ class MenuTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 4
-    }
-
-
+//    override func numberOfSections(in tableView: UITableView) -> Int {
+//        // #warning Incomplete implementation, return the number of sections
+//        return 2
+//    }
+//
+//    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        // #warning Incomplete implementation, return the number of rows
+//        return 4
+//    }
     
+    func openFacebook(facebookUsername: String) {
+        
+        
+        guard let url = URL(string: "https://facebook.com/\(facebookUsername)")  else { return }
+        if UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+
+    func openInstagram(instagramHandle: String) {
+        
+      
+        guard let url = URL(string: "https://instagram.com/\(instagramHandle)")  else { return }
+        if UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    @IBAction func openFB(_ sender: Any) {
+        
+        openFacebook(facebookUsername: "fishrulerapp")
+    }
+    
+    @IBAction func openInsta(_ sender: Any) {
+        
+        openInstagram(instagramHandle: "fishrulerapp")
+    }
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)

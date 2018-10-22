@@ -427,28 +427,28 @@
             </objects>
             <point key="canvasLocation" x="7173.6000000000004" y="-816.34182908545733"/>
         </scene>
-        <!--Root View Controller-->
+        <!--MENU-->
         <scene sceneID="br6-fp-Mby">
             <objects>
                 <tableViewController id="6No-f0-0b7" customClass="MenuTableViewController" customModule="FishRuler" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="apL-K1-CIU">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="apL-K1-CIU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="sectionIndexBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <sections>
                             <tableViewSection headerTitle="Tools" id="8Wh-3Z-WA1" userLabel="Use App">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="YQA-6g-BjB">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YQA-6g-BjB" id="zbU-Lm-Ly2">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hk9-GV-yVc">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hk9-GV-yVc">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                                    <state key="normal" title="  Map">
+                                                    <state key="normal" title="  Map" image="smallMap">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
@@ -465,16 +465,15 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="jT1-h4-VcE">
-                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jT1-h4-VcE" id="OOV-ws-Wh3">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gHr-dp-MgW">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gHr-dp-MgW">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                                    <state key="normal" title="  Measure Fish">
+                                                    <state key="normal" title="  Measure Fish" image="Ruler">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
@@ -491,16 +490,16 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Ucg-rm-Odn">
-                                        <rect key="frame" x="0.0" y="116" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="143.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ucg-rm-Odn" id="XBb-d7-wjx">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y71-qU-3du">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y71-qU-3du">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                                    <state key="normal" title="  Camera">
+                                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <state key="normal" title="  Camera" image="cameraButton">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
@@ -517,16 +516,15 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Enm-Pa-r2C">
-                                        <rect key="frame" x="0.0" y="160" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="187.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Enm-Pa-r2C" id="cLc-gu-bU2">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ele-JP-dfT">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ele-JP-dfT">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                                    <state key="normal" title="  Home">
+                                                    <state key="normal" title="  Home" image="home">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
@@ -542,29 +540,57 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="j0d-oT-SIJ">
-                                        <rect key="frame" x="0.0" y="204" width="375" height="44"/>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Follow Us On Social" id="V3y-Rg-YhG" userLabel="Use App">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="BUo-aI-RAT">
+                                        <rect key="frame" x="0.0" y="287.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="j0d-oT-SIJ" id="CBs-qh-egZ">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BUo-aI-RAT" id="cKU-9c-cTd">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pMi-Ui-LrS">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKK-3u-30d">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                                    <state key="normal" title="Settings">
+                                                    <state key="normal" title="Instagram @fishruler.app" image="insta 2">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="settingsButton:" destination="6No-f0-0b7" eventType="touchUpInside" id="IW9-7j-cdB"/>
+                                                        <action selector="openInsta:" destination="6No-f0-0b7" eventType="touchUpInside" id="y1q-zh-Ysl"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="pMi-Ui-LrS" firstAttribute="top" secondItem="CBs-qh-egZ" secondAttribute="top" id="Wig-Uy-wT2"/>
-                                                <constraint firstAttribute="trailing" secondItem="pMi-Ui-LrS" secondAttribute="trailing" id="X2x-VG-DOj"/>
-                                                <constraint firstAttribute="bottom" secondItem="pMi-Ui-LrS" secondAttribute="bottom" id="gSN-Tg-jO2"/>
-                                                <constraint firstItem="pMi-Ui-LrS" firstAttribute="leading" secondItem="CBs-qh-egZ" secondAttribute="leading" id="ukm-hB-V9s"/>
+                                                <constraint firstAttribute="trailing" secondItem="bKK-3u-30d" secondAttribute="trailing" id="0rp-t4-hlW"/>
+                                                <constraint firstAttribute="bottom" secondItem="bKK-3u-30d" secondAttribute="bottom" id="BOb-go-9Xa"/>
+                                                <constraint firstItem="bKK-3u-30d" firstAttribute="top" secondItem="cKU-9c-cTd" secondAttribute="top" id="VZd-JK-kMd"/>
+                                                <constraint firstItem="bKK-3u-30d" firstAttribute="leading" secondItem="cKU-9c-cTd" secondAttribute="leading" id="aiQ-fe-Uk1"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="U56-iP-wks">
+                                        <rect key="frame" x="0.0" y="331.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="U56-iP-wks" id="ZJT-mm-Wzx">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aPz-Px-yUN">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                    <state key="normal" title="Facebook @fishrulerapp" image="fb 2">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="openFB:" destination="6No-f0-0b7" eventType="touchUpInside" id="pe4-Mj-i3w"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="aPz-Px-yUN" secondAttribute="trailing" id="10T-Mq-NWC"/>
+                                                <constraint firstAttribute="bottom" secondItem="aPz-Px-yUN" secondAttribute="bottom" id="5ie-oK-J67"/>
+                                                <constraint firstItem="aPz-Px-yUN" firstAttribute="top" secondItem="ZJT-mm-Wzx" secondAttribute="top" id="HKN-yw-Pdc"/>
+                                                <constraint firstItem="aPz-Px-yUN" firstAttribute="leading" secondItem="ZJT-mm-Wzx" secondAttribute="leading" id="qHX-5c-L1O"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -576,7 +602,7 @@
                             <outlet property="delegate" destination="6No-f0-0b7" id="K8f-Nh-4JA"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="J58-jw-vQK"/>
+                    <navigationItem key="navigationItem" title="MENU" id="J58-jw-vQK"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AEF-hs-Urh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2112,9 +2138,14 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Ruler" width="26" height="26"/>
         <image name="addToMap" width="128" height="128"/>
         <image name="back" width="128" height="128"/>
         <image name="camera" width="128" height="128"/>
+        <image name="cameraButton" width="42" height="42"/>
+        <image name="fb 2" width="42" height="42"/>
+        <image name="home" width="42" height="42"/>
+        <image name="insta 2" width="42" height="42"/>
         <image name="lake overview" width="2816" height="3699"/>
         <image name="largeRuler" width="128" height="128"/>
         <image name="map" width="128" height="128"/>
@@ -2122,14 +2153,15 @@
         <image name="restart" width="20" height="23"/>
         <image name="settings" width="128" height="128"/>
         <image name="share" width="50" height="50"/>
+        <image name="smallMap" width="42" height="42"/>
         <image name="targetWhite" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xAk-2Q-soq"/>
-        <segue reference="UZJ-yS-SqO"/>
+        <segue reference="8l4-4A-b3v"/>
+        <segue reference="cDf-Zp-BMZ"/>
         <segue reference="VoT-aD-1YR"/>
         <segue reference="LWf-5o-QOW"/>
-        <segue reference="VpG-Ia-X6w"/>
-        <segue reference="q96-cR-eaV"/>
+        <segue reference="ICj-ke-wHr"/>
+        <segue reference="cdY-ro-9VV"/>
     </inferredMetricsTieBreakers>
 </document>
