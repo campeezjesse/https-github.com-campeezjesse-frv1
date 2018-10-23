@@ -27,6 +27,8 @@ class SearchViewController: PullUpController {
     var matchingItems:[MKMapItem] = []
     var mapView: MKMapView? = nil
     
+    var buttonIsSelected = false
+    
     let locationManager = CLLocationManager()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -34,6 +36,10 @@ class SearchViewController: PullUpController {
     // MARK: - IBOutlets
     
 
+    @IBOutlet weak var showPOI: UIButton!
+    @IBOutlet weak var showPaths: UIButton!
+    @IBOutlet weak var followButton: UIButton!
+    @IBOutlet weak var addCatchButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet private weak var visualEffectView: UIVisualEffectView!
     @IBOutlet private weak var searchBoxContainerView: UIView!
@@ -42,6 +48,7 @@ class SearchViewController: PullUpController {
             searchSeparatorView.layer.cornerRadius = searchSeparatorView.frame.height/2
         }
     }
+    @IBOutlet weak var startTracking: UIButton!
     @IBOutlet private weak var firstPreviewView: UIView!
     @IBOutlet private weak var secondPreviewView: UIView!
     @IBOutlet private weak var tableView: UITableView!
@@ -56,6 +63,28 @@ class SearchViewController: PullUpController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        showPOI.layer.borderWidth = 2
+        showPOI.layer.borderColor = UIColor.black.cgColor
+        showPOI.layer.cornerRadius = 5
+        showPOI.layer.masksToBounds = true
+        
+        showPaths.layer.borderWidth = 2
+        showPaths.layer.borderColor = UIColor.black.cgColor
+        showPaths.layer.cornerRadius = 5
+        showPaths.layer.masksToBounds = true
+        
+        followButton.layer.borderWidth = 2
+        followButton.layer.borderColor = UIColor.black.cgColor
+        followButton.layer.cornerRadius = 5
+        followButton.layer.masksToBounds = true
+
+        addCatchButton.layer.borderWidth = 2
+        addCatchButton.layer.borderColor = UIColor.black.cgColor
+        addCatchButton.layer.cornerRadius = 5
+        addCatchButton.layer.masksToBounds = true
+
+        
         
      
         tableView.keyboardDismissMode = .onDrag
@@ -107,9 +136,75 @@ class SearchViewController: PullUpController {
         
    }
     
-   // @IBAction func editButtPressed(_ sender: Any) {
-    //    performSegue(withIdentifier: "editButt", sender: self)
-    //}
+    @IBAction func showCatches(_ sender: Any) {
+        
+       addCatchButton.isSelected = !addCatchButton.isSelected
+        addCatchButton.setTitle("Show Spots", for: UIControl.State.selected)
+        
+        (self.parent as? MapViewController)?.removeCatchPins()
+       
+        
+        if addCatchButton.isSelected {
+            
+            addCatchButton.setTitle("Hide Spots", for: UIControl.State.selected)
+          (self.parent as? MapViewController)?.addCatchPins()
+            
+        }
+    
+//        buttonIsSelected = !buttonIsSelected
+//
+//        (self.parent as? MapViewController)?.addCatchPins()
+        
+//    }
+//    func updateCatchButton() {
+//        if buttonIsSelected {
+//
+//        } else{
+//
+//            (self.parent as? MapViewController)?.removeCatchPins()
+//
+//        }
+    }
+    @IBAction func startFollow(_ sender: Any) {
+        
+        print(" pressed")
+  
+    }
+//        
+//        locationManager.startUpdatingLocation()
+//        locationManager.startUpdatingHeading()
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        
+//        mapView?.addAnnotation(startPin)
+//        
+//    }
+//        let startPin = MKPointAnnotation()
+//    
+//    
+//        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//            mapView?.removeAnnotation(startPin)
+//
+//            let location = locations.last! as CLLocation
+//
+//            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+//            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+//
+//            //set region on the map
+//            mapView?.setRegion(region, animated: true)
+//
+//            (self.parent as? MapViewController)?.zoom(to: center)
+//
+//            let startPinView = MKPinAnnotationView(annotation: startPin, reuseIdentifier: "startPin")
+//            startPinView.pinTintColor = UIColor.green
+//            
+//            startPin.coordinate = location.coordinate
+//            mapView?.addAnnotation(startPin)
+//            
+//            locationManager.stopUpdatingLocation()
+//
+//        
+//    }
+   
     
     // MARK: - PullUpController
     

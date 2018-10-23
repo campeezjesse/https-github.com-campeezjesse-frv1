@@ -46,6 +46,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let locationManager = CLLocationManager()
+    
+    let startPin = MKPointAnnotation()
    
     
     @IBOutlet weak var map: MKMapView!
@@ -72,8 +74,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         addPullUpController()
       
         
-       // let pullUpController = makeSearchViewControllerIfNeeded()
-        
         map.zoomToUserLocation()
         
         //Mark: - Authorization
@@ -86,9 +86,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         map.mapType = MKMapType.satelliteFlyover
         map.showsUserLocation = true
         
-        if let annotations = getData() {
-            map.addAnnotations(annotations)
-        }
+//        if let annotations = getData() {
+//            map.addAnnotations(annotations)
+//        }
    
         
     }
@@ -104,7 +104,22 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         map.setRegion(region, animated: true)
     }
-
+    
+    func addCatchPins() {
+        
+                if let annotations = getData() {
+                    map.addAnnotations(annotations)
+                }
+        
+    }
+    
+    func removeCatchPins() {
+     
+        map.removeAnnotations(map.annotations)
+            
+    
+    }
+    
     func getData() -> [MKAnnotation]? {
         
        
@@ -143,40 +158,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         return nil
     }
-    
-    func  deletePin() {
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let context = appDelegate.persistentContainer.viewContext
-//        let requestDel = NSFetchRequest<NSFetchRequestResult>(entityName: "Fish")
-//
-//        let thisCatch = selectedAnnotation?.title
-//        requestDel.returnsObjectsAsFaults = false
-//
-//        let predicateDel = NSPredicate(format: "species == %d", thisCatch!)
-//        requestDel.predicate = predicateDel
-//
-//
-//        do {
-//            let locations = try context.fetch(requestDel)
-//            for location in locations{
-//                context.delete(location as! NSManagedObject)
-//
-//                self.map.removeAnnotation(selectedAnnotation!)
-//                print("pinDeleted")
-//            }
-//        } catch {
-//            print("Failed")
-//        }
-//
-//        do {
-//            try context.save()
-//        } catch {
-//            print("Failed saving")
-//        }
-//    }
 
-        self.map.removeAnnotation(selectedAnnotation!)
-    }
     
     //MARK: - Custom Annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

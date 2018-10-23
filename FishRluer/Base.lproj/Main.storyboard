@@ -664,7 +664,7 @@
                                                                 </constraints>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light" returnKeyType="done"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light"/>
                                                             </textField>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="length: " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LG1-Xy-gwJ">
                                                                 <rect key="frame" x="0.0" y="60" width="375" height="60"/>
@@ -784,7 +784,7 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" text="Bait:  " textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="37v-BP-5Xu">
                                                 <rect key="frame" x="0.0" y="120" width="375" height="60"/>
@@ -793,7 +793,7 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                <textInputTraits key="textInputTraits" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <textInputTraits key="textInputTraits" keyboardAppearance="light" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" text="Notes: " translatesAutoresizingMaskIntoConstraints="NO" id="qy9-M5-eNz">
                                                 <rect key="frame" x="0.0" y="180" width="375" height="50"/>
@@ -1195,7 +1195,7 @@
                                                                 </constraints>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light" enablesReturnKeyAutomatically="YES"/>
                                                             </textField>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="length: " textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bDC-tr-IX2">
                                                                 <rect key="frame" x="0.0" y="60" width="375" height="60"/>
@@ -1204,7 +1204,7 @@
                                                                 </constraints>
                                                                 <nil key="textColor"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                                             </textField>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DZR-Pw-Bx5" userLabel="weatherView">
                                                                 <rect key="frame" x="0.0" y="120" width="375" height="130"/>
@@ -1294,7 +1294,7 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="fill" text="Water Depth/Temp:  " textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="d1f-5T-XoZ">
                                                 <rect key="frame" x="0.0" y="60" width="375" height="60"/>
@@ -1303,7 +1303,7 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation" keyboardAppearance="light" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="fill" text="Bait:  " textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="YP3-Kj-7f8">
                                                 <rect key="frame" x="0.0" y="120" width="375" height="60"/>
@@ -1312,7 +1312,7 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                                <textInputTraits key="textInputTraits" keyboardAppearance="light" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <textInputTraits key="textInputTraits" keyboardAppearance="light" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" text="Notes: " translatesAutoresizingMaskIntoConstraints="NO" id="DWf-1H-aBL">
                                                 <rect key="frame" x="0.0" y="180" width="375" height="72"/>
@@ -1546,9 +1546,54 @@
                                             <rect key="frame" x="0.0" y="66" width="375" height="601"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <view key="tableHeaderView" contentMode="scaleToFill" id="vG2-nB-qtP">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="JrY-Le-P8r">
+                                                        <rect key="frame" x="0.0" y="6" width="375" height="30"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GWi-iv-YRW">
+                                                                <rect key="frame" x="0.0" y="0.0" width="89.5" height="30"/>
+                                                                <state key="normal" title="Follow Path">
+                                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                                <connections>
+                                                                    <action selector="startFollow:" destination="Ls2-6D-TVK" eventType="touchUpInside" id="Alw-43-lKn"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0P-0A-zGH">
+                                                                <rect key="frame" x="95.5" y="0.0" width="89" height="30"/>
+                                                                <state key="normal" title="Catches"/>
+                                                                <connections>
+                                                                    <action selector="showCatches:" destination="Ls2-6D-TVK" eventType="touchUpInside" id="c3Y-Yq-CxO"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PFq-H1-Yjg">
+                                                                <rect key="frame" x="190.5" y="0.0" width="89.5" height="30"/>
+                                                                <state key="normal" title="Show Paths"/>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xLF-qj-CkW">
+                                                                <rect key="frame" x="286" y="0.0" width="89" height="30"/>
+                                                                <state key="normal" title="Show POI"/>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="30" id="A7w-Ho-tWu"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="JrY-Le-P8r" firstAttribute="top" secondItem="vG2-nB-qtP" secondAttribute="top" constant="6" id="6i3-MS-fzi"/>
+                                                    <constraint firstItem="JrY-Le-P8r" firstAttribute="leading" secondItem="vG2-nB-qtP" secondAttribute="leading" id="XFh-mw-oHc"/>
+                                                    <constraint firstAttribute="trailing" secondItem="JrY-Le-P8r" secondAttribute="trailing" id="kkC-hD-5HD"/>
+                                                </constraints>
+                                            </view>
                                             <prototypes>
                                                 <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchResultCell" rowHeight="406" id="OZ7-wF-cR6" customClass="SearchResultCell" customModule="FishRuler">
-                                                    <rect key="frame" x="0.0" y="28" width="375" height="406"/>
+                                                    <rect key="frame" x="0.0" y="72" width="375" height="406"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OZ7-wF-cR6" id="KLN-8i-2cU">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="405.5"/>
@@ -1788,11 +1833,16 @@
                         <viewLayoutGuide key="safeArea" id="ca3-sf-OZH"/>
                     </view>
                     <connections>
+                        <outlet property="addCatchButton" destination="E0P-0A-zGH" id="y7s-GE-EzP"/>
                         <outlet property="firstPreviewView" destination="rTQ-lo-7Yk" id="oMJ-6M-oUL"/>
+                        <outlet property="followButton" destination="GWi-iv-YRW" id="H5z-cd-EIO"/>
                         <outlet property="searchBar" destination="qgK-ss-nwN" id="mrw-ce-sfy"/>
                         <outlet property="searchBoxContainerView" destination="hTe-mM-ML5" id="qzV-Lx-jff"/>
                         <outlet property="searchSeparatorView" destination="JIN-aJ-PXc" id="sHB-Xn-fuK"/>
                         <outlet property="secondPreviewView" destination="sNJ-Be-vGd" id="gfk-oO-0dA"/>
+                        <outlet property="showPOI" destination="xLF-qj-CkW" id="l0g-NL-FjY"/>
+                        <outlet property="showPaths" destination="PFq-H1-Yjg" id="WEp-vM-z5u"/>
+                        <outlet property="startTracking" destination="GWi-iv-YRW" id="5ka-oV-gff"/>
                         <outlet property="tableView" destination="lt6-SL-aNF" id="oHw-qN-3Fm"/>
                         <outlet property="visualEffectView" destination="bg1-lH-G96" id="3yM-L3-wRG"/>
                     </connections>
@@ -2161,7 +2211,7 @@
         <segue reference="cDf-Zp-BMZ"/>
         <segue reference="VoT-aD-1YR"/>
         <segue reference="LWf-5o-QOW"/>
-        <segue reference="ICj-ke-wHr"/>
+        <segue reference="VpG-Ia-X6w"/>
         <segue reference="cdY-ro-9VV"/>
     </inferredMetricsTieBreakers>
 </document>

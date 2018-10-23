@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 
-class CatchDetailsViewController: UIViewController {
+class CatchDetailsViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var deleteCatchButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
@@ -84,6 +84,11 @@ class CatchDetailsViewController: UIViewController {
         
     
     }
+    
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        self.view.endEditing(true)
+//        return false
+//    }
     
 
     @IBAction func goBackButton(_ sender: Any) {

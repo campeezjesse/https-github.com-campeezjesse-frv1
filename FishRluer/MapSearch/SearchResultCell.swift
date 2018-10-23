@@ -25,7 +25,7 @@ class SearchResultCell: UITableViewCell {
     @IBOutlet weak var tempConditions: UILabel!
     @IBOutlet weak var summaryConditions: UILabel!
     
-    @IBOutlet weak var editButt: UIButton!
+
 
     
     func configure(title: String, subTitle: String) {
