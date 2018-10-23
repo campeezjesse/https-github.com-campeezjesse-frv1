@@ -151,23 +151,27 @@ class SearchViewController: PullUpController {
             
         }
     
-//        buttonIsSelected = !buttonIsSelected
-//
-//        (self.parent as? MapViewController)?.addCatchPins()
-        
-//    }
-//    func updateCatchButton() {
-//        if buttonIsSelected {
-//
-//        } else{
-//
-//            (self.parent as? MapViewController)?.removeCatchPins()
-//
-//        }
+
     }
     @IBAction func startFollow(_ sender: Any) {
         
-        print(" pressed")
+        
+        
+        followButton.isSelected = !followButton.isSelected
+        followButton.setTitle("Follow Path", for: UIControl.State.selected)
+        
+        (self.parent as? MapViewController)?.addStopPin()
+        
+        
+        if followButton.isSelected {
+            
+            followButton.setTitle("Stop Following", for: UIControl.State.selected)
+           
+            (self.parent as? MapViewController)?.addStartPin()
+            
+        }
+        
+
   
     }
 //        

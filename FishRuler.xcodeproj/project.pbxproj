@@ -29,7 +29,8 @@
 		7FA2BEA82165529F00EC4478 /* CatchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2BEA72165529F00EC4478 /* CatchDetailsViewController.swift */; };
 		7FA8A18021762DD400A06F3D /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA8A17F21762DD400A06F3D /* MenuTableViewController.swift */; };
 		7FA8A1832176344100A06F3D /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA8A1822176344100A06F3D /* MenuTableViewCell.swift */; };
-		7FA8A18B217A528F00A06F3D /* WindowUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA8A18A217A528E00A06F3D /* WindowUtil.swift */; };
+		7FA8A18D217F7DA800A06F3D /* FormatDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA8A18C217F7DA800A06F3D /* FormatDisplay.swift */; };
+		7FA8A18F217F805200A06F3D /* UnitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA8A18E217F805200A06F3D /* UnitExtensions.swift */; };
 		7FBBB306216538D100982715 /* ARSCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBBB305216538D100982715 /* ARSCNView.swift */; };
 		7FCF397B2166CE97007163E2 /* ForecastIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FCF397A2166CE97007163E2 /* ForecastIO.framework */; };
 		7FCF397D2166CE9C007163E2 /* NVActivityIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FCF397C2166CE9C007163E2 /* NVActivityIndicatorView.framework */; };
@@ -69,7 +70,8 @@
 		7FA2BEA72165529F00EC4478 /* CatchDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CatchDetailsViewController.swift; path = FishRluer/CatchDetailsViewController.swift; sourceTree = SOURCE_ROOT; };
 		7FA8A17F21762DD400A06F3D /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		7FA8A1822176344100A06F3D /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
-		7FA8A18A217A528E00A06F3D /* WindowUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowUtil.swift; sourceTree = "<group>"; };
+		7FA8A18C217F7DA800A06F3D /* FormatDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatDisplay.swift; sourceTree = "<group>"; };
+		7FA8A18E217F805200A06F3D /* UnitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitExtensions.swift; sourceTree = "<group>"; };
 		7FBBB305216538D100982715 /* ARSCNView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARSCNView.swift; sourceTree = "<group>"; };
 		7FCF397A2166CE97007163E2 /* ForecastIO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ForecastIO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FCF397C2166CE9C007163E2 /* NVActivityIndicatorView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NVActivityIndicatorView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -190,7 +192,8 @@
 		7F70911D20C83A5E00265230 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				7FA8A18A217A528E00A06F3D /* WindowUtil.swift */,
+				7FA8A18E217F805200A06F3D /* UnitExtensions.swift */,
+				7FA8A18C217F7DA800A06F3D /* FormatDisplay.swift */,
 				7F70911B20C83A4B00265230 /* Line.swift */,
 				7FBBB305216538D100982715 /* ARSCNView.swift */,
 				7F70912020C83B6200265230 /* SCNVector3.swift */,
@@ -365,11 +368,11 @@
 				7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */,
 				7FA8A1832176344100A06F3D /* MenuTableViewCell.swift in Sources */,
 				7F4834A0214C0B99007C8927 /* SearchViewController.swift in Sources */,
-				7FA8A18B217A528F00A06F3D /* WindowUtil.swift in Sources */,
 				7F05756820F81D18008B3101 /* myAnnotation.swift in Sources */,
 				7FBBB306216538D100982715 /* ARSCNView.swift in Sources */,
 				7FA8A18021762DD400A06F3D /* MenuTableViewController.swift in Sources */,
 				7F00DCEF20BE3A8F001A2C9E /* MeasureViewController.swift in Sources */,
+				7FA8A18D217F7DA800A06F3D /* FormatDisplay.swift in Sources */,
 				7F6DCDC020F50819004D22C1 /* Fish_Ruler.xcdatamodeld in Sources */,
 				7FA2BEA22165516F00EC4478 /* MapViewController.swift in Sources */,
 				7F70912120C83B6200265230 /* SCNVector3.swift in Sources */,
@@ -382,6 +385,7 @@
 				7F23050720F58BAD00052AB2 /* CoreDataStack.swift in Sources */,
 				7FCF39812166FCAB007163E2 /* HomeViewController.swift in Sources */,
 				7F2583B420D2E2FC000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */,
+				7FA8A18F217F805200A06F3D /* UnitExtensions.swift in Sources */,
 				7F6DCD9320F3EDD1004D22C1 /* CatchAnnotation.swift in Sources */,
 				7F4834A2214C0BA0007C8927 /* SearchResultCell.swift in Sources */,
 				7FCF39852167CF46007163E2 /* ImagePreviewViewController.swift in Sources */,
