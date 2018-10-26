@@ -257,7 +257,10 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         
         let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
         
-        alert.addAction(UIAlertAction(title: "Go to map", style: .default, handler: {action in self.performSegue(withIdentifier: "addInfoToMap", sender: self)}))
+       // alert.addAction(UIAlertAction(title: "Go to map", style: .default, handler: {action in self.performSegue(withIdentifier: "addInfoToMap", sender: self)
+        
+           
+       // }))
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
 
@@ -275,6 +278,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
 
     @IBAction func goBackButton(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
         
     }
     
@@ -282,34 +286,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is MapViewController{
             
-            if CLLocationManager.locationServicesEnabled() {
-                switch CLLocationManager.authorizationStatus() {
-                case .notDetermined, .restricted, .denied:
-                    let alert = UIAlertController(title: "Location Needed", message: "There was an error finding you!", preferredStyle: .alert)
-                    
-                    let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
-                        guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
-                            return
-                        }
-                        
-                        if UIApplication.shared.canOpenURL(settingsUrl) {
-                            UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
-                                print("Settings opened: \(success)") // Prints true
-                            })
-                        }
-                    }
-                    alert.addAction(settingsAction)
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-                    alert.addAction(cancelAction)
-                    
-                    present(alert, animated: true, completion: nil)
-                    
-                    
-                case .authorizedAlways, .authorizedWhenInUse:
-                    
-                    
-            
-            
+
             
             let mapVC = segue.destination as? MapViewController
         
@@ -322,6 +299,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
             let bait =  baitUsed.text!
             let weatherCond = currentWeather.text!
             let notes = moreNotes.text!
+         //   let time = catchTime.text
            
             
             mapVC?.fishKind = fishKind
@@ -334,13 +312,14 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
             mapVC?.catchSubTitle = catchSubTitle!
             mapVC?.catchSpecies = catchSpecies!
             
+            mapVC?.catchID = catchSubTitle!
 
-       
-        }
-            }
+            
+     
+          }
+       }
     }
-}
-}
+
 extension ImageDisplayViewController {
     fileprivate func setupView() {
         

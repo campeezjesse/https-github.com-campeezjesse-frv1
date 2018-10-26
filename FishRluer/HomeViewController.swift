@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import CoreLocation
 
 class HomeViewController: UIViewController {
+    
+    let locationManager = CLLocationManager()
 
     @IBOutlet weak var addToMap: UIView!
     
@@ -39,14 +42,36 @@ navigationController?.setNavigationBarHidden(true, animated: false)
         }
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func enableLocationServices() {
+        locationManager.delegate = self as? CLLocationManagerDelegate
+        
+        switch CLLocationManager.authorizationStatus() {
+            
+        case .notDetermined, .restricted, .denied:
+            let alert = UIAlertController(title: "Location Needed", message: "There was an error finding you!", preferredStyle: .alert)
+            
+            let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+                guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                    return
+                }
+                
+                if UIApplication.shared.canOpenURL(settingsUrl) {
+                    UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                        print("Settings opened: \(success)") // Prints true
+                    })
+                }
+            }
+            alert.addAction(settingsAction)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
+            
+        case .authorizedAlways:
+            enableLocationServices()
+        case .authorizedWhenInUse:
+            enableLocationServices()
+        }
     }
-    */
-
 }

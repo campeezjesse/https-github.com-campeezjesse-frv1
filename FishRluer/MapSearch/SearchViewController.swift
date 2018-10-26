@@ -38,7 +38,7 @@ class SearchViewController: PullUpController {
 
     @IBOutlet weak var showPOI: UIButton!
     @IBOutlet weak var showPaths: UIButton!
-    @IBOutlet weak var followButton: UIButton!
+
     @IBOutlet weak var addCatchButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet private weak var visualEffectView: UIVisualEffectView!
@@ -48,7 +48,7 @@ class SearchViewController: PullUpController {
             searchSeparatorView.layer.cornerRadius = searchSeparatorView.frame.height/2
         }
     }
-    @IBOutlet weak var startTracking: UIButton!
+
     @IBOutlet private weak var firstPreviewView: UIView!
     @IBOutlet private weak var secondPreviewView: UIView!
     @IBOutlet private weak var tableView: UITableView!
@@ -74,10 +74,6 @@ class SearchViewController: PullUpController {
         showPaths.layer.cornerRadius = 5
         showPaths.layer.masksToBounds = true
         
-        followButton.layer.borderWidth = 2
-        followButton.layer.borderColor = UIColor.black.cgColor
-        followButton.layer.cornerRadius = 5
-        followButton.layer.masksToBounds = true
 
         addCatchButton.layer.borderWidth = 2
         addCatchButton.layer.borderColor = UIColor.black.cgColor
@@ -139,75 +135,21 @@ class SearchViewController: PullUpController {
     @IBAction func showCatches(_ sender: Any) {
         
        addCatchButton.isSelected = !addCatchButton.isSelected
-        addCatchButton.setTitle("Show Spots", for: UIControl.State.selected)
+        addCatchButton.setTitle("Show Catches", for: UIControl.State.selected)
         
         (self.parent as? MapViewController)?.removeCatchPins()
        
         
         if addCatchButton.isSelected {
             
-            addCatchButton.setTitle("Hide Spots", for: UIControl.State.selected)
+            addCatchButton.setTitle("Hide Catches", for: UIControl.State.selected)
           (self.parent as? MapViewController)?.addCatchPins()
             
         }
     
 
     }
-    @IBAction func startFollow(_ sender: Any) {
-        
-        
-        
-        followButton.isSelected = !followButton.isSelected
-        followButton.setTitle("Follow Path", for: UIControl.State.selected)
-        
-        (self.parent as? MapViewController)?.addStopPin()
-        
-        
-        if followButton.isSelected {
-            
-            followButton.setTitle("Stop Following", for: UIControl.State.selected)
-           
-            (self.parent as? MapViewController)?.addStartPin()
-            
-        }
-        
 
-  
-    }
-//        
-//        locationManager.startUpdatingLocation()
-//        locationManager.startUpdatingHeading()
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        
-//        mapView?.addAnnotation(startPin)
-//        
-//    }
-//        let startPin = MKPointAnnotation()
-//    
-//    
-//        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//            mapView?.removeAnnotation(startPin)
-//
-//            let location = locations.last! as CLLocation
-//
-//            let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-//            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-//
-//            //set region on the map
-//            mapView?.setRegion(region, animated: true)
-//
-//            (self.parent as? MapViewController)?.zoom(to: center)
-//
-//            let startPinView = MKPinAnnotationView(annotation: startPin, reuseIdentifier: "startPin")
-//            startPinView.pinTintColor = UIColor.green
-//            
-//            startPin.coordinate = location.coordinate
-//            mapView?.addAnnotation(startPin)
-//            
-//            locationManager.stopUpdatingLocation()
-//
-//        
-//    }
    
     
     // MARK: - PullUpController

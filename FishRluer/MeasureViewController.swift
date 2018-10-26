@@ -184,7 +184,14 @@ final class MeasureViewController: UIViewController {
     
 
     @IBAction func backButtonPressed(_ sender: Any) {
+        if let presenter = presentingViewController as? ImageDisplayViewController {
+            
+            let getLength = messageLabel.text
+            presenter.fishLength.text = getLength
+        }
+        
         navigationController?.popViewController(animated: true)
+         self.dismiss(animated: true, completion: nil)
     }
     
 

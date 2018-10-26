@@ -30,13 +30,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var weatherCond: String = ""
     var notes: String = ""
     var time: String = ""
-    
    
+    
+ 
 
     var myFishAnnotation: [MyAnnotation] = []
     var selectedAnnotation: MyAnnotation?
     
-    
+    var catchID: String = ""
     var fish: Fish!
     var storedLocations: [Fish]! = []
     var catches: [Fish]! = []
@@ -55,6 +56,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
    
     
 
+    @IBOutlet weak var mapImageView: UIImageView!
     @IBOutlet weak var buttonToStart: UIButton!
     @IBOutlet weak var buttonToStop: UIButton!
     @IBOutlet weak var buttonToAddCatch: UIButton!
@@ -69,6 +71,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var paceLabel: UILabel!
     
+    @IBOutlet weak var snapShotView: UIView!
     
     //for pullUp
     private func makeSearchViewControllerIfNeeded() -> SearchViewController {
@@ -89,18 +92,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         super.viewDidLoad()
         
         // Buttons
-        startFollowButton.layer.borderWidth = 0.25
-        startFollowButton.layer.cornerRadius = startFollowButton.frame.height/2
-        startFollowButton.layer.borderColor = UIColor.lightGray.cgColor
+        startFollowButton.layer.borderWidth = 1
+        startFollowButton.layer.cornerRadius = 5
+        startFollowButton.layer.borderColor = UIColor.black.cgColor
         
-        stopFollowingButton.layer.borderWidth = 0.25
-        stopFollowingButton.layer.cornerRadius = stopFollowingButton.frame.height/2
-        stopFollowingButton.layer.borderColor = UIColor.lightGray.cgColor
+        stopFollowingButton.layer.borderWidth = 1
+        stopFollowingButton.layer.cornerRadius = 5
+        stopFollowingButton.layer.borderColor = UIColor.black.cgColor
         stopFollowingButton.isHidden = true
         
-        addACatchButton.layer.borderWidth = 0.25
-        addACatchButton.layer.cornerRadius = addACatchButton.frame.height/2
-        addACatchButton.layer.borderColor = UIColor.lightGray.cgColor
+        addACatchButton.layer.borderWidth = 1
+        addACatchButton.layer.cornerRadius = 5
+        addACatchButton.layer.borderColor = UIColor.black.cgColor
         
         
         addPullUpController()
@@ -174,70 +177,53 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let alertController = UIAlertController(title: "Stop Following?",
                                                 message: "Are you done with this trip?",
                                                 preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            
+            self.startFollowButton.isHidden = true
+            self.stopFollowingButton.isHidden = false
+        
+            })
+        
         alertController.addAction(UIAlertAction(title: "Save", style: .default) { _ in
             
             self.saveRun()
+            let stopFollowPin = MKPointAnnotation()
+            stopFollowPin.title = "The End"
+            stopFollowPin.subtitle = "But only for now!"
+            
+            stopFollowPin.coordinate = CLLocationCoordinate2D(latitude: self.map.userLocation.coordinate.latitude, longitude: self.map.userLocation.coordinate.longitude)
+            
+            self.locationManager.stopUpdatingLocation()
+            self.timer?.invalidate()
+            
+            self.map.addAnnotation(stopFollowPin)
+            self.takeSnapShot()
             
            
             
             
             
         })
-        alertController.addAction(UIAlertAction(title: "Discard", style: .destructive) { _ in
+        alertController.addAction(UIAlertAction(title: "Delete Path", style: .destructive) { _ in
             
             _ = self.navigationController?.popToRootViewController(animated: true)
         })
         
         present(alertController, animated: true)
         
-        let stopFollowPin = MKPointAnnotation()
-        stopFollowPin.title = "The End"
-        stopFollowPin.subtitle = "But only for now!"
-
-        stopFollowPin.coordinate = CLLocationCoordinate2D(latitude: map.userLocation.coordinate.latitude, longitude: map.userLocation.coordinate.longitude)
-
-        locationManager.stopUpdatingLocation()
-        timer?.invalidate()
-
-        map.addAnnotation(stopFollowPin)
+        
     }
     
     func takeSnapShot() {
-        let mapSnapshotOptions = MKMapSnapshotter.Options()
         
-        // Set the region of the map that is rendered. (by one specified coordinate)
-        // let location = CLLocationCoordinate2DMake(24.78423, 121.01836) // Apple HQ
-        // let region = MKCoordinateRegionMakeWithDistance(location, 1000, 1000)
+    let mapPic = snapShotView.screenshot()
+        mapImageView.image = mapPic
         
-        // Set the region of the map that is rendered. (by polyline)
-         var yourCoordinates = [CLLocationCoordinate2D]()
-        let polyLine = MKPolyline(coordinates: &yourCoordinates, count: yourCoordinates.count)
-        let region = MKCoordinateRegion(polyLine.boundingMapRect)
-        
-        mapSnapshotOptions.region = region
-        
-        // Set the scale of the image. We'll just use the scale of the current device, which is 2x scale on Retina screens.
-        mapSnapshotOptions.scale = UIScreen.main.scale
-        
-        // Set the size of the image output.
-        mapSnapshotOptions.size = CGSize(width: 300, height: 300)
-        
-        // Show buildings and Points of Interest on the snapshot
-        mapSnapshotOptions.showsBuildings = true
-        mapSnapshotOptions.showsPointsOfInterest = true
-        
-        let snapShotter = MKMapSnapshotter(options: mapSnapshotOptions)
-        
-        snapShotter.start() { snapshot, error in
-            guard let snapshot = snapshot else {
-                return
-            }
-//            self.imageView.image = snapshot.image
-        }
-    }
 
+        }
     
+
+
     func eachSecond() {
         seconds += 1
         updateDisplay()
@@ -269,11 +255,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         newRoute.timestamp = Date()
         
         for location in locationList {
-            let locationObject = Location(context: CoreDataStack.context)
+            let locationObject = RouteLocation(context: CoreDataStack.context)
             locationObject.timestamp = location.timestamp
             locationObject.latitude = location.coordinate.latitude
             locationObject.longitude = location.coordinate.longitude
-            newRoute.addToLocations(locationObject)
+            newRoute.addToRouteLocations(locationObject)
         }
         
         CoreDataStack.saveContext()
@@ -295,6 +281,52 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
     
     }
+    
+    func addPinToPath() {
+        
+        let catchLat = map.userLocation.coordinate.latitude
+        let catchLon = map.userLocation.coordinate.longitude
+        
+        let catchPathPin = MKPointAnnotation()
+//        catchPathPin.title = "Start"
+//        catchPathPin.subtitle = "On the journey to more fish"
+        
+        catchPathPin.coordinate = CLLocationCoordinate2D(latitude: catchLat, longitude: catchLon)
+        
+        map.addAnnotation(catchPathPin)
+    }
+        
+    @IBAction func addPinPath(_ sender: Any) {
+        addPinToPath()
+    }
+    
+//        let ID = catchID
+//
+//        do{
+//            let request: NSFetchRequest<Fish> = Fish.fetchRequest()
+//            let predicate = NSPredicate(format: "time == %@", ID)
+//            request.predicate = predicate
+//
+////            var pathPin = [MKAnnotation]()
+//
+//            let locations = try self.context.fetch(request)
+//            for location in locations{
+//
+//               let pathPin = MyAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), title: "", subtitle: "", newLength: "", newTime: "", newBait: "", newNotes: "", newWaterTempDepth: "", newWeatherCond: "")
+//
+//
+//                map.addAnnotation(pathPin)
+//            }
+//
+//        } catch {
+//            print("Failed")
+//        }
+//
+//
+//    }
+//
+
+    
     // Catch Annotations
     
     func getData() -> [MKAnnotation]? {
@@ -359,7 +391,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             annotationView?.annotation = annotation
         }
 
-
+                    if (annotation.title! == "Start") {
+                        annotationView?.image = UIImage(named: "startPin")
+                    }
+                    else if (annotation.title! == "The End") {
+                        annotationView?.image = UIImage(named: "stopPin")
+                    }
+        
          return annotationView
     // Use This Later
 //        func mapView (_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
@@ -406,9 +444,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             vc?.catchID = theID!
 
         }
-    }
+        else if segue.destination is ImagePreviewViewController{
+            
+            let ImVC = segue.destination as? ImagePreviewViewController
+            
+            let mapImage = mapImageView.image
+            
+            ImVC?.image = mapImage
+            
     
-
+    }
+}
     
 
     @IBAction func goBackButton(_ sender: Any) {
@@ -514,8 +560,18 @@ extension MapViewController {
             return MKOverlayRenderer(overlay: overlay)
         }
         let renderer = MKPolylineRenderer(polyline: polyline)
-        renderer.strokeColor = .blue
+        renderer.strokeColor = .black
         renderer.lineWidth = 3
         return renderer
     }
+}
+
+extension UIView {
+    
+    func screenshot() -> UIImage {
+        return UIGraphicsImageRenderer(size: bounds.size).image { _ in
+            drawHierarchy(in: CGRect(origin: .zero, size: bounds.size), afterScreenUpdates: true)
+        }
+    }
+    
 }
