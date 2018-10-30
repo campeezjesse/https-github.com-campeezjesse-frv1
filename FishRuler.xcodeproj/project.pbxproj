@@ -12,8 +12,6 @@
 		7F00DCF420BE3AA4001A2C9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F00DCF320BE3AA4001A2C9E /* Assets.xcassets */; };
 		7F00DCF720BE3AA4001A2C9E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F00DCF520BE3AA4001A2C9E /* LaunchScreen.storyboard */; };
 		7F05756820F81D18008B3101 /* myAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F05756720F81D17008B3101 /* myAnnotation.swift */; };
-		7F05757D20FE2EB3008B3101 /* CalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F05757B20FE2EB3008B3101 /* CalloutView.swift */; };
-		7F05758620FECC83008B3101 /* FishAnnotationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F05758520FECC83008B3101 /* FishAnnotationViewController.swift */; };
 		7F23050720F58BAD00052AB2 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F23050620F58BAD00052AB2 /* CoreDataStack.swift */; };
 		7F2583B420D2E2FC000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2583B320D2E2FB000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift */; };
 		7F4834A0214C0B99007C8927 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F48349F214C0B99007C8927 /* SearchViewController.swift */; };
@@ -23,7 +21,6 @@
 		7F70911C20C83A4B00265230 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70911B20C83A4B00265230 /* Line.swift */; };
 		7F70912120C83B6200265230 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70912020C83B6200265230 /* SCNVector3.swift */; };
 		7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */; };
-		7FA2BE9D21654ED500EC4478 /* CatchCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2BE9C21654ED500EC4478 /* CatchCalloutView.swift */; };
 		7FA2BEA12165507B00EC4478 /* PullUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2BEA02165507B00EC4478 /* PullUpController.swift */; };
 		7FA2BEA22165516F00EC4478 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DCD4820E583FF004D22C1 /* MapViewController.swift */; };
 		7FA2BEA82165529F00EC4478 /* CatchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA2BEA72165529F00EC4478 /* CatchDetailsViewController.swift */; };
@@ -53,8 +50,6 @@
 		7F00DCF620BE3AA4001A2C9E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F00DCF820BE3AA4001A2C9E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F05756720F81D17008B3101 /* myAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myAnnotation.swift; sourceTree = "<group>"; };
-		7F05757B20FE2EB3008B3101 /* CalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalloutView.swift; sourceTree = "<group>"; };
-		7F05758520FECC83008B3101 /* FishAnnotationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FishAnnotationViewController.swift; sourceTree = "<group>"; };
 		7F23050620F58BAD00052AB2 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		7F2583B320D2E2FB000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGImagePropertyOrientation+UIImageOrientation.swift"; sourceTree = "<group>"; };
 		7F48349F214C0B99007C8927 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -65,7 +60,6 @@
 		7F70911B20C83A4B00265230 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		7F70912020C83B6200265230 /* SCNVector3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3.swift; sourceTree = "<group>"; };
 		7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDisplayViewController.swift; sourceTree = "<group>"; };
-		7FA2BE9C21654ED500EC4478 /* CatchCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatchCalloutView.swift; sourceTree = "<group>"; };
 		7FA2BEA02165507B00EC4478 /* PullUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullUpController.swift; sourceTree = "<group>"; };
 		7FA2BEA72165529F00EC4478 /* CatchDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CatchDetailsViewController.swift; path = FishRluer/CatchDetailsViewController.swift; sourceTree = SOURCE_ROOT; };
 		7FA8A17F21762DD400A06F3D /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
@@ -171,11 +165,8 @@
 		7F4834712136E4B9007C8927 /* Annotations */ = {
 			isa = PBXGroup;
 			children = (
-				7FA2BE9C21654ED500EC4478 /* CatchCalloutView.swift */,
 				7F6DCD9220F3EDD1004D22C1 /* CatchAnnotation.swift */,
 				7F05756720F81D17008B3101 /* myAnnotation.swift */,
-				7F05758520FECC83008B3101 /* FishAnnotationViewController.swift */,
-				7F05757B20FE2EB3008B3101 /* CalloutView.swift */,
 			);
 			path = Annotations;
 			sourceTree = "<group>";
@@ -369,7 +360,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F05758620FECC83008B3101 /* FishAnnotationViewController.swift in Sources */,
 				7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */,
 				7FA8A1832176344100A06F3D /* MenuTableViewCell.swift in Sources */,
 				7F4834A0214C0B99007C8927 /* SearchViewController.swift in Sources */,
@@ -382,10 +372,8 @@
 				7FA2BEA22165516F00EC4478 /* MapViewController.swift in Sources */,
 				7F70912120C83B6200265230 /* SCNVector3.swift in Sources */,
 				7FA2BEA12165507B00EC4478 /* PullUpController.swift in Sources */,
-				7F05757D20FE2EB3008B3101 /* CalloutView.swift in Sources */,
 				7FCF39832167CB4B007163E2 /* CameraViewController.swift in Sources */,
 				7FDFA4E02110D45A00F831A2 /* AppDelegate.swift in Sources */,
-				7FA2BE9D21654ED500EC4478 /* CatchCalloutView.swift in Sources */,
 				7FA2BEA82165529F00EC4478 /* CatchDetailsViewController.swift in Sources */,
 				7F23050720F58BAD00052AB2 /* CoreDataStack.swift in Sources */,
 				7FCF39812166FCAB007163E2 /* HomeViewController.swift in Sources */,

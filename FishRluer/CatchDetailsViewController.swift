@@ -35,13 +35,7 @@ class CatchDetailsViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
-        
-        // date and time passed from annotation to be used as ID
-        
-       // dateTimeLabel.text = catchID
-        
-        //let ID = self.dateTimeLabel.text
+  
         let ID = catchID
         
         do{
@@ -131,16 +125,7 @@ class CatchDetailsViewController: UIViewController, UITextFieldDelegate {
                             
                         })
                         
-//                        // the alert view once deleted
-//                        let alert = UIAlertController(title: "Catch Is Deleted", message: "You may have to refresh your map.(it was hooked well!)", preferredStyle: .alert)
-//                        self.present(alert, animated: true, completion: nil)
-//
-//                        // change to desired number of seconds (in this case 5 seconds)
-//                        let when = DispatchTime.now() + 3
-//                        DispatchQueue.main.asyncAfter(deadline: when){
-//                            // your code with delay
-//                            alert.dismiss(animated: true, completion: nil)
-                    //    }
+
                     } catch {
                         print("Failed saving")
                     }

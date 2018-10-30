@@ -25,6 +25,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     var weatherCond: String? = ""
     var notes: String? = ""
     
+    
 
    
     
@@ -230,6 +231,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         let catchWind = theWind.text
         let catchTemp = theTemp.text
         let catchWeatherSum = theSummary.text
+        
     
 
          let myCoordinate = pointAnnotation.coordinate
@@ -264,7 +266,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
 
-            
+          
 
                 }
             func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -279,6 +281,9 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     @IBAction func goBackButton(_ sender: Any) {
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
+        
+
+      
         
     }
     
@@ -299,9 +304,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
             let bait =  baitUsed.text!
             let weatherCond = currentWeather.text!
             let notes = moreNotes.text!
-         //   let time = catchTime.text
-           
-            
+ 
             mapVC?.fishKind = fishKind
             mapVC?.waterTempDepth = waterTempDepth
             mapVC?.bait = bait

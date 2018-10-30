@@ -38,7 +38,7 @@ class MyAnnotation: NSObject, MKAnnotation {
         self.newNotes = newNotes
         self.newWaterTempDepth = newWaterTempDepth
         self.newWeatherCond = newWeatherCond
-        //self.objectID = objectID
+        
         
     }
 

@@ -33,15 +33,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
    
     
  
-
+    
     var myFishAnnotation: [MyAnnotation] = []
     var selectedAnnotation: MyAnnotation?
+    
+ 
     
     var catchID: String = ""
     var fish: Fish!
     var storedLocations: [Fish]! = []
     var catches: [Fish]! = []
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let locationManager = CLLocationManager()
@@ -55,7 +58,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     private var locationList: [CLLocation] = []
    
     
-
+    @IBOutlet weak var takePictureOfPath: UIButton!
+    
     @IBOutlet weak var mapImageView: UIImageView!
     @IBOutlet weak var buttonToStart: UIButton!
     @IBOutlet weak var buttonToStop: UIButton!
@@ -120,8 +124,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         map.mapType = MKMapType.satelliteFlyover
         map.showsUserLocation = true
         
-
-   
+        takePictureOfPath.isHidden = true
+        
+ 
         
     }
     
@@ -149,13 +154,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         trackingOutput.isHidden = false
         
+        
         let startFollowPin = MKPointAnnotation()
         startFollowPin.title = "Start"
-        startFollowPin.subtitle = "On the journey to more fish"
+        startFollowPin.subtitle = "Showing Path"
         
         startFollowPin.coordinate = CLLocationCoordinate2D(latitude: map.userLocation.coordinate.latitude, longitude: map.userLocation.coordinate.longitude)
-        
-        //locationManager.startUpdatingLocation()
+     
        
         map.userTrackingMode = MKUserTrackingMode(rawValue: 2)!
         map.removeOverlays(map.overlays)
@@ -171,6 +176,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         startLocationUpdates()
     }
+ 
     func addStopPin() {
    
         
@@ -181,6 +187,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             self.startFollowButton.isHidden = true
             self.stopFollowingButton.isHidden = false
+            
         
             })
         
@@ -188,8 +195,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             self.saveRun()
             let stopFollowPin = MKPointAnnotation()
-            stopFollowPin.title = "The End"
-            stopFollowPin.subtitle = "But only for now!"
+            stopFollowPin.title = "Stop"
+            stopFollowPin.subtitle = "Showing Path"
             
             stopFollowPin.coordinate = CLLocationCoordinate2D(latitude: self.map.userLocation.coordinate.latitude, longitude: self.map.userLocation.coordinate.longitude)
             
@@ -197,9 +204,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             self.timer?.invalidate()
             
             self.map.addAnnotation(stopFollowPin)
+            
+            self.map.selectAnnotation(self.startPin, animated: true)
+            //self.map.selectAnnotation(stopFollowPin, animated: true)
+            
             self.takeSnapShot()
             
-           
+            self.takePictureOfPath.isHidden = false
             
             
             
@@ -269,15 +280,26 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     func addCatchPins() {
         
-                if let annotations = getData() {
-                    map.addAnnotations(annotations)
+       
+                if let catchAnno = getData() {
+                    map.addAnnotations(catchAnno)
                 }
-        
-    }
+        }
+    
     
     func removeCatchPins() {
+        
+        let filteredAnnotations = map.annotations.filter { annotation in
+            if annotation is MKUserLocation { return false }          // don't remove MKUserLocation
+            guard let subTitle = annotation.subtitle else { return false }  // don't remove annotations without any title
+            
+          
+            return subTitle != "Showing Path"                         // remove those whose title does not match
+        }
+        
+        map.removeAnnotations(filteredAnnotations)
      
-        map.removeAnnotations(map.annotations)
+      
             
     
     }
@@ -288,44 +310,27 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let catchLon = map.userLocation.coordinate.longitude
         
         let catchPathPin = MKPointAnnotation()
-//        catchPathPin.title = "Start"
-//        catchPathPin.subtitle = "On the journey to more fish"
+        //        catchPathPin.title = "Start"
+        //        catchPathPin.subtitle = "On the journey to more fish"
         
         catchPathPin.coordinate = CLLocationCoordinate2D(latitude: catchLat, longitude: catchLon)
         
         map.addAnnotation(catchPathPin)
     }
+    
+    
         
     @IBAction func addPinPath(_ sender: Any) {
         addPinToPath()
     }
     
-//        let ID = catchID
-//
-//        do{
-//            let request: NSFetchRequest<Fish> = Fish.fetchRequest()
-//            let predicate = NSPredicate(format: "time == %@", ID)
-//            request.predicate = predicate
-//
-////            var pathPin = [MKAnnotation]()
-//
-//            let locations = try self.context.fetch(request)
-//            for location in locations{
-//
-//               let pathPin = MyAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude), title: "", subtitle: "", newLength: "", newTime: "", newBait: "", newNotes: "", newWaterTempDepth: "", newWeatherCond: "")
-//
-//
-//                map.addAnnotation(pathPin)
-//            }
-//
-//        } catch {
-//            print("Failed")
-//        }
-//
-//
-//    }
-//
 
+    @IBAction func picOfPath(_ sender: Any) {
+        
+        takeSnapShot()
+        
+        performSegue(withIdentifier: "mapPic", sender: self)
+    }
     
     // Catch Annotations
     
@@ -333,7 +338,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         do {
             storedLocations = try context.fetch(Fish.fetchRequest())
+            
+            // Need to exclude here
             var annotations = [MKAnnotation]()
+            
+          
             for storedLocation in storedLocations {
                 let newAnnotation = MyAnnotation(coordinate: CLLocationCoordinate2D(latitude: storedLocation.latitude, longitude: storedLocation.longitude), title: "", subtitle: "", newLength: "", newTime: "", newBait: "", newNotes: "", newWaterTempDepth: "", newWeatherCond: "")
                 newAnnotation.coordinate.latitude = storedLocation.latitude
@@ -347,8 +356,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 newAnnotation.newWeatherCond = storedLocation.weather
 
                 annotations.append(newAnnotation)
+                
    
             }
+            
+
             
             return annotations
         }
@@ -357,6 +369,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         return nil
     }
+    
+
 
     @IBAction func startFollow(_ sender: Any) {
         addStartPin()
@@ -372,61 +386,48 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
     }
     
-    @IBAction func addCatch(_ sender: Any) {
-    }
+//    @IBAction func addCatch(_ sender: Any) {
+ //   }
     
     //MARK: - Custom Annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else {
             return nil
         }
-
-        let reuseIdentifier = "pin"
-        var annotationView = map.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier)
-       
-        if annotationView == nil {
-            annotationView = FishAnnotationViewController(annotation: annotation, reuseIdentifier: reuseIdentifier)
-
-        } else {
-            annotationView?.annotation = annotation
-        }
-
-                    if (annotation.title! == "Start") {
-                        annotationView?.image = UIImage(named: "startPin")
-                    }
-                    else if (annotation.title! == "The End") {
-                        annotationView?.image = UIImage(named: "stopPin")
-                    }
         
-         return annotationView
-    // Use This Later
-//        func mapView (_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
-//        {
-//            if (annotation is MKUserLocation) {
-//                return nil
-//            }
-//            var anView = mapView.dequeueReusableAnnotationView(withIdentifier: "annId")
-//            
-//            if anView == nil {
-//                anView = MKAnnotationView(annotation: annotation, reuseIdentifier: "annId")
-//            }
-//            else {
-//                anView?.annotation = annotation
-//            }
-//            
-//            anView?.canShowCallout = true
-//            
-//            if (annotation.subtitle! == "Offline") {
-//                anView?.image = UIImage(named: "offIceCream.pdf")
-//            }
-//            else if (annotation.subtitle! == "Online") {
-//                anView?.image = UIImage(named: "onIceCream.pdf")
-//            }
-//            return anView
-//        }
-
-
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "") {
+            annotationView.annotation = annotation
+            return annotationView
+            
+        } else {
+            
+            let annotationView = MKPinAnnotationView(annotation:annotation, reuseIdentifier:"pin")
+            annotationView.isEnabled = true
+            annotationView.canShowCallout = true
+            annotationView.animatesDrop = true
+            
+            let btn = UIButton(type: .detailDisclosure)
+            annotationView.rightCalloutAccessoryView = btn
+            
+                                if (annotation.title! == "Start") {
+                                    annotationView.image = UIImage(named: "startPin")
+                                    btn.isHidden = true
+                                }
+                                else if (annotation.title! == "The End") {
+                                    annotationView.image = UIImage(named: "stopPin")
+                                    btn.isHidden = true
+                                }
+            
+            return annotationView
         }
+    }
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == view.rightCalloutAccessoryView {
+            performSegue(withIdentifier: "editInfo", sender: view)
+        }
+    }
+    
+
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         self.selectedAnnotation = view.annotation as? MyAnnotation
@@ -480,54 +481,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
         
 }
-extension MapViewController: ExampleCalloutViewDelegate {
-    func mapView(_ mapView: MKMapView, didTapDetailsButton button: UIButton, for annotation: MKAnnotation) {
-        
-     performSegue(withIdentifier: "editInfo", sender: self)
-        
-        //below code will present an allert with options
-        
-//        let alert = UIAlertController(title: "Edit or Delete", message: "Any changes are permenate!", preferredStyle: .alert)
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//
-//        let deleteDataAction = UIAlertAction(title: "delete", style: .destructive, handler: { action in
-//
-//            let pinTitle = self.selectedAnnotation?.newTime
-//
-//                do{
-//                    let request: NSFetchRequest<Fish> = Fish.fetchRequest()
-//                    let predicate = NSPredicate(format: "time == %@", pinTitle!)
-//                    request.predicate = predicate
-//
-//                    let locations = try self.context.fetch(request)
-//                    for location in locations{
-//                        self.context.delete(location)
-//
-//                        self.map.removeAnnotation(self.selectedAnnotation!)
-//                        print("pinDeleted")
-//                    }
-//                } catch {
-//                    print("Failed")
-//            }
-//
-//            do {
-//                try self.context.save()
-//            } catch {
-//                print("Failed saving")
-//            }
-//
-//        })
-//
-//
-//        alert.addAction(UIAlertAction(title: "Add more info and save on map ", style: .default, handler: {action in self.performSegue(withIdentifier: "editInfo", sender: self)}))
-//
-//
-//        alert.addAction(cancelAction)
-//        alert.addAction(deleteDataAction)
-//
-//        self.present(alert, animated: true, completion: nil)
-    }
-}
+
 
 // MARK: - Location Manager Delegate
 

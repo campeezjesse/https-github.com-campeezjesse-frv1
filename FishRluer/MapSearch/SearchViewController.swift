@@ -242,16 +242,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             else { return UITableViewCell() }
         
         cell.configure(title: catches[indexPath.row].species!, subTitle: catches[indexPath.row].time!)
-        
-//        cell.editButt.layer.borderColor = UIColor.black.cgColor
-//        cell.editButt.layer.borderWidth = 1.0
-//        cell.editButt.layer.cornerRadius = 0.5
-//
-//        cell.directionsButt.layer.borderColor = UIColor.black.cgColor
-//        cell.directionsButt.layer.borderWidth = 2.0
-//        cell.directionsButt.layer.cornerRadius = 0.5
 
-        
         let fishLength = catches[indexPath.row].length!
         let fishBait = catches[indexPath.row].bait
         let water = catches[indexPath.row].water
@@ -273,7 +264,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         
         cell.fishID = time!
         
-        fishID = time!
+       // fishID = time!
         
         return cell
     }
@@ -284,6 +275,8 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
             let vc = segue.destination as? CatchDetailsViewController
             
             vc?.catchID = fishID
+            
+           
         }
     }
     
@@ -318,13 +311,28 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         
         let fishPoint = catches[indexPath.row]
         let catchSpot = CLLocationCoordinate2DMake(fishPoint.latitude, fishPoint.longitude)
+        let showAnno = MyAnnotation(coordinate: catchSpot, title: "", subtitle: "", newLength: "", newTime: "", newBait: "", newNotes: "", newWaterTempDepth: "", newWeatherCond: "")
  
+        let time = catches[indexPath.row].time
+        let kindaFish = catches[indexPath.row].species
         
+        showAnno.title = kindaFish
+        showAnno.subtitle = time
+        
+        (parent as? MapViewController)?.removeCatchPins()
         (parent as? MapViewController)?.zoom(to: catchSpot)
+        (parent as? MapViewController)?.map.addAnnotation(showAnno)
+        (parent as? MapViewController)?.map.selectAnnotation( showAnno, animated: true)   // To show the annotation view
+        (parent as? MapViewController)?.selectedAnnotation?.newTime = time       // This will pass the ID for coreData
+        
+        
         self.mapView?.selectAnnotation(catches[indexPath.row] as! MKAnnotation, animated: true)
         
+        
+        
+        
+        
     }
-
+ 
 }
-
 
