@@ -279,6 +279,11 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     
 
     @IBAction func goBackButton(_ sender: Any) {
+        
+        if let presenter = presentingViewController as? MapViewController {
+//            presenter.contacts.append(newContact)
+             presenter.catchSub = catchTime.text!
+        }
         navigationController?.popViewController(animated: true)
         self.dismiss(animated: true, completion: nil)
         

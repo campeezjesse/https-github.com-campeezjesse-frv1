@@ -66,18 +66,7 @@ class CameraViewController: UIViewController {
             let tapGesture = UITapGestureRecognizer.init(target: self, action: #selector(askForCameraPermissions))
             askForPermissionsLabel.addGestureRecognizer(tapGesture)
             
-//            footerView.backgroundColor = darkBlue
-//            headerView.backgroundColor = darkBlue
-            
-//            if CLLocationManager.locationServicesEnabled() {
-//                switch CLLocationManager.authorizationStatus() {
-//                case .authorizedAlways, .authorizedWhenInUse:
-//                    self.cameraManager.shouldUseLocationServices = true
-//                    self.locationButton.isHidden = true
-//                default:
-//                    self.cameraManager.shouldUseLocationServices = false
-//                }
-//            }
+
             
             let currentCameraState = cameraManager.currentCameraStatus()
             

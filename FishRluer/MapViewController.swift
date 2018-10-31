@@ -31,11 +31,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var notes: String = ""
     var time: String = ""
    
+    var catchSub: String = ""
     
  
     
     var myFishAnnotation: [MyAnnotation] = []
     var selectedAnnotation: MyAnnotation?
+    
     
  
     
@@ -136,9 +138,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
        
         NSLayoutConstraint.activate([
             
+            // Anchor Buttons to Pull Up
             buttonView.bottomAnchor.constraint(equalTo: pullUpController.searchBar.topAnchor),
-//            purpleView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 50),
-//            purpleView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -50)
+
             ])
     }
     
@@ -154,10 +156,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         trackingOutput.isHidden = false
         
+
         
-        let startFollowPin = MKPointAnnotation()
-        startFollowPin.title = "Start"
-        startFollowPin.subtitle = "Showing Path"
+        let startFollowPin = CatchAnnotation()
+        startFollowPin.title = "Start Showing"
+        startFollowPin.subtitle = "Path"
+        startFollowPin.pinImageName = "start"
         
         startFollowPin.coordinate = CLLocationCoordinate2D(latitude: map.userLocation.coordinate.latitude, longitude: map.userLocation.coordinate.longitude)
      
@@ -194,9 +198,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         alertController.addAction(UIAlertAction(title: "Save", style: .default) { _ in
             
             self.saveRun()
-            let stopFollowPin = MKPointAnnotation()
+            let stopFollowPin = CatchAnnotation()
             stopFollowPin.title = "Stop"
-            stopFollowPin.subtitle = "Showing Path"
+            stopFollowPin.subtitle = "Path"
+            stopFollowPin.pinImageName = "stop"
             
             stopFollowPin.coordinate = CLLocationCoordinate2D(latitude: self.map.userLocation.coordinate.latitude, longitude: self.map.userLocation.coordinate.longitude)
             
@@ -294,7 +299,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             guard let subTitle = annotation.subtitle else { return false }  // don't remove annotations without any title
             
           
-            return subTitle != "Showing Path"                         // remove those whose title does not match
+            return subTitle != "Path"                         // remove those whose title does not match
         }
         
         map.removeAnnotations(filteredAnnotations)
@@ -306,15 +311,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     func addPinToPath() {
         
+        let catchPathPin = CatchAnnotation()
+        
         let catchLat = map.userLocation.coordinate.latitude
         let catchLon = map.userLocation.coordinate.longitude
-        
-        let catchPathPin = MKPointAnnotation()
-        //        catchPathPin.title = "Start"
-        //        catchPathPin.subtitle = "On the journey to more fish"
-        
+       
         catchPathPin.coordinate = CLLocationCoordinate2D(latitude: catchLat, longitude: catchLon)
+        catchPathPin.title = "Fish On"
+        catchPathPin.subtitle = "Path"
+        catchPathPin.pinImageName = "catch"
         
+ 
         map.addAnnotation(catchPathPin)
     }
     
@@ -386,41 +393,87 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
     }
     
-//    @IBAction func addCatch(_ sender: Any) {
- //   }
-    
+
     //MARK: - Custom Annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !(annotation is MKUserLocation) else {
             return nil
         }
+            
+            if !(annotation is CatchAnnotation) {
+                
+                
+                let annotationView = MKPinAnnotationView(annotation:annotation, reuseIdentifier:"")
+                annotationView.isEnabled = true
+                annotationView.canShowCallout = true
+                annotationView.animatesDrop = true
+                
+                let btn = UIButton(type: .detailDisclosure)
+                annotationView.rightCalloutAccessoryView = btn
+                
+                if (annotation.title! == "Start") {
+                    annotationView.image = UIImage(named: "startPin")
+                    btn.isHidden = true
+                }
+                else if (annotation.title! == "The End") {
+                    annotationView.image = UIImage(named: "stopPin")
+                    btn.isHidden = true
+                }
+                
+                return annotationView
+
+//                return nil
+            }
         
-        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "") {
-            annotationView.annotation = annotation
-            return annotationView
+            let reuseID = "pin"
             
-        } else {
+            var anView = mapView.dequeueReusableAnnotationView(withIdentifier: "pin")
+            if anView == nil {
+                anView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+                anView!.canShowCallout = true
+            }
+            else {
+                anView!.annotation = annotation
+            }
+        
+            let cpa = annotation as! CatchAnnotation
+            anView!.image = UIImage(named:cpa.pinImageName)
             
-            let annotationView = MKPinAnnotationView(annotation:annotation, reuseIdentifier:"pin")
-            annotationView.isEnabled = true
-            annotationView.canShowCallout = true
-            annotationView.animatesDrop = true
-            
-            let btn = UIButton(type: .detailDisclosure)
-            annotationView.rightCalloutAccessoryView = btn
-            
-                                if (annotation.title! == "Start") {
-                                    annotationView.image = UIImage(named: "startPin")
-                                    btn.isHidden = true
-                                }
-                                else if (annotation.title! == "The End") {
-                                    annotationView.image = UIImage(named: "stopPin")
-                                    btn.isHidden = true
-                                }
-            
-            return annotationView
+            return anView
         }
-    }
+    
+
+            // This was working code
+//
+//            return nil
+//        }
+//
+//        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "") {
+//            annotationView.annotation = annotation
+//            return annotationView
+//
+//        } else {
+//
+//            let annotationView = MKPinAnnotationView(annotation:annotation, reuseIdentifier:"pin")
+//            annotationView.isEnabled = true
+//            annotationView.canShowCallout = true
+//            annotationView.animatesDrop = true
+//
+//            let btn = UIButton(type: .detailDisclosure)
+//            annotationView.rightCalloutAccessoryView = btn
+//
+//                                if (annotation.title! == "Start") {
+//                                    annotationView.image = UIImage(named: "startPin")
+//                                    btn.isHidden = true
+//                                }
+//                                else if (annotation.title! == "The End") {
+//                                    annotationView.image = UIImage(named: "stopPin")
+//                                    btn.isHidden = true
+//                                }
+//
+//            return annotationView
+//        }
+//    }
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             performSegue(withIdentifier: "editInfo", sender: view)
