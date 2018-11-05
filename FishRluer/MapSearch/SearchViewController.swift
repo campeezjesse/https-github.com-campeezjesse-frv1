@@ -36,6 +36,9 @@ class SearchViewController: PullUpController {
     // MARK: - IBOutlets
     
 
+
+    @IBOutlet weak var stopFollowButton: UIButton!
+    @IBOutlet weak var startFollowButton: UIButton!
     @IBOutlet weak var showPOI: UIButton!
     @IBOutlet weak var showPaths: UIButton!
 
@@ -63,6 +66,17 @@ class SearchViewController: PullUpController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        startFollowButton.layer.borderWidth = 2
+        startFollowButton.layer.borderColor = UIColor.black.cgColor
+        startFollowButton.layer.cornerRadius = 5
+        startFollowButton.layer.masksToBounds = true
+        
+        stopFollowButton.layer.borderWidth = 2
+        stopFollowButton.layer.borderColor = UIColor.black.cgColor
+        stopFollowButton.layer.cornerRadius = 5
+        stopFollowButton.layer.masksToBounds = true
+        stopFollowButton.isHidden = true
         
         showPOI.layer.borderWidth = 2
         showPOI.layer.borderColor = UIColor.black.cgColor
@@ -149,8 +163,53 @@ class SearchViewController: PullUpController {
     
 
     }
+    @IBAction func startToFollow(_ sender: Any) {
+        
+        (self.parent as? MapViewController)?.addStartPin()
+        startFollowButton.isHidden = true
+        stopFollowButton.isHidden = false
+    }
+    
+    @IBAction func stopFollowing(_ sender: Any) {
+      //  (self.parent as? MapViewController)?.addStopPin()
+        
+        let alertController = UIAlertController(title: "Stop Tracking?",
+                                                message: "Are you done with this trip?",
+                                                preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            
+            //            self.startFollowButton.isHidden = true
+            //            self.stopFollowButton.isHidden = false
+            
+            
+        })
+        
+        alertController.addAction(UIAlertAction(title: "Stop", style: .default) { _ in
+            
+            (self.parent as? MapViewController)?.addStopPin()
+            
+            self.startFollowButton.isHidden = false
+            self.stopFollowButton.isHidden = true
+            
+        })
+     
+        present(alertController, animated: true)
+        
+        
+       
+       // this needs to be in an alert view.
+//        stopFollowButton.isHidden = true
+//        stopFollowButton.isHidden = false
+    
+    }
+    
+    @IBAction func showPaths(_ sender: Any) {
+        (self.parent as? MapViewController)?.addPaths()
+        
 
-   
+    }
+    
+    
     
     // MARK: - PullUpController
     

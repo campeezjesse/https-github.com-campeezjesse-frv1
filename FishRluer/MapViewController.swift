@@ -30,26 +30,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var weatherCond: String = ""
     var notes: String = ""
     var time: String = ""
-   
-    var catchSub: String = ""
-    
  
-    
-    var myFishAnnotation: [MyAnnotation] = []
     var selectedAnnotation: MyAnnotation?
-    
-    
- 
+    var pathAnnotations = [MKAnnotation]()
+    var startFollowPin = CatchAnnotation()
     
     var catchID: String = ""
     var fish: Fish!
     var storedLocations: [Fish]! = []
     var catches: [Fish]! = []
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+ // Show routes on map
+    var storedRoutes: [Routes]! = []
 
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let locationManager = CLLocationManager()
+    
+    
     
     // Drawing a line to follow
     let startPin = MKPointAnnotation()
@@ -59,24 +57,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     private var distance = Measurement(value: 0, unit: UnitLength.meters)
     private var locationList: [CLLocation] = []
    
+
     
-    @IBOutlet weak var takePictureOfPath: UIButton!
+
+    @IBOutlet weak var saveButt: UIButton!
+    @IBOutlet weak var dontSaveButt: UIButton!
     
     @IBOutlet weak var mapImageView: UIImageView!
-    @IBOutlet weak var buttonToStart: UIButton!
-    @IBOutlet weak var buttonToStop: UIButton!
-    @IBOutlet weak var buttonToAddCatch: UIButton!
+
+    @IBOutlet weak var viewToSave: UIView!
     
+    @IBOutlet weak var buttonToAddCatch: UIButton!
     @IBOutlet weak var addACatchButton: UIView!
-    @IBOutlet weak var stopFollowingButton: UIView!
     @IBOutlet weak var buttonView: UIView!
-    @IBOutlet weak var startFollowButton: UIView!
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var trackingOutput: UIView!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var paceLabel: UILabel!
-    
     @IBOutlet weak var snapShotView: UIView!
     
     //for pullUp
@@ -98,19 +96,23 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         super.viewDidLoad()
         
         // Buttons
-        startFollowButton.layer.borderWidth = 1
-        startFollowButton.layer.cornerRadius = 5
-        startFollowButton.layer.borderColor = UIColor.black.cgColor
-        
-        stopFollowingButton.layer.borderWidth = 1
-        stopFollowingButton.layer.cornerRadius = 5
-        stopFollowingButton.layer.borderColor = UIColor.black.cgColor
-        stopFollowingButton.isHidden = true
+        saveButt.layer.borderWidth = 1
+        saveButt.layer.cornerRadius = 5
+        saveButt.layer.borderColor = UIColor.black.cgColor
+
+        dontSaveButt.layer.borderWidth = 1
+        dontSaveButt.layer.cornerRadius = 5
+        dontSaveButt.layer.borderColor = UIColor.black.cgColor
+       
         
         addACatchButton.layer.borderWidth = 1
         addACatchButton.layer.cornerRadius = 5
         addACatchButton.layer.borderColor = UIColor.black.cgColor
         
+        //viewToSave.layer.borderWidth = 0.5
+        viewToSave.layer.cornerRadius = 5
+       // viewToSave.layer.borderColor = UIColor.black.cgColor
+        viewToSave.isHidden = true
         
         addPullUpController()
         trackingOutput.isHidden = true
@@ -126,7 +128,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         map.mapType = MKMapType.satelliteFlyover
         map.showsUserLocation = true
         
-        takePictureOfPath.isHidden = true
+  
         
  
         
@@ -143,8 +145,64 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
             ])
     }
+
+
+     // Line from storage in CoreData
+    private func polyLine() -> MKPolyline {
+        guard let routeLocations = route?.routeLocations else {
+            return MKPolyline()
+        }
+
+        let coords: [CLLocationCoordinate2D] = routeLocations.map { location in
+            let location = location as! RouteLocation
+            return CLLocationCoordinate2D(latitude: location.routeLongitude, longitude: location.routeLongitude)
+            
+            
+        }
+        
+        
+        return MKPolyline(coordinates: coords, count: coords.count)
+    }
+
+    // Set Region
+    private func mapRegion() -> MKCoordinateRegion? {
+        guard
+            let routeLocations = route?.routeLocations,
+            routeLocations.count > 0
+            else {
+                return nil
+        }
+
+        let latitudes = routeLocations.map { routeLocation -> Double in
+            let routeLocation = routeLocation as! RouteLocation
+            return routeLocation.routeLatitude
+        }
+
+        let longitudes = routeLocations.map { routeLocation -> Double in
+            let routeLocation = routeLocation as! RouteLocation
+            return routeLocation.routeLongitude
+        }
+
+        let maxLat = latitudes.max()!
+        let minLat = latitudes.min()!
+        let maxLong = longitudes.max()!
+        let minLong = longitudes.min()!
+
+        let center = CLLocationCoordinate2D(latitude: (minLat + maxLat) / 2,
+                                            longitude: (minLong + maxLong) / 2)
+        let span = MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * 1.3,
+                                    longitudeDelta: (maxLong - minLong) * 1.3)
+        return MKCoordinateRegion(center: center, span: span)
+    }
     
     
+//    // To get line from core Data
+//    private func loadMap() {
+//
+//    }
+    
+
+
     func zoom(to location: CLLocationCoordinate2D) {
         let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion.init(center: location, span: span)
@@ -156,15 +214,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         trackingOutput.isHidden = false
         
-
+       
         
-        let startFollowPin = CatchAnnotation()
+        
+//        let startFollowPin = CatchAnnotation()
         startFollowPin.title = "Start Showing"
         startFollowPin.subtitle = "Path"
         startFollowPin.pinImageName = "start"
         
         startFollowPin.coordinate = CLLocationCoordinate2D(latitude: map.userLocation.coordinate.latitude, longitude: map.userLocation.coordinate.longitude)
      
+        
        
         map.userTrackingMode = MKUserTrackingMode(rawValue: 2)!
         map.removeOverlays(map.overlays)
@@ -184,50 +244,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     func addStopPin() {
    
         
-        let alertController = UIAlertController(title: "Stop Following?",
-                                                message: "Are you done with this trip?",
-                                                preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
-            
-            self.startFollowButton.isHidden = true
-            self.stopFollowingButton.isHidden = false
-            
+        let stopFollowPin = CatchAnnotation()
+        stopFollowPin.title = "Stop"
+        stopFollowPin.subtitle = "Path"
+        stopFollowPin.pinImageName = "stop"
         
-            })
+        stopFollowPin.coordinate = CLLocationCoordinate2D(latitude: self.map.userLocation.coordinate.latitude, longitude: self.map.userLocation.coordinate.longitude)
         
-        alertController.addAction(UIAlertAction(title: "Save", style: .default) { _ in
-            
-            self.saveRun()
-            let stopFollowPin = CatchAnnotation()
-            stopFollowPin.title = "Stop"
-            stopFollowPin.subtitle = "Path"
-            stopFollowPin.pinImageName = "stop"
-            
-            stopFollowPin.coordinate = CLLocationCoordinate2D(latitude: self.map.userLocation.coordinate.latitude, longitude: self.map.userLocation.coordinate.longitude)
-            
-            self.locationManager.stopUpdatingLocation()
-            self.timer?.invalidate()
-            
-            self.map.addAnnotation(stopFollowPin)
-            
-            self.map.selectAnnotation(self.startPin, animated: true)
-            //self.map.selectAnnotation(stopFollowPin, animated: true)
-            
-            self.takeSnapShot()
-            
-            self.takePictureOfPath.isHidden = false
-            
-            
-            
-        })
-        alertController.addAction(UIAlertAction(title: "Delete Path", style: .destructive) { _ in
-            
-            _ = self.navigationController?.popToRootViewController(animated: true)
-        })
+        self.locationManager.stopUpdatingLocation()
+        self.timer?.invalidate()
         
-        present(alertController, animated: true)
+        viewToSave.isHidden = false
+        addACatchButton.isHidden = true
         
+        map.showsUserLocation = false
         
+        self.map.addAnnotation(stopFollowPin)
+        
+
     }
     
     func takeSnapShot() {
@@ -265,21 +299,33 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
     
     private func saveRun() {
-        let newRoute = Routes(context: CoreDataStack.context)
+        
+        // create NSData from UIImage
+//        guard let imageData = mapImageView.image!.jpegData(compressionQuality: 1) else {
+//            // handle failed conversion
+//            print("jpg error")
+//            return
+//        }
+   
+       let newRoute = Routes(context: context)
         newRoute.distance = distance.value
         newRoute.duration = Int16(seconds)
         newRoute.timestamp = Date()
+        newRoute.latitude = startFollowPin.coordinate.latitude
+        newRoute.longitude = startFollowPin.coordinate.longitude
+      //  newRoute.imageData = imageData
         
-        for location in locationList {
-            let locationObject = RouteLocation(context: CoreDataStack.context)
-            locationObject.timestamp = location.timestamp
-            locationObject.latitude = location.coordinate.latitude
-            locationObject.longitude = location.coordinate.longitude
+        for routeLocation in locationList {
+            let locationObject = RouteLocation(context: context)
+            locationObject.timestamp = routeLocation.timestamp
+            locationObject.routeLatitude = routeLocation.coordinate.latitude
+            locationObject.routeLongitude = routeLocation.coordinate.longitude
             newRoute.addToRouteLocations(locationObject)
+            
+           (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            
         }
-        
-        CoreDataStack.saveContext()
-        
+   
         route = newRoute
     }
     
@@ -304,10 +350,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         map.removeAnnotations(filteredAnnotations)
      
-      
-            
-    
     }
+    
+    func addPaths() {
+        
+        
+        map.addAnnotations(pathAnnotations)
+        
+
+    }
+
+    
     
     func addPinToPath() {
         
@@ -323,19 +376,38 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
  
         map.addAnnotation(catchPathPin)
+        
     }
     
-    
+    @IBAction func saveButtPressed(_ sender: Any) {
         
+        saveRun()
+        takeSnapShot()
+        viewToSave.isHidden = true
+        addACatchButton.isHidden = false
+        
+        map.showsUserLocation = true
+    }
+    
+    @IBAction func dontSaveButtPressed(_ sender: Any) {
+        
+        trackingOutput.isHidden = true
+        addACatchButton.isHidden = false
+        viewToSave.isHidden = true
+        addACatchButton.isHidden = false
+        
+        map.showsUserLocation = true
+        
+    }
+    
     @IBAction func addPinPath(_ sender: Any) {
         addPinToPath()
     }
     
 
-    @IBAction func picOfPath(_ sender: Any) {
-        
-        takeSnapShot()
-        
+    @IBAction func seePic(_ sender: Any) {
+ 
+        mapImageView.isHidden = true
         performSegue(withIdentifier: "mapPic", sender: self)
     }
     
@@ -346,7 +418,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         do {
             storedLocations = try context.fetch(Fish.fetchRequest())
             
-            // Need to exclude here
+           
             var annotations = [MKAnnotation]()
             
           
@@ -377,21 +449,38 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         return nil
     }
     
-
-
-    @IBAction func startFollow(_ sender: Any) {
-        addStartPin()
-        startFollowButton.isHidden = true
-        stopFollowingButton.isHidden = false
-    }
+    // Path Annotations
     
-    @IBAction func stopFollow(_ sender: Any) {
-        addStopPin()
+    func getPathData() -> [MKAnnotation]? {
         
-        startFollowButton.isHidden = false
-        stopFollowingButton.isHidden = true
-        
+        do {
+            storedRoutes = try context.fetch(Routes.fetchRequest())
+            
+            
+//            var pathAnnotations = [MKAnnotation]()
+            
+            
+            for storedRoute in storedRoutes {
+                
+                let newPathAnno = CatchAnnotation()
+                
+                newPathAnno.title = "Start Of Route"
+                newPathAnno.pinImageName = "start"
+                newPathAnno.coordinate.latitude = storedRoute.latitude
+                newPathAnno.coordinate.longitude = storedRoute.longitude
+                
+                pathAnnotations.append(newPathAnno)
+          
+            }
+      
+            return pathAnnotations
+        }
+        catch {
+            print("Fetching Failed")
+        }
+        return nil
     }
+
     
 
     //MARK: - Custom Annotation
@@ -443,37 +532,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         }
     
 
-            // This was working code
-//
-//            return nil
-//        }
-//
-//        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "") {
-//            annotationView.annotation = annotation
-//            return annotationView
-//
-//        } else {
-//
-//            let annotationView = MKPinAnnotationView(annotation:annotation, reuseIdentifier:"pin")
-//            annotationView.isEnabled = true
-//            annotationView.canShowCallout = true
-//            annotationView.animatesDrop = true
-//
-//            let btn = UIButton(type: .detailDisclosure)
-//            annotationView.rightCalloutAccessoryView = btn
-//
-//                                if (annotation.title! == "Start") {
-//                                    annotationView.image = UIImage(named: "startPin")
-//                                    btn.isHidden = true
-//                                }
-//                                else if (annotation.title! == "The End") {
-//                                    annotationView.image = UIImage(named: "stopPin")
-//                                    btn.isHidden = true
-//                                }
-//
-//            return annotationView
-//        }
-//    }
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             performSegue(withIdentifier: "editInfo", sender: view)
@@ -552,6 +610,8 @@ extension MapViewController {
                 map.addOverlay(MKPolyline(coordinates: coordinates, count: 2))
                 let region = MKCoordinateRegion(center: newLocation.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
                 map.setRegion(region, animated: true)
+                
+             
             }
             
             locationList.append(newLocation)
@@ -568,7 +628,7 @@ extension MapViewController {
         }
         let renderer = MKPolylineRenderer(polyline: polyline)
         renderer.strokeColor = .black
-        renderer.lineWidth = 3
+        renderer.lineWidth = 2
         return renderer
     }
 }
