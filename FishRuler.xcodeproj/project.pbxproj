@@ -29,6 +29,8 @@
 		7FBBB306216538D100982715 /* ARSCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBBB305216538D100982715 /* ARSCNView.swift */; };
 		7FC219CA2190E1F3004729F4 /* CatchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC219C92190E1F2004729F4 /* CatchDetailsViewController.swift */; };
 		7FC219CC2190E244004729F4 /* CatchAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC219CB2190E244004729F4 /* CatchAnnotation.swift */; };
+		7FC219D02191F8DE004729F4 /* RunDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC219CF2191F8DE004729F4 /* RunDetailsViewController.swift */; };
+		7FC219D22191FA23004729F4 /* MulticolorPolyline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC219D12191FA23004729F4 /* MulticolorPolyline.swift */; };
 		7FCF397B2166CE97007163E2 /* ForecastIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FCF397A2166CE97007163E2 /* ForecastIO.framework */; };
 		7FCF397D2166CE9C007163E2 /* NVActivityIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FCF397C2166CE9C007163E2 /* NVActivityIndicatorView.framework */; };
 		7FCF397F2166CEA2007163E2 /* PullUpController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FCF397E2166CEA2007163E2 /* PullUpController.framework */; };
@@ -67,6 +69,8 @@
 		7FC219C92190E1F2004729F4 /* CatchDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CatchDetailsViewController.swift; sourceTree = "<group>"; };
 		7FC219CB2190E244004729F4 /* CatchAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CatchAnnotation.swift; path = "FishRuler/New Group/CatchAnnotation.swift"; sourceTree = SOURCE_ROOT; };
 		7FC219CD2190E447004729F4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7FC219CF2191F8DE004729F4 /* RunDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunDetailsViewController.swift; sourceTree = "<group>"; };
+		7FC219D12191FA23004729F4 /* MulticolorPolyline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticolorPolyline.swift; sourceTree = "<group>"; };
 		7FCF397A2166CE97007163E2 /* ForecastIO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ForecastIO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FCF397C2166CE9C007163E2 /* NVActivityIndicatorView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NVActivityIndicatorView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FCF397E2166CEA2007163E2 /* PullUpController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = PullUpController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +136,7 @@
 		7F00DCEB20BE3A8F001A2C9E /* FishRuler */ = {
 			isa = PBXGroup;
 			children = (
+				7FC219CF2191F8DE004729F4 /* RunDetailsViewController.swift */,
 				7F00DCEE20BE3A8F001A2C9E /* MeasureViewController.swift */,
 				7F70916A20CEDD4F00265230 /* ImageDisplayViewController.swift */,
 				7F6DCD4820E583FF004D22C1 /* MapViewController.swift */,
@@ -183,6 +188,7 @@
 		7F70911D20C83A5E00265230 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				7FC219D12191FA23004729F4 /* MulticolorPolyline.swift */,
 				7FA8A18E217F805200A06F3D /* UnitExtensions.swift */,
 				7FA8A18C217F7DA800A06F3D /* FormatDisplay.swift */,
 				7F70911B20C83A4B00265230 /* Line.swift */,
@@ -363,6 +369,7 @@
 				7F70916B20CEDD5600265230 /* ImageDisplayViewController.swift in Sources */,
 				7FA8A1832176344100A06F3D /* MenuTableViewCell.swift in Sources */,
 				7F4834A0214C0B99007C8927 /* SearchViewController.swift in Sources */,
+				7FC219D02191F8DE004729F4 /* RunDetailsViewController.swift in Sources */,
 				7F05756820F81D18008B3101 /* myAnnotation.swift in Sources */,
 				7FBBB306216538D100982715 /* ARSCNView.swift in Sources */,
 				7FA8A18021762DD400A06F3D /* MenuTableViewController.swift in Sources */,
@@ -375,6 +382,7 @@
 				7FCF39832167CB4B007163E2 /* CameraViewController.swift in Sources */,
 				7FDFA4E02110D45A00F831A2 /* AppDelegate.swift in Sources */,
 				7FC219CA2190E1F3004729F4 /* CatchDetailsViewController.swift in Sources */,
+				7FC219D22191FA23004729F4 /* MulticolorPolyline.swift in Sources */,
 				7F23050720F58BAD00052AB2 /* CoreDataStack.swift in Sources */,
 				7FCF39812166FCAB007163E2 /* HomeViewController.swift in Sources */,
 				7F2583B420D2E2FC000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */,
