@@ -1,8 +1,8 @@
 //
-//  catchAnnotation.swift
+//  PathAnnotation.swift
 //  FishRuler
 //
-//  Created by user1 on 7/2/18.
+//  Created by user1 on 11/30/18.
 //  Copyright © 2018 campeez. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 
-class CatchAnnotation: MKPointAnnotation {
+class PathAnnotation: MKPointAnnotation {
     var pinImageName: String?
     var annoID: String?
 }

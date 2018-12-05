@@ -17,6 +17,8 @@
 		7F52FED021ADC5D0009090AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F52FECE21ADC5D0009090AC /* LaunchScreen.storyboard */; };
 		7F52FED321ADC5E0009090AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F52FED121ADC5DF009090AC /* Main.storyboard */; };
 		7F52FED721ADC8CF009090AC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F52FED621ADC8CF009090AC /* Info.plist */; };
+		7F52FEDB21B18067009090AC /* CatchesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F52FEDA21B18067009090AC /* CatchesDataSource.swift */; };
+		7F52FEDE21B18154009090AC /* PathAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F52FEDD21B18154009090AC /* PathAnnotation.swift */; };
 		7F6DCDC020F50819004D22C1 /* Fish_Ruler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DCDBE20F50819004D22C1 /* Fish_Ruler.xcdatamodeld */; };
 		7F70911C20C83A4B00265230 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70911B20C83A4B00265230 /* Line.swift */; };
 		7F70912120C83B6200265230 /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F70912020C83B6200265230 /* SCNVector3.swift */; };
@@ -49,7 +51,7 @@
 		7F00DCE920BE3A8F001A2C9E /* FishRuler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FishRuler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F00DCEE20BE3A8F001A2C9E /* MeasureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MeasureViewController.swift; path = ../FishRluer/MeasureViewController.swift; sourceTree = "<group>"; };
 		7F00DCF320BE3AA4001A2C9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../FishRluer/Assets.xcassets; sourceTree = "<group>"; };
-		7F05756720F81D17008B3101 /* myAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = myAnnotation.swift; path = ../../FishRluer/Annotations/myAnnotation.swift; sourceTree = "<group>"; };
+		7F05756720F81D17008B3101 /* myAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myAnnotation.swift; sourceTree = "<group>"; };
 		7F23050620F58BAD00052AB2 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		7F2583B320D2E2FB000BE1B6 /* CGImagePropertyOrientation+UIImageOrientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGImagePropertyOrientation+UIImageOrientation.swift"; path = "../../FishRluer/New Group/CGImagePropertyOrientation+UIImageOrientation.swift"; sourceTree = "<group>"; };
 		7F48349F214C0B99007C8927 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = ../../FishRluer/MapSearch/SearchViewController.swift; sourceTree = "<group>"; };
@@ -57,6 +59,8 @@
 		7F52FECF21ADC5D0009090AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = FishRluer/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		7F52FED221ADC5DF009090AC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = FishRluer/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7F52FED621ADC8CF009090AC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FishRluer/Info.plist; sourceTree = SOURCE_ROOT; };
+		7F52FEDA21B18067009090AC /* CatchesDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CatchesDataSource.swift; path = FishRuler/DataSource/CatchesDataSource.swift; sourceTree = SOURCE_ROOT; };
+		7F52FEDD21B18154009090AC /* PathAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathAnnotation.swift; sourceTree = "<group>"; };
 		7F6DCD4820E583FF004D22C1 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapViewController.swift; path = ../FishRluer/MapViewController.swift; sourceTree = "<group>"; };
 		7F6DCDBF20F50819004D22C1 /* Fish_Ruler.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Fish_Ruler.xcdatamodel; sourceTree = "<group>"; };
 		7F70911B20C83A4B00265230 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Line.swift; path = "../../FishRluer/New Group/Line.swift"; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 				7FC219C92190E1F2004729F4 /* CatchDetailsViewController.swift */,
 				7FCF39802166FCAB007163E2 /* HomeViewController.swift */,
 				7F4834712136E4B9007C8927 /* Annotations */,
+				7F52FEDC21B1808C009090AC /* DataSource */,
 				7F4834702136E465007C8927 /* CoreData */,
 				7FA8A18121762E5700A06F3D /* Menu */,
 				7F70911D20C83A5E00265230 /* Support */,
@@ -172,9 +177,11 @@
 			isa = PBXGroup;
 			children = (
 				7FC219CB2190E244004729F4 /* CatchAnnotation.swift */,
+				7F52FEDD21B18154009090AC /* PathAnnotation.swift */,
 				7F05756720F81D17008B3101 /* myAnnotation.swift */,
 			);
-			path = Annotations;
+			name = Annotations;
+			path = ../FishRluer/Annotations;
 			sourceTree = "<group>";
 		};
 		7F48349E214C06AE007C8927 /* MapSearch */ = {
@@ -184,6 +191,14 @@
 				7F4834A1214C0BA0007C8927 /* SearchResultCell.swift */,
 			);
 			path = MapSearch;
+			sourceTree = "<group>";
+		};
+		7F52FEDC21B1808C009090AC /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				7F52FEDA21B18067009090AC /* CatchesDataSource.swift */,
+			);
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 		7F70911D20C83A5E00265230 /* Support */ = {
@@ -307,18 +322,18 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-FishRuler/Pods-FishRuler-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CameraManager/CameraManager.framework",
+				"${BUILT_PRODUCTS_DIR}/FloatingPanel/FloatingPanel.framework",
 				"${BUILT_PRODUCTS_DIR}/ForecastIO/ForecastIO.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/PullUpController/PullUpController.framework",
-				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CameraManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FloatingPanel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ForecastIO.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PullUpController.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -374,12 +389,14 @@
 				7FA8A1832176344100A06F3D /* MenuTableViewController.swift in Sources */,
 				7F4834A0214C0B99007C8927 /* SearchViewController.swift in Sources */,
 				7FC219D02191F8DE004729F4 /* RunDetailsViewController.swift in Sources */,
+				7F52FEDB21B18067009090AC /* CatchesDataSource.swift in Sources */,
 				7F05756820F81D18008B3101 /* myAnnotation.swift in Sources */,
 				7FBBB306216538D100982715 /* ARSCNView.swift in Sources */,
 				7FA8A18021762DD400A06F3D /* MenuTableViewCell.swift in Sources */,
 				7F00DCEF20BE3A8F001A2C9E /* MeasureViewController.swift in Sources */,
 				7FA8A18D217F7DA800A06F3D /* FormatDisplay.swift in Sources */,
 				7F6DCDC020F50819004D22C1 /* Fish_Ruler.xcdatamodeld in Sources */,
+				7F52FEDE21B18154009090AC /* PathAnnotation.swift in Sources */,
 				7FA2BEA22165516F00EC4478 /* MapViewController.swift in Sources */,
 				7F70912120C83B6200265230 /* SCNVector3.swift in Sources */,
 				7FA2BEA12165507B00EC4478 /* PullUpController.swift in Sources */,

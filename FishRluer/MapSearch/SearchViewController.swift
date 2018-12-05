@@ -194,20 +194,30 @@ class SearchViewController: PullUpController {
         })
      
         present(alertController, animated: true)
-        
-        
-       
-       // this needs to be in an alert view.
-//        stopFollowButton.isHidden = true
-//        stopFollowButton.isHidden = false
-    
+
     }
     
     @IBAction func showPaths(_ sender: Any) {
-        (self.parent as? MapViewController)?.addPaths()
+      //  (self.parent as? MapViewController)?.addPaths()
+        
+        showPaths.isSelected = !showPaths.isSelected
+        showPaths.setTitle("Show Routes", for: UIControl.State.selected)
+        
+        (self.parent as? MapViewController)?.removePathPins()
+        
+        
+        if showPaths.isSelected {
+            
+            showPaths.setTitle("Remove Routes", for: UIControl.State.selected)
+            (self.parent as? MapViewController)?.addPaths()
+            
+        }
+        
+        
+    }
         
 
-    }
+    
     
     
     

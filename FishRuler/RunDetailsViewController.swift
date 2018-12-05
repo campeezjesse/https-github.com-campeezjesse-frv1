@@ -18,6 +18,7 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var paceLabel: UILabel!
     @IBOutlet weak var fishCaughtLabel: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
     
     var run: Routes!
     var myFish: Fish!
@@ -39,6 +40,11 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
         addCatchPins()
         
  
+        // Buttons
+        deleteButton.layer.borderWidth = 1
+        deleteButton.layer.cornerRadius = 5
+        deleteButton.layer.borderColor = UIColor.black.cgColor
+
     }
     
     
@@ -48,7 +54,7 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
         
         do{
             let request: NSFetchRequest<Routes> = Routes.fetchRequest()
-            let predicate = NSPredicate(format: "date == %@", ID)
+            let predicate = NSPredicate(format: "catchID == %@", ID)
             request.predicate = predicate
             
             let locations = try self.context.fetch(request)
@@ -267,16 +273,18 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
         
         let deleteDataAction = UIAlertAction(title: "delete", style: .destructive, handler: { action in
             
-            let pathID = self.routeID
+           // let pathID = self.routeID
             
             do{
+                let ID = self.routeID
                 let request: NSFetchRequest<Routes> = Routes.fetchRequest()
-                let predicate = NSPredicate(format: "date == %@", pathID)
+                let predicate = NSPredicate(format: "catchID == %@", ID)
                 request.predicate = predicate
                 
                 let locations = try self.context.fetch(request)
                 for location in locations{
                     self.context.delete(location)
+                    try self.context.save()
                    
                     
                 }
@@ -285,17 +293,28 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
             }
             
             do {
-                try self.context.save()
+               // try self.context.save()
                 
+//                if let presenter = self.presentingViewController as? MapViewController {
+//
+//
+//                    let selectedAnno = presenter.pathAnnotations
+//                   // let ID = self.routeID
+//                   // let selectedAnno.annoID = ID
+//
+//                    presenter.map.removeAnnotation(selectedAnno as! MKAnnotation)
+//
+//                }
+
                 DispatchQueue.main.asyncAfter(deadline:.now() + 0.75, execute: {
                     self.dismiss(animated: true, completion: nil)
-                    
-                    
+
+                
                 })
                 
                 
-            } catch {
-                print("Failed saving")
+//            } catch {
+//                print("Failed saving")
             }
             
         })
@@ -325,12 +344,12 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
 
 extension RunDetailsViewController {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        guard let polyline = overlay as? MulticolorPolyline else {
+        guard let polyline = overlay as? MKPolyline else {
             return MKOverlayRenderer(overlay: overlay)
         }
         let renderer = MKPolylineRenderer(polyline: polyline)
-        renderer.strokeColor = polyline.color
-        renderer.lineWidth = 3
+        renderer.strokeColor = .black //polyline.color
+        renderer.lineWidth = 2
         return renderer
     }
     

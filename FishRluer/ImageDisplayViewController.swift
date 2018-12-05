@@ -25,10 +25,10 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     var weatherCond: String? = ""
     var notes: String? = ""
     
+    // ID to link with route
+    var theAnnoID: String? = ""
     
-
    
-    
     let formater = DateFormatter()
     let locationManager = CLLocationManager()
     
@@ -232,9 +232,10 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         let catchTemp = theTemp.text
         let catchWeatherSum = theSummary.text
         
-    
-
-         let myCoordinate = pointAnnotation.coordinate
+        // ID conected to the start of a path to connect in RunDetails VC
+        let annoID = theAnnoID
+        
+        let myCoordinate = pointAnnotation.coordinate
        
 
         let newPin = Fish(context: context)
@@ -251,18 +252,17 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         newPin.currentTemp = catchTemp
         newPin.weatherSummary = catchWeatherSum
         newPin.windSpeed = catchWind
+        newPin.annoID = theAnnoID
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        
+        
         
        
         let alert = UIAlertController(title: "Saved!", message: "See your fish on the map, or continue catching", preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)
-        
-       // alert.addAction(UIAlertAction(title: "Go to map", style: .default, handler: {action in self.performSegue(withIdentifier: "addInfoToMap", sender: self)
-        
-           
-       // }))
+      
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)
 
@@ -368,7 +368,6 @@ extension ImageDisplayViewController {
                     
                 case .success(let currentForecast, let requestMetadata):
                     if let currentTemp: Double = currentForecast.currently?.temperature {
-//                        print(currentTemp)
 
                         DispatchQueue.main.async {
                             self.theTemp.text = String(Int(round(currentTemp))) + "˚F"
@@ -376,7 +375,7 @@ extension ImageDisplayViewController {
                        
                     
                     if let summaryInfo: String = currentForecast.currently?.summary {
-                        print(summaryInfo)
+                       
                         DispatchQueue.main.async {
                             self.currentWeather.text = summaryInfo  + " " + String(Int(round(currentTemp))) + "˚F"
                         }
@@ -387,7 +386,7 @@ extension ImageDisplayViewController {
                     }
                     }
                         if let summaryInfo: String = currentForecast.currently?.summary {
-                            print(summaryInfo)
+                           
                             DispatchQueue.main.async {
                                 self.theSummary.text = summaryInfo
                             }
