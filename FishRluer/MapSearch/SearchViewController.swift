@@ -39,7 +39,7 @@ class SearchViewController: PullUpController {
 
     @IBOutlet weak var stopFollowButton: UIButton!
     @IBOutlet weak var startFollowButton: UIButton!
-    @IBOutlet weak var showPOI: UIButton!
+    @IBOutlet weak var removeAll: UIButton!
     @IBOutlet weak var showPaths: UIButton!
 
     @IBOutlet weak var addCatchButton: UIButton!
@@ -78,10 +78,11 @@ class SearchViewController: PullUpController {
         stopFollowButton.layer.masksToBounds = true
         stopFollowButton.isHidden = true
         
-        showPOI.layer.borderWidth = 2
-        showPOI.layer.borderColor = UIColor.black.cgColor
-        showPOI.layer.cornerRadius = 5
-        showPOI.layer.masksToBounds = true
+        removeAll.layer.borderWidth = 2
+        removeAll.layer.borderColor = UIColor.black.cgColor
+        removeAll.layer.cornerRadius = 5
+        removeAll.layer.masksToBounds = true
+        removeAll.isHidden = true
         
         showPaths.layer.borderWidth = 2
         showPaths.layer.borderColor = UIColor.black.cgColor
@@ -171,15 +172,15 @@ class SearchViewController: PullUpController {
     }
     
     @IBAction func stopFollowing(_ sender: Any) {
-      //  (self.parent as? MapViewController)?.addStopPin()
+      
+        removeAll.isHidden = false
         
         let alertController = UIAlertController(title: "Stop Tracking?",
                                                 message: "Are you done with this trip?",
                                                 preferredStyle: .actionSheet)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
             
-            //            self.startFollowButton.isHidden = true
-            //            self.stopFollowButton.isHidden = false
+            
             
             
         })
@@ -216,11 +217,7 @@ class SearchViewController: PullUpController {
         
     }
         
-
-    
-    
-    
-    
+ 
     // MARK: - PullUpController
     
     override var pullUpControllerPreferredSize: CGSize {

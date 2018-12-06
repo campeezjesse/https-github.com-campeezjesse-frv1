@@ -13,4 +13,8 @@ import MapKit
 class PathAnnotation: MKPointAnnotation {
     var pinImageName: String?
     var annoID: String?
+    
+//    class func keyPathsForValuesAffectingCoordinate() -> Set<String> {
+//        return Set<String>([ #keyPath(CatchAnnotation.coordinate)])
+//    }
 }

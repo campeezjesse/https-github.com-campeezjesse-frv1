@@ -49,7 +49,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     var catchID: String = ""
     var fish: Fish!
-    var storedLocations: [Fish]! = []
+    @objc var storedLocations: [Fish]! = []
     var catches: [Fish]! = []
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
  
@@ -123,18 +123,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         addACatchButton.layer.cornerRadius = 5
         addACatchButton.layer.borderColor = UIColor.black.cgColor
         
-        //viewToSave.layer.borderWidth = 0.5
+        
         viewToSave.layer.cornerRadius = 5
-       // viewToSave.layer.borderColor = UIColor.black.cgColor
         viewToSave.isHidden = true
         
         trackingOutput.layer.cornerRadius = 5
         trackingOutput.isHidden = true
         trackingOutput.layer.masksToBounds = true
         
-        addPullUpController()
         
-  
+        // Notify when a pin is deleted
+        let mainVc = MapViewController()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(mainVc.removeSelectedAnno), name:NSNotification.Name(rawValue: "NotificationID"), object: nil)
         
         //Mark: - Authorization
         locationManager.delegate = self
@@ -142,12 +143,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         locationManager.requestAlwaysAuthorization()
         
         
-        
         map.mapType = MKMapType.satelliteFlyover
         map.showsUserLocation = true
         
-  
-        
+        addPullUpController()
  
         
     }
@@ -164,23 +163,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             ])
     }
 
-//
-//     // Line from storage in CoreData
-//    private func polyLine() -> MKPolyline {
-//        guard let routeLocations = route?.routeLocations else {
-//            return MKPolyline()
-//        }
-//
-//        let coords: [CLLocationCoordinate2D] = routeLocations.map { location in
-//            let location = location as! RouteLocation
-//            return CLLocationCoordinate2D(latitude: location.routeLongitude, longitude: location.routeLongitude)
-//
-//
-//        }
-//
-//
-//        return MKPolyline(coordinates: coords, count: coords.count)
-//    }
+
 
     // Set Region
     private func mapRegion() -> MKCoordinateRegion? {
@@ -212,6 +195,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                                     longitudeDelta: (maxLong - minLong) * 1.3)
         return MKCoordinateRegion(center: center, span: span)
     }
+    
     
     func getDate() {
 
@@ -249,15 +233,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         // create a unique ID  that will be used for all annotations created during this trip
 
-        
-        
          annoIDStart = startID
         startFollowPin = startPin
-        
-        print(annoIDStart)
-        print(startID)
-        print(startFollowPin.annoID)
-        
   
         map.userTrackingMode = MKUserTrackingMode(rawValue: 2)!
         map.removeOverlays(map.overlays)
@@ -434,6 +411,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
     }
     
+    @objc func removeSelectedAnno(){
+        
+        let selectedAnno = map.annotations.filter { annotation in
+            if annotation is MKUserLocation { return false }          // don't remove MKUserLocation
+            guard let subTitle = annotation.subtitle else { return false }  // don't remove annotations without any title
+            
+            
+            return subTitle != "Path"                         // remove those whose title does not match
+            
+        }
+        map.removeAnnotations(selectedAnno)
+    }
+    
+
  
     @IBAction func saveButtPressed(_ sender: Any) {
         
@@ -495,10 +486,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 annotations.append(newAnnotation)
                 
    
+             
             }
-            
-
-            
             return annotations
         }
         catch {
@@ -668,10 +657,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 }
     
 
-//    @IBAction func goBackButton(_ sender: Any) {
-//        navigationController?.popViewController(animated: true)
-//
-//    }
 }
     extension MKMapView {
         func zoomToUserLocation() {

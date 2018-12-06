@@ -341,10 +341,10 @@
             </objects>
             <point key="canvasLocation" x="6192.8000000000002" y="-816.34182908545733"/>
         </scene>
-        <!--Map View Controller-->
+        <!--Map-->
         <scene sceneID="f46-wa-F0W">
             <objects>
-                <viewController id="9la-20-NeK" customClass="MapViewController" customModule="FishRuler" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mapVC" title="Map" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9la-20-NeK" customClass="MapViewController" customModule="FishRuler" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mjq-Rv-rBN">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -484,11 +484,17 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="2Xz-BN-D1E">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="52"/>
                                                 <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="mark" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFB-w7-zad">
+                                                        <rect key="frame" x="0.0" y="0.0" width="60" height="12"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="addToMap" translatesAutoresizingMaskIntoConstraints="NO" id="Prw-sB-Aec">
-                                                        <rect key="frame" x="0.0" y="0.0" width="60" height="40"/>
+                                                        <rect key="frame" x="0.0" y="12" width="60" height="28"/>
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Catch" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rfk-KF-hqH">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="spot" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rfk-KF-hqH">
                                                         <rect key="frame" x="0.0" y="40" width="60" height="12"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
                                                         <nil key="highlightedColor"/>
@@ -496,7 +502,10 @@
                                                 </subviews>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
+                                                    <constraint firstItem="KFB-w7-zad" firstAttribute="top" secondItem="2Xz-BN-D1E" secondAttribute="top" id="Rq6-OZ-y3B"/>
                                                     <constraint firstAttribute="trailing" secondItem="Rfk-KF-hqH" secondAttribute="trailing" id="Rry-fB-dyE"/>
+                                                    <constraint firstItem="KFB-w7-zad" firstAttribute="leading" secondItem="2Xz-BN-D1E" secondAttribute="leading" id="UId-3r-pqI"/>
+                                                    <constraint firstAttribute="trailing" secondItem="KFB-w7-zad" secondAttribute="trailing" id="i2v-9j-FUU"/>
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wft-JS-VYN">
@@ -1746,10 +1755,10 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rTQ-lo-7Yk">
-                                            <rect key="frame" x="0.0" y="110" width="375" height="106"/>
+                                            <rect key="frame" x="0.0" y="110" width="375" height="43"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="106" id="Nre-bt-E5C"/>
+                                                <constraint firstAttribute="height" constant="43" id="Nre-bt-E5C"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sNJ-Be-vGd">
@@ -1768,34 +1777,37 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="JrY-Le-P8r">
-                                                        <rect key="frame" x="0.0" y="46" width="375" height="30"/>
+                                                        <rect key="frame" x="8" y="0.0" width="359" height="30"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0P-0A-zGH">
-                                                                <rect key="frame" x="0.0" y="0.0" width="117" height="30"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="30"/>
                                                                 <state key="normal" title="Show Catches"/>
                                                                 <connections>
                                                                     <action selector="showCatches:" destination="Ls2-6D-TVK" eventType="touchUpInside" id="c3Y-Yq-CxO"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PFq-H1-Yjg">
-                                                                <rect key="frame" x="129" y="0.0" width="117" height="30"/>
-                                                                <state key="normal" title="Show Paths"/>
+                                                                <rect key="frame" x="123.5" y="0.0" width="112" height="30"/>
+                                                                <state key="normal" title="Show Routes"/>
                                                                 <connections>
                                                                     <action selector="showPaths:" destination="Ls2-6D-TVK" eventType="touchUpInside" id="09V-0R-KAd"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xLF-qj-CkW">
-                                                                <rect key="frame" x="258" y="0.0" width="117" height="30"/>
-                                                                <state key="normal" title="Show POI"/>
+                                                                <rect key="frame" x="247.5" y="0.0" width="111.5" height="30"/>
+                                                                <state key="normal" title="Remove All"/>
+                                                                <connections>
+                                                                    <segue destination="9la-20-NeK" kind="show" id="dBj-So-1a0"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5KZ-Kp-P3F">
-                                                        <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
+                                                        <rect key="frame" x="8" y="42" width="375" height="37"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P1k-zO-h9p">
-                                                                <rect key="frame" x="30" y="0.0" width="315" height="38"/>
+                                                                <rect key="frame" x="30" y="0.0" width="315" height="37"/>
                                                                 <color key="backgroundColor" red="0.1549946687" green="0.88517622330000001" blue="0.27489742700000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
                                                                 <state key="normal" title="Track Route">
@@ -1806,7 +1818,7 @@
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mVh-8W-0u5">
-                                                                <rect key="frame" x="30" y="0.0" width="315" height="38"/>
+                                                                <rect key="frame" x="30" y="0.0" width="315" height="37"/>
                                                                 <color key="backgroundColor" red="1" green="0.05529965748" blue="0.10268027289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="21"/>
                                                                 <state key="normal" title="Stop Tracking Route">
@@ -1833,13 +1845,12 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="5KZ-Kp-P3F" firstAttribute="top" secondItem="vG2-nB-qtP" secondAttribute="top" id="G0y-EZ-z6T"/>
-                                                    <constraint firstItem="JrY-Le-P8r" firstAttribute="top" secondItem="5KZ-Kp-P3F" secondAttribute="bottom" constant="8" id="OGd-pG-SEK"/>
-                                                    <constraint firstAttribute="trailing" secondItem="5KZ-Kp-P3F" secondAttribute="trailing" id="U5S-N1-l8j"/>
-                                                    <constraint firstItem="5KZ-Kp-P3F" firstAttribute="leading" secondItem="vG2-nB-qtP" secondAttribute="leading" id="cKl-MD-Osd"/>
-                                                    <constraint firstItem="JrY-Le-P8r" firstAttribute="top" secondItem="vG2-nB-qtP" secondAttribute="top" constant="46" id="ckm-81-OE1"/>
-                                                    <constraint firstItem="JrY-Le-P8r" firstAttribute="leading" secondItem="vG2-nB-qtP" secondAttribute="leading" id="uiI-ty-6qm"/>
-                                                    <constraint firstAttribute="trailing" secondItem="JrY-Le-P8r" secondAttribute="trailing" id="zTs-Du-Qvq"/>
+                                                    <constraint firstItem="5KZ-Kp-P3F" firstAttribute="top" secondItem="JrY-Le-P8r" secondAttribute="bottom" constant="12" id="Bh0-4T-Gu4"/>
+                                                    <constraint firstItem="JrY-Le-P8r" firstAttribute="top" secondItem="vG2-nB-qtP" secondAttribute="top" id="GZt-4K-Gew"/>
+                                                    <constraint firstAttribute="trailing" secondItem="JrY-Le-P8r" secondAttribute="trailing" constant="8" id="KLa-Qw-l4w"/>
+                                                    <constraint firstItem="JrY-Le-P8r" firstAttribute="leading" secondItem="vG2-nB-qtP" secondAttribute="leading" constant="8" id="L69-Aq-2Fz"/>
+                                                    <constraint firstItem="5KZ-Kp-P3F" firstAttribute="leading" secondItem="vG2-nB-qtP" secondAttribute="leading" constant="8" id="T2z-55-qrI"/>
+                                                    <constraint firstAttribute="trailing" secondItem="5KZ-Kp-P3F" secondAttribute="trailing" constant="-8" id="YN4-SI-HpL"/>
                                                 </constraints>
                                             </view>
                                             <prototypes>
@@ -2062,7 +2073,7 @@
                                         <constraint firstAttribute="trailing" secondItem="sNJ-Be-vGd" secondAttribute="trailing" id="JRH-2X-H4P"/>
                                         <constraint firstItem="rTQ-lo-7Yk" firstAttribute="leading" secondItem="mhI-3m-DRO" secondAttribute="leading" id="N7x-au-OoT"/>
                                         <constraint firstItem="rTQ-lo-7Yk" firstAttribute="top" secondItem="hTe-mM-ML5" secondAttribute="bottom" constant="1" id="PLL-8g-7hJ"/>
-                                        <constraint firstItem="sNJ-Be-vGd" firstAttribute="top" secondItem="rTQ-lo-7Yk" secondAttribute="bottom" id="SMo-Yb-Ksm"/>
+                                        <constraint firstItem="sNJ-Be-vGd" firstAttribute="top" secondItem="rTQ-lo-7Yk" secondAttribute="bottom" constant="63" id="SMo-Yb-Ksm"/>
                                         <constraint firstItem="sNJ-Be-vGd" firstAttribute="leading" secondItem="mhI-3m-DRO" secondAttribute="leading" id="VeO-2i-g8a"/>
                                         <constraint firstAttribute="trailing" secondItem="rTQ-lo-7Yk" secondAttribute="trailing" id="XO6-fn-3PA"/>
                                         <constraint firstAttribute="trailing" secondItem="lt6-SL-aNF" secondAttribute="trailing" id="apz-RH-qac"/>
@@ -2086,11 +2097,11 @@
                     <connections>
                         <outlet property="addCatchButton" destination="E0P-0A-zGH" id="y7s-GE-EzP"/>
                         <outlet property="firstPreviewView" destination="rTQ-lo-7Yk" id="oMJ-6M-oUL"/>
+                        <outlet property="removeAll" destination="xLF-qj-CkW" id="29o-9C-rL4"/>
                         <outlet property="searchBar" destination="qgK-ss-nwN" id="mrw-ce-sfy"/>
                         <outlet property="searchBoxContainerView" destination="hTe-mM-ML5" id="qzV-Lx-jff"/>
                         <outlet property="searchSeparatorView" destination="JIN-aJ-PXc" id="sHB-Xn-fuK"/>
                         <outlet property="secondPreviewView" destination="sNJ-Be-vGd" id="gfk-oO-0dA"/>
-                        <outlet property="showPOI" destination="xLF-qj-CkW" id="l0g-NL-FjY"/>
                         <outlet property="showPaths" destination="PFq-H1-Yjg" id="WEp-vM-z5u"/>
                         <outlet property="startFollowButton" destination="P1k-zO-h9p" id="IyC-XM-Ngt"/>
                         <outlet property="stopFollowButton" destination="mVh-8W-0u5" id="PRY-WM-x5O"/>
@@ -2581,7 +2592,7 @@
         <segue reference="8l4-4A-b3v"/>
         <segue reference="A1Q-w3-Krz"/>
         <segue reference="83j-c1-qpu"/>
-        <segue reference="ICj-ke-wHr"/>
+        <segue reference="dBj-So-1a0"/>
         <segue reference="cdY-ro-9VV"/>
     </inferredMetricsTieBreakers>
 </document>

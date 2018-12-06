@@ -285,27 +285,18 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
                 for location in locations{
                     self.context.delete(location)
                     try self.context.save()
-                   
                     
-                }
+               // MapViewController.removeSelectedAnno()
+                
+            }
             } catch {
                 print("Failed")
             }
             
             do {
-               // try self.context.save()
                 
-//                if let presenter = self.presentingViewController as? MapViewController {
-//
-//
-//                    let selectedAnno = presenter.pathAnnotations
-//                   // let ID = self.routeID
-//                   // let selectedAnno.annoID = ID
-//
-//                    presenter.map.removeAnnotation(selectedAnno as! MKAnnotation)
-//
-//                }
-
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NotificationID"), object: nil)
+      
                 DispatchQueue.main.asyncAfter(deadline:.now() + 0.75, execute: {
                     self.dismiss(animated: true, completion: nil)
 

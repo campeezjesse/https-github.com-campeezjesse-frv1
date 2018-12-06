@@ -16,7 +16,6 @@
 		7F4834A2214C0BA0007C8927 /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F4834A1214C0BA0007C8927 /* SearchResultCell.swift */; };
 		7F52FED021ADC5D0009090AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F52FECE21ADC5D0009090AC /* LaunchScreen.storyboard */; };
 		7F52FED321ADC5E0009090AC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F52FED121ADC5DF009090AC /* Main.storyboard */; };
-		7F52FED721ADC8CF009090AC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F52FED621ADC8CF009090AC /* Info.plist */; };
 		7F52FEDB21B18067009090AC /* CatchesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F52FEDA21B18067009090AC /* CatchesDataSource.swift */; };
 		7F52FEDE21B18154009090AC /* PathAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F52FEDD21B18154009090AC /* PathAnnotation.swift */; };
 		7F6DCDC020F50819004D22C1 /* Fish_Ruler.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F6DCDBE20F50819004D22C1 /* Fish_Ruler.xcdatamodeld */; };
@@ -304,7 +303,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F52FED721ADC8CF009090AC /* Info.plist in Resources */,
 				7F52FED321ADC5E0009090AC /* Main.storyboard in Resources */,
 				7F00DCF420BE3AA4001A2C9E /* Assets.xcassets in Resources */,
 				7F52FED021ADC5D0009090AC /* LaunchScreen.storyboard in Resources */,
