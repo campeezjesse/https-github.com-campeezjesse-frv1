@@ -28,6 +28,7 @@
 		7FA8A1832176344100A06F3D /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA8A1822176344100A06F3D /* MenuTableViewController.swift */; };
 		7FA8A18D217F7DA800A06F3D /* FormatDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA8A18C217F7DA800A06F3D /* FormatDisplay.swift */; };
 		7FA8A18F217F805200A06F3D /* UnitExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA8A18E217F805200A06F3D /* UnitExtensions.swift */; };
+		7FB249F421BADE9F00DA589F /* PathResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB249F221BADE9F00DA589F /* PathResultsCell.swift */; };
 		7FBBB306216538D100982715 /* ARSCNView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBBB305216538D100982715 /* ARSCNView.swift */; };
 		7FC219CA2190E1F3004729F4 /* CatchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC219C92190E1F2004729F4 /* CatchDetailsViewController.swift */; };
 		7FC219CC2190E244004729F4 /* CatchAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC219CB2190E244004729F4 /* CatchAnnotation.swift */; };
@@ -70,6 +71,7 @@
 		7FA8A1822176344100A06F3D /* MenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		7FA8A18C217F7DA800A06F3D /* FormatDisplay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormatDisplay.swift; path = "../../FishRluer/New Group/FormatDisplay.swift"; sourceTree = "<group>"; };
 		7FA8A18E217F805200A06F3D /* UnitExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnitExtensions.swift; path = "../../FishRluer/New Group/UnitExtensions.swift"; sourceTree = "<group>"; };
+		7FB249F221BADE9F00DA589F /* PathResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathResultsCell.swift; sourceTree = "<group>"; };
 		7FBBB305216538D100982715 /* ARSCNView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ARSCNView.swift; path = "../../FishRluer/New Group/ARSCNView.swift"; sourceTree = "<group>"; };
 		7FC219C92190E1F2004729F4 /* CatchDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CatchDetailsViewController.swift; path = ../FishRluer/CatchDetailsViewController.swift; sourceTree = "<group>"; };
 		7FC219CB2190E244004729F4 /* CatchAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CatchAnnotation.swift; path = "FishRluer/New Group/CatchAnnotation.swift"; sourceTree = SOURCE_ROOT; };
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				7F48349F214C0B99007C8927 /* SearchViewController.swift */,
+				7FB249F221BADE9F00DA589F /* PathResultsCell.swift */,
 				7F4834A1214C0BA0007C8927 /* SearchResultCell.swift */,
 			);
 			path = MapSearch;
@@ -320,18 +323,18 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-FishRuler/Pods-FishRuler-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CameraManager/CameraManager.framework",
-				"${BUILT_PRODUCTS_DIR}/FloatingPanel/FloatingPanel.framework",
 				"${BUILT_PRODUCTS_DIR}/ForecastIO/ForecastIO.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/PullUpController/PullUpController.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CameraManager.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FloatingPanel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ForecastIO.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PullUpController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -398,6 +401,7 @@
 				7FA2BEA22165516F00EC4478 /* MapViewController.swift in Sources */,
 				7F70912120C83B6200265230 /* SCNVector3.swift in Sources */,
 				7FA2BEA12165507B00EC4478 /* PullUpController.swift in Sources */,
+				7FB249F421BADE9F00DA589F /* PathResultsCell.swift in Sources */,
 				7FCF39832167CB4B007163E2 /* CameraViewController.swift in Sources */,
 				7FDFA4E02110D45A00F831A2 /* AppDelegate.swift in Sources */,
 				7FC219CA2190E1F3004729F4 /* CatchDetailsViewController.swift in Sources */,
@@ -561,10 +565,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/FishRluer/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Campeez.FishRuler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -584,10 +585,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/FishRluer/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Campeez.FishRuler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

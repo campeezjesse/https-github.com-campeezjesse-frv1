@@ -39,6 +39,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
  
     var routeAnnotations = [PathAnnotation]()
+    var annotations = [MKAnnotation]()
     
     var selectedAnnotation: MyAnnotation?
     var selectedRoute: PathAnnotation?
@@ -63,7 +64,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     
     // Drawing a line to follow
-    let startPin = MKPointAnnotation()
+   // let startPin = MKPointAnnotation()
     private var route: Routes?
     private var seconds = 0
     private var timer: Timer?
@@ -134,8 +135,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         // Notify when a pin is deleted
         let mainVc = MapViewController()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(mainVc.removeSelectedAnno), name:NSNotification.Name(rawValue: "NotificationID"), object: nil)
+         // for deleting path pin
+        NotificationCenter.default.addObserver(self, selector: #selector(mainVc.removeSelectedPath), name:NSNotification.Name(rawValue: "NotificationID"), object: nil)
+        // for deleting catch pin
+        NotificationCenter.default.addObserver(self, selector: #selector(mainVc.removeSelectedCatch), name:NSNotification.Name(rawValue: "deleteCatch"), object: nil)
         
         //Mark: - Authorization
         locationManager.delegate = self
@@ -146,8 +149,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         map.mapType = MKMapType.satelliteFlyover
         map.showsUserLocation = true
         
+        //navigationController?.setNavigationBarHidden(true, animated: false)
+        
         addPullUpController()
- 
+        
         
     }
     
@@ -164,7 +169,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
 
 
-
+   
     // Set Region
     private func mapRegion() -> MKCoordinateRegion? {
         guard
@@ -196,6 +201,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         return MKCoordinateRegion(center: center, span: span)
     }
     
+    func removePullUpController() {
+        let pullUpController = makeSearchViewControllerIfNeeded()
+        removePullUpController(pullUpController, animated: true)
+    }
+    
+
     
     func getDate() {
 
@@ -383,7 +394,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             return subTitle != "Path"                         // remove those whose title does not match
         }
         
+        // clear the array first
+        annotations.removeAll()
+        // then remove
         map.removeAnnotations(filteredAnnotations)
+        
+        
      
     }
     
@@ -407,23 +423,55 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             return subTitle != "Path"                         // remove those whose title does not match
         }
         
+        // clear the array first
+        routeAnnotations.removeAll()
+        // then remove
         map.removeAnnotations(filteredAnnotations)
         
     }
     
-    @objc func removeSelectedAnno(){
+//    func reLoadTable() {
+//
+//    }
+    
+    @objc func removeSelectedPath(){
         
         let selectedAnno = map.annotations.filter { annotation in
             if annotation is MKUserLocation { return false }          // don't remove MKUserLocation
             guard let subTitle = annotation.subtitle else { return false }  // don't remove annotations without any title
             
+            let subID = selectedRoute?.annoID
+            // remove those whose title does match
             
-            return subTitle != "Path"                         // remove those whose title does not match
+            
+            return subTitle == subID
+            // remove those whose title does not match
+            //return subTitle != subID
+          
             
         }
         map.removeAnnotations(selectedAnno)
     }
     
+    @objc func removeSelectedCatch(){
+        
+        let selectedCatch = map.annotations.filter { annotation in
+            if annotation is MKUserLocation { return false }          // don't remove MKUserLocation
+            guard let subTitle = annotation.subtitle else { return false }  // don't remove annotations without any title
+            
+            let subID = selectedAnnotation?.newTime
+            // remove those whose title does match
+            
+            
+            return subTitle == subID
+            // remove those whose title does not match
+            //return subTitle != subID
+            
+            
+        }
+        map.removeAnnotations(selectedCatch)
+        
+    }
 
  
     @IBAction func saveButtPressed(_ sender: Any) {
@@ -466,22 +514,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         do {
             storedLocations = try context.fetch(Fish.fetchRequest())
-            
-           
-            var annotations = [MKAnnotation]()
-            
+         
           
             for storedLocation in storedLocations {
                 let newAnnotation = MyAnnotation(coordinate: CLLocationCoordinate2D(latitude: storedLocation.latitude, longitude: storedLocation.longitude), title: "", subtitle: "", newLength: "", newTime: "", newBait: "", newNotes: "", newWaterTempDepth: "", newWeatherCond: "")
                 newAnnotation.coordinate.latitude = storedLocation.latitude
                 newAnnotation.coordinate.longitude = storedLocation.longitude
                 newAnnotation.title = storedLocation.species
-                newAnnotation.subtitle = storedLocation.length
+                newAnnotation.subtitle = storedLocation.time
                 newAnnotation.newTime = storedLocation.time
                 newAnnotation.newBait = storedLocation.bait
                 newAnnotation.newNotes = storedLocation.notes
                 newAnnotation.newWaterTempDepth = storedLocation.water
                 newAnnotation.newWeatherCond = storedLocation.weather
+                newAnnotation.newLength = storedLocation.length
 
                 annotations.append(newAnnotation)
                 

@@ -108,7 +108,7 @@ class CatchDetailsViewController: UIViewController, UITextFieldDelegate {
                             let locations = try self.context.fetch(request)
                             for location in locations{
                                 self.context.delete(location)
-        
+                                try self.context.save()
                            
                                 
                             }
@@ -117,17 +117,23 @@ class CatchDetailsViewController: UIViewController, UITextFieldDelegate {
                     }
         
                     do {
-                        try self.context.save()
+                        
+                        //this removes pin
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteCatch"), object: nil)
+                        // this updates core data
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadCatch"), object: nil)
+                        
                         
                         DispatchQueue.main.asyncAfter(deadline:.now() + 0.75, execute: {
-                            self.performSegue(withIdentifier:"backToMap",sender: self)
+                            
+                            self.dismiss(animated: true, completion: nil)
                             
                             
                         })
                         
 
-                    } catch {
-                        print("Failed saving")
+//                    } catch {
+//                        print("Failed saving")
                     }
         
                 })

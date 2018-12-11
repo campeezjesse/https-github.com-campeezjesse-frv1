@@ -39,6 +39,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     fileprivate lazy var isRecording: Bool = false
     
    
+    @IBOutlet weak var backAfterSaveButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var fishLength: UITextField!
     @IBOutlet weak var latitudeLabel: UILabel!
@@ -92,7 +93,7 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         mapView.mapType = MKMapType.standard
         mapView.showsUserLocation = true
        
-        
+        backAfterSaveButton.isHidden = true
     }
     
     
@@ -186,6 +187,58 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
     }
     
 
+    func saveFish() {
+        
+        //this is where we set the information to be saved into the coreData model named "Fish"
+        
+        let fishKind = fishSpeciesLabel.text
+        let waterTempDepth = waterTempConditions.text
+        let bait =  baitUsed.text
+        let weatherCond = currentWeather.text
+        let notes = moreNotes.text
+        let catchTimeandDate = catchTime.text
+        let catchLength = fishLength.text
+        let catchWind = theWind.text
+        let catchTemp = theTemp.text
+        let catchWeatherSum = theSummary.text
+        
+        // ID conected to the start of a path to connect in RunDetails VC
+       // let annoID = theAnnoID
+        
+        let myCoordinate = pointAnnotation.coordinate
+        
+        
+        let newPin = Fish(context: context)
+        
+        newPin.latitude = myCoordinate.latitude
+        newPin.longitude = myCoordinate.longitude
+        newPin.species = fishKind
+        newPin.length = catchLength
+        newPin.water = waterTempDepth
+        newPin.bait = bait
+        newPin.weather = weatherCond
+        newPin.notes = notes
+        newPin.time = catchTimeandDate
+        newPin.currentTemp = catchTemp
+        newPin.weatherSummary = catchWeatherSum
+        newPin.windSpeed = catchWind
+        newPin.annoID = theAnnoID
+        
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        
+        let alert = UIAlertController(title: "OK", message: "your catch is safe!", preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+        
+        
+        // change to desired number of seconds (in this case .75 seconds)
+        let when = DispatchTime.now() + 0.75
+        DispatchQueue.main.asyncAfter(deadline: when){
+            // your code with delay
+            alert.dismiss(animated: true, completion: nil)
+        }
+        
+        
+    }
     
     @IBAction func addInfo(_ sender: UIButton) {
         
@@ -256,7 +309,8 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
-        
+        backButton.isHidden = true
+        backAfterSaveButton.isHidden = false
         
        
         let alert = UIAlertController(title: "Saved!", message: "See your fish on the map, or continue catching", preferredStyle: .alert)
@@ -280,15 +334,38 @@ class ImageDisplayViewController: UIViewController, CLLocationManagerDelegate, M
 
     @IBAction func goBackButton(_ sender: Any) {
         
+        let alert = UIAlertController(title: "Are You Sure?", message: "If you do not save this catch it nobody will belive you later!", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Don't Save", style: .default, handler: {action in self.navigationController?.popViewController(animated: true); self.dismiss(animated: true, completion: nil)}))
+        
+        alert.addAction(UIAlertAction(title: "Save The Fish!", style: .default, handler: {action in self.saveFish()
+            // change to desired number of seconds (in this case .75 seconds)
+            let when = DispatchTime.now() + 0.75
+            DispatchQueue.main.asyncAfter(deadline: when){
+                // your code with delay
+                self.navigationController?.popViewController(animated: true)
+                  self.dismiss(animated: true, completion: nil)
+            }
+            
+            
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
 
-        navigationController?.popViewController(animated: true)
-        self.dismiss(animated: true, completion: nil)
         
 
-      
-        
+       // navigationController?.popViewController(animated: true)
+      //  self.dismiss(animated: true, completion: nil)
+       
     }
     
+    @IBAction func backAfterSavePressed(_ sender: Any) {
+        
+        
+         navigationController?.popViewController(animated: true)
+          self.dismiss(animated: true, completion: nil)
+        
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.destination is MapViewController{

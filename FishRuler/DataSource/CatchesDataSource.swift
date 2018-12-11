@@ -43,8 +43,9 @@ class CatchesDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             
+            return catches.count
             // let total = catches.count + routes.count
-            return 2
+          //  return 2
             
         }
         

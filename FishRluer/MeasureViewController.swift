@@ -171,7 +171,7 @@ final class MeasureViewController: UIViewController {
     @IBAction func takePic(_ sender: Any) {
        outputImageView.image = sceneView.snapshot()
         photoTaken.isHidden = false
-        saveImageButton.isEnabled = true
+        saveImageButton.isHidden = false
         saveFishButton.isHidden = false
  
     }
@@ -205,7 +205,7 @@ final class MeasureViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
         
         // change to desired number of seconds (in this case 5 seconds)
-        let when = DispatchTime.now() + 0.5
+        let when = DispatchTime.now() + 0.75
         DispatchQueue.main.asyncAfter(deadline: when){
             // your code with delay
             alert.dismiss(animated: true, completion: nil)
@@ -333,14 +333,14 @@ extension MeasureViewController {
         startMeasureButton.isHidden = false
         stopMeasureButton.isHidden = true
         cameraButton.isHidden = false
-     saveImageButton.isEnabled = false
+        saveImageButton.isHidden = true
         recordingLabel.isHidden = true
         
         saveFishButton.isHidden = true
         session.run(sessionConfiguration, options: [.resetTracking, .removeExistingAnchors])
         resetValues()
         
-        //navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         
      
         

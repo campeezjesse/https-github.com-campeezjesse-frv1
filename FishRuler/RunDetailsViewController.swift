@@ -29,6 +29,8 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
     var catches = [MKAnnotation]()
     var myCatches: [Fish]! = []
     
+  //  var startAnno: MKAnnotation?
+    
     var numOfCatches = 0
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -38,6 +40,9 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
         configureView()
         
         addCatchPins()
+        
+        
+       // addStartPin()
         
  
         // Buttons
@@ -68,8 +73,7 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
                 let formattedPace = FormatDisplay.pace(distance: distance,
                                                        seconds: seconds,
                                                        outputUnit: UnitSpeed.minutesPerMile)
-                //let formatedCatches = numOfCatches
-                
+              
                 distanceLabel.text = "Distance:  \(formattedDistance)"
                 dateLabel.text = formattedDate
                 timeLabel.text = "Time:  \(formattedTime)"
@@ -81,9 +85,7 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
                 location.date = routeID
            
                 loadMap()
-            
-              // print(myCatchID)
-                
+ 
  
             }
         } catch {
@@ -119,13 +121,7 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
                 
                 
                 catches.append(catchAnno)
-                
-                
-//                formatedCatches = catches.count
-//                print(formatedCatches)
-          
-               //  myFish = myCatch
-                
+ 
             }
             
             return catches
@@ -143,8 +139,7 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
             mapView.addAnnotations(catchAnno)
             
             numOfCatches = mapView.annotations.count
-            print(numOfCatches)
-            
+         
             fishCaughtLabel.text = "Fish Caught: \(numOfCatches)"
         }
     }
@@ -206,8 +201,7 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
 
         }
         
-      
-        
+
         //5
         var segments: [MulticolorPolyline] = []
         for ((start, end), _) in zip(coordinates, speeds) {
@@ -236,9 +230,11 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
         
         mapView.setRegion(region, animated: true)
         mapView.addOverlays(polyLine())
-        //mapView.addAnnotations(catches)
+
+       
     }
     
+
     //MARK: - Custom Annotation
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
@@ -273,7 +269,7 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
         
         let deleteDataAction = UIAlertAction(title: "delete", style: .destructive, handler: { action in
             
-           // let pathID = self.routeID
+          
             
             do{
                 let ID = self.routeID
@@ -285,8 +281,7 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
                 for location in locations{
                     self.context.delete(location)
                     try self.context.save()
-                    
-               // MapViewController.removeSelectedAnno()
+              
                 
             }
             } catch {
@@ -296,16 +291,14 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
             do {
                 
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NotificationID"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loadPath"), object: nil)
       
                 DispatchQueue.main.asyncAfter(deadline:.now() + 0.75, execute: {
                     self.dismiss(animated: true, completion: nil)
 
                 
                 })
-                
-                
-//            } catch {
-//                print("Failed saving")
+
             }
             
         })
@@ -323,6 +316,8 @@ class RunDetailsViewController: UIViewController, MKMapViewDelegate{
         if let presenter = presentingViewController as? MapViewController {
             
             presenter.removeCatchPins()
+            
+            
             
         }
         

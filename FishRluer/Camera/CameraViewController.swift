@@ -213,6 +213,8 @@ class CameraViewController: UIViewController {
             validVC.cameraManager = self.cameraManager
             
             self.navigationController?.pushViewController(validVC, animated: true)
+            
+            print("edit")
         }
         
     }
@@ -255,6 +257,8 @@ class CameraViewController: UIViewController {
     @IBAction func goBackToLast(_ sender: Any) {
         
         navigationController?.popViewController(animated: true)
+        
+        self.dismiss(animated: true, completion: nil)
         
     }
 }
